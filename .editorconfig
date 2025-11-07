@@ -1,0 +1,22 @@
+# Using Java-style braces in 
+[*.cs]
+csharp_new_line_before_open_brace = none
+csharp_space_after_keywords_in_control_flow_statements = true
+
+# Use camelCase for variables and methods
+dotnet_naming_rule.members_should_be_camel_case.severity = suggestion
+dotnet_naming_rule.members_should_be_camel_case.symbols = members
+dotnet_naming_rule.members_should_be_camel_case.style = camel_case_style
+
+dotnet_naming_symbols.members.applicable_kinds = field, local, parameter
+dotnet_naming_style.camel_case_style.capitalization = camel_case
+
+# Prefix private variables with _
+dotnet_naming_rule.private_fields_should_have_underscore.severity = suggestion
+dotnet_naming_rule.private_fields_should_have_underscore.symbols = private_fields
+dotnet_naming_rule.private_fields_should_have_underscore.style = prefix_underscore_style
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_style.prefix_underscore_style.required_prefix = _
+dotnet_naming_style.prefix_underscore_style.capitalization = camel_case

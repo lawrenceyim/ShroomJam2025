@@ -1,0 +1,19 @@
+<Project Sdk="Godot.NET.Sdk/4.5.0">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>NewGameProject</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Scripts\Consts\FilePath.cs.uid" />
+    <Content Include="Scripts\Service Locator\ServiceImpl\Input System\InputController.cs.uid" />
+    <Content Include="Scripts\Service Locator\ServiceImpl\Input System\InputEventDto.cs.uid" />
+    <Content Include="Scripts\Service Locator\ServiceImpl\Input System\InputMapping.cs.uid" />
+    <Content Include="Scripts\Service Locator\ServiceImpl\Input System\InputType.cs.uid" />
+    <Content Include="Scripts\Utils\JsonUtils.cs.uid" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\Models\" />
+  </ItemGroup>
+</Project>

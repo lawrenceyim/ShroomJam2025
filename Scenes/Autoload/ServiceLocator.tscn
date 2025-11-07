@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c02ot6rr8vwb1"]
+
+[ext_resource type="Script" uid="uid://c4hj5eeqy6xir" path="res://Scripts/Service Locator/ServiceLocator.cs" id="1_smfmo"]
+
+[node name="ServiceLocator" type="Node"]
+script = ExtResource("1_smfmo")

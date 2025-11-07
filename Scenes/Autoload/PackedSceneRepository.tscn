@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dev75re4fuepr"]
+
+[ext_resource type="Script" uid="uid://bx5ig7e2usawu" path="res://Scripts/Repository/Impl/PackedSceneRepository.cs" id="1_7xdtx"]
+[ext_resource type="PackedScene" uid="uid://dkivshgpmfqtv" path="res://Scenes/Game Object/Shrimp.tscn" id="2_mrrc0"]
+
+[node name="PackedSceneRepository" type="Node"]
+script = ExtResource("1_7xdtx")
+_packedScenes = Dictionary[int, PackedScene]({
+0: ExtResource("2_mrrc0")
+})
