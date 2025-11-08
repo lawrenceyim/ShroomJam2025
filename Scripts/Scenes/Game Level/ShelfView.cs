@@ -1,7 +1,6 @@
 using Godot;
-using ServiceSystem;
 
-public partial class Shelf : Node2D {
+public partial class ShelfView : Node2D {
     private readonly Vector2I _originPosition = new Vector2I(330, 270);
     private readonly int _xOffset = 170;
     private readonly int _yOffset = 200;

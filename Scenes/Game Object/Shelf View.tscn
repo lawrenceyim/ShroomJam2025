@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://6ap52pswgcp2"]
 
 [ext_resource type="Texture2D" uid="uid://chmhvj6n2nijc" path="res://Assets/Sprites/Shelf.webp" id="1_afo3j"]
-[ext_resource type="Script" uid="uid://cch04puu0b1cu" path="res://Scripts/Scenes/Shelf.cs" id="1_ivvb1"]
+[ext_resource type="Script" uid="uid://cch04puu0b1cu" path="res://Scripts/Scenes/Game Level/ShelfView.cs" id="1_ivvb1"]
 
 [node name="Shelf View" type="Node2D"]
 script = ExtResource("1_ivvb1")

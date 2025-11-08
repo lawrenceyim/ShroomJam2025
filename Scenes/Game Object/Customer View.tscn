@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b542syw0tbdyd"]
+
+[ext_resource type="Script" uid="uid://bwa7a85coc2e5" path="res://Scripts/Scenes/Game Level/CustomerView.cs" id="1_5qpia"]
+
+[node name="Customer View" type="Node2D"]
+script = ExtResource("1_5qpia")
+
+[node name="Customer Camera2D" type="Camera2D" parent="."]

@@ -1,24 +1,18 @@
 [gd_scene load_steps=4 format=3 uid="uid://bvfndfuef4jrr"]
 
 [ext_resource type="Script" uid="uid://crfdydjdi1rww" path="res://Scripts/Scenes/Game Level/MainLevel.cs" id="1_if62t"]
-[ext_resource type="Texture2D" uid="uid://dnpvpmfcqsqb3" path="res://Assets/Sprites/Empty slot.webp" id="3_14an5"]
+[ext_resource type="PackedScene" uid="uid://b542syw0tbdyd" path="res://Scenes/Game Object/Customer View.tscn" id="3_14an5"]
 [ext_resource type="PackedScene" uid="uid://6ap52pswgcp2" path="res://Scenes/Game Object/Shelf View.tscn" id="3_jurmy"]
 
 [node name="GameLevel" type="Node2D" node_paths=PackedStringArray("_customerViewCamera", "_shelfViewCamera")]
 script = ExtResource("1_if62t")
-_customerViewCamera = NodePath("ShelfView/Shelf Camera2D")
-_shelfViewCamera = NodePath("shelf view")
+_customerViewCamera = NodePath("Customer View/Customer Camera2D")
+_shelfViewCamera = NodePath("ShelfView/Shelf Camera2D")
 
-[node name="shelf view" type="Camera2D" parent="."]
-position = Vector2(1364, -3)
-
-[node name="EmptySlot" type="Sprite2D" parent="."]
-position = Vector2(1363, -3)
-texture = ExtResource("3_14an5")
+[node name="Customer View" parent="." instance=ExtResource("3_14an5")]
 
 [node name="ShelfView" parent="." instance=ExtResource("3_jurmy")]
+position = Vector2(1280, 0)
 
-[node name="Shelf" parent="ShelfView" index="0"]
-centered = true
-
+[editable path="Customer View"]
 [editable path="ShelfView"]
