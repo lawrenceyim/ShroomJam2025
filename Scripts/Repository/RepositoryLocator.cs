@@ -11,6 +11,7 @@ public partial class RepositoryLocator : Node, IService {
 	public override void _EnterTree() {
 		AddRepository(RepositoryName.PackedScene, GetNode<PackedSceneRepository>(PackedSceneRepository.AutoloadPath));
 		AddRepository(RepositoryName.Scene, GetNode<SceneRepository>(SceneRepository.AutoloadPath));
+		AddRepository(RepositoryName.DvdStorage, new DvdRepository());
 	}
 
 	public void AddRepository(RepositoryName repositoryName, IRepository repository) {
