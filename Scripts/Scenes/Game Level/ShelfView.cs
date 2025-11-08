@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 public partial class ShelfView : Node2D {
@@ -7,6 +8,8 @@ public partial class ShelfView : Node2D {
     private DvdService _dvdService;
     private PackedSceneRepository _packedSceneRepository;
     private PackedScene _dvdPackedScene;
+    private Vector2I? _hoveredSlot;
+    private Dictionary<Vector2I, DvdSlot> _dvdSlots = new();
 
     public void Initialize(DvdService dvdService, PackedSceneRepository packedSceneRepository) {
         _dvdService = dvdService;
@@ -17,15 +20,28 @@ public partial class ShelfView : Node2D {
 
         for (int column = 0; column < shelfSize.X; column++) {
             for (int row = 0; row < shelfSize.Y; row++) {
-                // Dvd dvd = dvdService.GetDvd(new Vector2I(column, row));
-                // if (dvd == null) {
-                //     continue;
-                // }
+                DvdSlot dvdSlot = new();
+                Vector2I position = new Vector2I(column, row);
+                dvdSlot.Position = _originPosition + new Vector2I(column * _xOffset, row * _yOffset);
+                dvdSlot.Initialize(position);
+                dvdSlot.MouseEntered += (Vector2I position) => _hoveredSlot = position;
+                dvdSlot.MouseExited += () => _hoveredSlot = null;
+                _dvdSlots[position] = dvdSlot;
+                AddChild(dvdSlot);
 
-                DvdObject dvdObject = dvdPackedScene.Instantiate() as DvdObject;
-                dvdObject.Position = _originPosition + new Vector2I(column * _xOffset, row * _yOffset);
-                AddChild(dvdObject);
+                Dvd dvd = _dvdService.GetDvdFromShelf(new Vector2I(column, row));
+                if (dvd != null) {
+                    // set sprite based on tier and color of the dvd                    
+                }
             }
         }
+    }
+
+    public void SetDvdTexture(Vector2I slot, Texture2D texture) {
+        _dvdSlots[slot].SetTexture(texture);
+    }
+
+    public Vector2I? GetHoveredSlot() {
+        return _hoveredSlot;
     }
 }

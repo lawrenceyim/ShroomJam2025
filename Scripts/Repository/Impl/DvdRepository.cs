@@ -5,7 +5,7 @@ using RepositorySystem;
 public class DvdRepository : IRepository {
     private int _numberOfRows = 2;
     private int _numberOfColumns = 2;
-    
+
     private Dvd _heldDvd;
     private Dictionary<Vector2I, Dvd> _shelf = new Dictionary<Vector2I, Dvd>();
 
@@ -14,7 +14,7 @@ public class DvdRepository : IRepository {
     }
 
     public void AddDvd(Dvd dvd, Vector2I position) {
-        _shelf.Add(position, dvd);
+        _shelf[position] = dvd;
     }
 
     public Dvd GetDvd(Vector2I position) {
@@ -34,7 +34,7 @@ public class DvdRepository : IRepository {
     }
 
     public Vector2I GetShelfSize() {
-        return new  Vector2I(_numberOfColumns, _numberOfRows);
+        return new Vector2I(_numberOfColumns, _numberOfRows);
     }
 
     public void SetShelfSize(Vector2I shelfSize) {

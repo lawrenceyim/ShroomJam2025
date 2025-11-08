@@ -1,4 +1,9 @@
 public class Dvd {
-    private int _tier;
-    private DvdColor _color;
+    public readonly int Tier;
+    public readonly DvdColor Color;
+
+    public Dvd(int tier, DvdColor color) {
+        Tier = tier;
+        Color = color;
+    }
 }
