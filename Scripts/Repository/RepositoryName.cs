@@ -1,7 +1,7 @@
 namespace RepositorySystem;
 
 public enum RepositoryName {
-    DvdStorage,
+    Dvd,
     PackedScene,
     PlayerData,
     Scene,

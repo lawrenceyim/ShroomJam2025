@@ -1,7 +1,6 @@
 using Godot;
 using Godot.Collections;
-
-namespace RepositorySystem;
+using RepositorySystem;
 
 public partial class PackedSceneRepository : Node, IAutoload, IRepository {
     public static string AutoloadPath => "/root/PackedSceneRepository";
@@ -15,5 +14,5 @@ public partial class PackedSceneRepository : Node, IAutoload, IRepository {
 }
 
 public enum PackedSceneId {
-    Shrimp = 0
+    Dvd = 0
 }

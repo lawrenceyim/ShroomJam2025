@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3p44vdhs5q6v"]
+
+[ext_resource type="Texture2D" uid="uid://dnpvpmfcqsqb3" path="res://Assets/Sprites/Empty slot.webp" id="1_ax1he"]
+[ext_resource type="Script" uid="uid://bkynx5r0re2uo" path="res://Scripts/Scenes/Game Objects/DvdObject.cs" id="1_ry1k7"]
+
+[node name="Dvd Object" type="Sprite2D"]
+texture = ExtResource("1_ax1he")
+script = ExtResource("1_ry1k7")

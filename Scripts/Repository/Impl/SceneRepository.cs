@@ -1,7 +1,6 @@
 using Godot;
 using Godot.Collections;
-
-namespace RepositorySystem;
+using RepositorySystem;
 
 public partial class SceneRepository : Node, IAutoload, IRepository {
     public static string AutoloadPath { get; } = "/root/SceneRepository";
