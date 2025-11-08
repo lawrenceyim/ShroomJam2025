@@ -8,7 +8,7 @@ public partial class Shelf : Node2D {
     private DvdService _dvdService;
     private PackedSceneRepository _packedSceneRepository;
     private PackedScene _dvdPackedScene;
-    
+
     public void Initialize(DvdService dvdService, PackedSceneRepository packedSceneRepository) {
         _dvdService = dvdService;
         _packedSceneRepository = packedSceneRepository;
@@ -22,12 +22,11 @@ public partial class Shelf : Node2D {
                 // if (dvd == null) {
                 //     continue;
                 // }
-                
+
                 DvdObject dvdObject = dvdPackedScene.Instantiate() as DvdObject;
                 dvdObject.Position = _originPosition + new Vector2I(column * _xOffset, row * _yOffset);
                 AddChild(dvdObject);
             }
         }
-        
     }
 }
