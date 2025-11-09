@@ -1,5 +1,3 @@
-using NewGameProject.Scripts.Enums;
-
 public class Merchandise {
     public readonly int Tier;
     public readonly MerchandiseColor Color;

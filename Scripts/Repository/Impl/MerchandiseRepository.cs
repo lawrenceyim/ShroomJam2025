@@ -4,7 +4,7 @@ using RepositorySystem;
 
 public class MerchandiseRepository : IRepository {
     private int _numberOfRows = 2;
-    private int _numberOfColumns = 2;
+    private int _numberOfColumns = 6;
 
     private Merchandise _heldMerchandise;
     private Dictionary<Vector2I, Merchandise> _shelf = new Dictionary<Vector2I, Merchandise>();
