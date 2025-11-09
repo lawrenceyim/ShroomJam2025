@@ -1,12 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://dxr4cm5blttwr"]
+[gd_scene load_steps=10 format=3 uid="uid://dxr4cm5blttwr"]
 
 [ext_resource type="Script" uid="uid://lpnp3bv46sai" path="res://Scripts/Repository/Impl/Texture2dRepository.cs" id="1_na3yd"]
 [ext_resource type="Texture2D" uid="uid://d1b1lqruisjqx" path="res://Assets/Sprites/CustomerNeutral.webp" id="2_hjbrh"]
 [ext_resource type="Texture2D" uid="uid://bs33pcrp8f2kd" path="res://Assets/Sprites/DVD.webp" id="2_yoygx"]
+[ext_resource type="Texture2D" uid="uid://bhkqj0sl76ssn" path="res://Assets/Sprites/customers/rich_man_happy.webp" id="4_eovgs"]
+[ext_resource type="Texture2D" uid="uid://bj4f146fylixo" path="res://Assets/Sprites/customers/rich_man_neutral.webp" id="5_5hbfe"]
+[ext_resource type="Texture2D" uid="uid://5m6a3javmar7" path="res://Assets/Sprites/customers/rich_man_angry.webp" id="6_2xmdi"]
+[ext_resource type="Texture2D" uid="uid://de2mpi0ptvg0o" path="res://Assets/Sprites/customers/rich_woman_happy.webp" id="7_tpql7"]
+[ext_resource type="Texture2D" uid="uid://efs1pfaylg7v" path="res://Assets/Sprites/customers/rich_woman_neutral.webp" id="8_yfyut"]
+[ext_resource type="Texture2D" uid="uid://67i2s38ip6sx" path="res://Assets/Sprites/customers/rich_woman_angry.webp" id="9_eqx7b"]
 
 [node name="Texture2dRepository" type="Node"]
 script = ExtResource("1_na3yd")
 _textures = Dictionary[int, Texture2D]({
 0: ExtResource("2_hjbrh"),
-1: ExtResource("2_yoygx")
+1: ExtResource("2_yoygx"),
+2: ExtResource("4_eovgs"),
+3: ExtResource("5_5hbfe"),
+4: ExtResource("6_2xmdi"),
+5: ExtResource("7_tpql7"),
+6: ExtResource("8_yfyut"),
+7: ExtResource("9_eqx7b")
 })

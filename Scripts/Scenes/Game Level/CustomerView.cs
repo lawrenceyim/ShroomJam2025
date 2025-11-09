@@ -11,9 +11,9 @@ public partial class CustomerView : Node2D, ITick {
 	private MerchandiseColor _colorWanted;
 	private MerchandiseType _merchandiseTypeWanted;
 	private CustomerType _customerType;
-	private Vector2I _customerSpawnPoint = new Vector2I(-800, -75);
-	private Vector2I _customerStopPoint = new Vector2I(-400, -75);
-	private Vector2I _customerExitPoint = new Vector2I(0, -75);
+	private Vector2I _customerSpawnPoint = new Vector2I(-800, -150);
+	private int _customerStopPointX = 400;
+	private Vector2I _customerExitPoint = new Vector2I(0, -150);
 	private Sprite2D? _currentCustomerSprite;
 	private Sprite2D? _leavingCustomerSprite;
 	private CurrentCustomerState _currentCustomerState;
@@ -41,6 +41,9 @@ public partial class CustomerView : Node2D, ITick {
 				case CurrentCustomerState.Entering:
 					// TODO : move sprite to position
 					_currentCustomerSprite.Position += _currentCustomerMovement.Movement();
+					if (Math.Abs(_currentCustomerSprite.Position.X -_customerStopPointX) < 25) {
+						_currentCustomerState = CurrentCustomerState.Waiting;
+					}
 					// STOP if in the position range
 					break;
 				case CurrentCustomerState.Waiting:
@@ -56,7 +59,7 @@ public partial class CustomerView : Node2D, ITick {
 		_customerType = _SelectRandomCustomerType();
 		Sprite2D sprite = new Sprite2D();
 		// TODO: SET ITS TEXTURE
-		sprite.Texture = _texture2DRepository.GetTexture(Texture2dId.CustomerPlaceholder);
+		sprite.Texture = _texture2DRepository.GetTexture(Texture2dId.RichWomanHappy);
 		sprite.Position = _customerSpawnPoint + Position;
 		sprite.ZIndex = -1;
 		AddChild(sprite);
