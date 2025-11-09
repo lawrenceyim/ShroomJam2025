@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bvfndfuef4jrr"]
 
 [ext_resource type="Script" uid="uid://crfdydjdi1rww" path="res://Scripts/Scenes/Game Level/MainLevel.cs" id="1_if62t"]
-[ext_resource type="PackedScene" uid="uid://b542syw0tbdyd" path="res://Scenes/Game Object/Customer View.tscn" id="3_14an5"]
-[ext_resource type="PackedScene" uid="uid://6ap52pswgcp2" path="res://Scenes/Game Object/Shelf View.tscn" id="3_jurmy"]
+[ext_resource type="PackedScene" uid="uid://b542syw0tbdyd" path="res://Scenes/Level Scene/Customer View.tscn" id="3_14an5"]
+[ext_resource type="PackedScene" uid="uid://6ap52pswgcp2" path="res://Scenes/Level Scene/Shelf View.tscn" id="3_jurmy"]
 
 [node name="GameLevel" type="Node2D" node_paths=PackedStringArray("_customerViewCamera", "_shelfViewCamera", "_shelfView")]
 script = ExtResource("1_if62t")
@@ -11,9 +11,10 @@ _shelfViewCamera = NodePath("ShelfView/Shelf Camera2D")
 _shelfView = NodePath("ShelfView")
 
 [node name="Customer View" parent="." instance=ExtResource("3_14an5")]
+position = Vector2(-2, 0)
 
 [node name="ShelfView" parent="." instance=ExtResource("3_jurmy")]
-position = Vector2(1280, 0)
+position = Vector2(3000, 9)
 
 [editable path="Customer View"]
 [editable path="ShelfView"]
