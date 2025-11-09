@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxcn7o2fh7vjl"
-path="res://.godot/imported/counter.webp-1c8b0970bc82ef39c70d8355c35ebb03.ctex"
+uid="uid://d37wqmvv7gusp"
+path="res://.godot/imported/tableprotoype.png-946560975b1b2e374722342e7c041c73.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/counter.webp"
-dest_files=["res://.godot/imported/counter.webp-1c8b0970bc82ef39c70d8355c35ebb03.ctex"]
+source_file="res://Assets/Sprites/tableprotoype.png"
+dest_files=["res://.godot/imported/tableprotoype.png-946560975b1b2e374722342e7c041c73.ctex"]
 
 [params]
 
