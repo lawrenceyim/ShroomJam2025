@@ -1,4 +1,4 @@
 public enum MerchandiseType {
-    DVD,
-    VHS
+    DVD = 0,
+    VHS = 1,
 }

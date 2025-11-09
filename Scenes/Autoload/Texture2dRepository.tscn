@@ -1,10 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxr4cm5blttwr"]
+[gd_scene load_steps=4 format=3 uid="uid://dxr4cm5blttwr"]
 
 [ext_resource type="Script" uid="uid://lpnp3bv46sai" path="res://Scripts/Repository/Impl/Texture2dRepository.cs" id="1_na3yd"]
+[ext_resource type="Texture2D" uid="uid://d1b1lqruisjqx" path="res://Assets/Sprites/CustomerNeutral.webp" id="2_hjbrh"]
 [ext_resource type="Texture2D" uid="uid://bs33pcrp8f2kd" path="res://Assets/Sprites/DVD.webp" id="2_yoygx"]
 
 [node name="Texture2dRepository" type="Node"]
 script = ExtResource("1_na3yd")
 _textures = Dictionary[int, Texture2D]({
-0: ExtResource("2_yoygx")
+0: ExtResource("2_hjbrh"),
+1: ExtResource("2_yoygx")
 })
