@@ -9,10 +9,10 @@ public partial class MainLevel : Node, IInputState, ITick {
 
 	[Export]
 	private Camera2D _shelfViewCamera;
-	
+
 	[Export]
 	private ShelfView _shelfView;
-	
+
 	private const string SwitchView = "Space";
 
 	private ServiceLocator _serviceLocator;
@@ -26,11 +26,11 @@ public partial class MainLevel : Node, IInputState, ITick {
 		_dvdService = _serviceLocator.GetService<DvdService>(ServiceName.Dvd);
 		_inputStateMachine = _serviceLocator.GetService<InputStateMachine>(ServiceName.InputStateMachine);
 		_inputStateMachine.SetState(this);
-
 		RepositoryLocator repositoryLocator = _serviceLocator.GetService<RepositoryLocator>(ServiceName.RepositoryLocator);
+		_packedSceneRepository = repositoryLocator.GetRepository<PackedSceneRepository>(RepositoryName.PackedScene);
 		_shelfView.Initialize(
 			_serviceLocator.GetService<DvdService>(ServiceName.Dvd),
-			_packedSceneRepository = repositoryLocator.GetRepository<PackedSceneRepository>(RepositoryName.PackedScene)
+			repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture)
 		);
 
 		_customerSpawner = new CustomerSpawner();
@@ -71,7 +71,7 @@ public partial class MainLevel : Node, IInputState, ITick {
 	private void _HandleMouseClick() {
 		Vector2I? hoveredDvdSlot = _shelfView.GetHoveredSlot();
 		if (hoveredDvdSlot != null) {
-			_SwapDvds(hoveredDvdSlot.Value);    
+			_SwapDvds(hoveredDvdSlot.Value);
 			return;
 		}
 
@@ -82,10 +82,10 @@ public partial class MainLevel : Node, IInputState, ITick {
 	private void _SwapDvds(Vector2I dvdSlot) {
 		Dvd heldDvd = _dvdService.GetHeldDvd();
 		Dvd dvdInSlot = _dvdService.GetDvdFromShelf(dvdSlot);
-		
+
 		_dvdService.SetHeldDvd(dvdInSlot);
 		_dvdService.SetShelfDvd(heldDvd, dvdSlot);
-		
+
 		// _shelfView.SetDvdTexture(dvdSlot, );
 	}
 }

@@ -5,4 +5,5 @@ public enum RepositoryName {
     PackedScene,
     PlayerData,
     Scene,
+    Texture
 }
