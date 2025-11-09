@@ -16,4 +16,10 @@ public partial class Texture2dRepository : Node, IAutoload, IRepository {
 public enum Texture2dId {
     CustomerPlaceholder = 0,
     MerchandisePlaceholder = 1,
+    RichManHappy = 2,
+    RichManNeutral = 3,
+    RichManAngry = 4,
+    RichWomanHappy = 5,
+    RichWomanNeutral = 6,
+    RichWomanAngry = 7,
 }
