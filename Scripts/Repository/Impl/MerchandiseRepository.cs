@@ -2,35 +2,35 @@ using System.Collections.Generic;
 using Godot;
 using RepositorySystem;
 
-public class DvdRepository : IRepository {
+public class MerchandiseRepository : IRepository {
     private int _numberOfRows = 2;
     private int _numberOfColumns = 2;
 
-    private Dvd _heldDvd;
-    private Dictionary<Vector2I, Dvd> _shelf = new Dictionary<Vector2I, Dvd>();
+    private Merchandise _heldMerchandise;
+    private Dictionary<Vector2I, Merchandise> _shelf = new Dictionary<Vector2I, Merchandise>();
 
     public void RemoveDvd(Vector2I position) {
         _shelf.Remove(position);
     }
 
-    public void AddDvd(Dvd dvd, Vector2I position) {
-        _shelf[position] = dvd;
+    public void AddDvd(Merchandise merchandise, Vector2I position) {
+        _shelf[position] = merchandise;
     }
 
-    public Dvd GetDvd(Vector2I position) {
+    public Merchandise GetDvd(Vector2I position) {
         return _shelf.GetValueOrDefault(position, null);
     }
 
-    public void SetHeldDvd(Dvd heldDvd) {
-        _heldDvd = heldDvd;
+    public void SetHeldDvd(Merchandise heldMerchandise) {
+        _heldMerchandise = heldMerchandise;
     }
 
-    public Dvd GetHeldDvd() {
-        return _heldDvd;
+    public Merchandise GetHeldDvd() {
+        return _heldMerchandise;
     }
 
     public void RemoveHeldDvd() {
-        _heldDvd = null;
+        _heldMerchandise = null;
     }
 
     public Vector2I GetShelfSize() {

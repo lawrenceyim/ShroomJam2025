@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3p44vdhs5q6v"]
+
+[ext_resource type="Texture2D" uid="uid://dnpvpmfcqsqb3" path="res://Assets/Sprites/Empty slot.webp" id="1_puaix"]
+[ext_resource type="Script" uid="uid://bkynx5r0re2uo" path="res://Scripts/Scenes/Game Objects/MerchandiseSlot.cs" id="2_il7k3"]
+
+[node name="Merchandise Object" type="Sprite2D"]
+texture = ExtResource("1_puaix")
+script = ExtResource("2_il7k3")

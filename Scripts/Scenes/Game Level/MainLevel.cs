@@ -18,23 +18,23 @@ public partial class MainLevel : Node, IInputState, ITick {
 	private ServiceLocator _serviceLocator;
 	private PackedSceneRepository _packedSceneRepository;
 	private InputStateMachine _inputStateMachine;
-	private CustomerSpawner _customerSpawner;
-	private DvdService _dvdService;
+	private TickTimer _tickTimer;
+	private MerchandiseService _merchandiseService;
 
 	public override void _Ready() {
 		_serviceLocator = GetNode<ServiceLocator>(ServiceLocator.AutoloadPath);
-		_dvdService = _serviceLocator.GetService<DvdService>(ServiceName.Dvd);
+		_merchandiseService = _serviceLocator.GetService<MerchandiseService>(ServiceName.Merchandise);
 		_inputStateMachine = _serviceLocator.GetService<InputStateMachine>(ServiceName.InputStateMachine);
 		_inputStateMachine.SetState(this);
 		RepositoryLocator repositoryLocator = _serviceLocator.GetService<RepositoryLocator>(ServiceName.RepositoryLocator);
 		_packedSceneRepository = repositoryLocator.GetRepository<PackedSceneRepository>(RepositoryName.PackedScene);
 		_shelfView.Initialize(
-			_serviceLocator.GetService<DvdService>(ServiceName.Dvd),
+			_serviceLocator.GetService<MerchandiseService>(ServiceName.Merchandise),
 			repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture)
 		);
 
-		_customerSpawner = new CustomerSpawner();
-		AddChild(_customerSpawner);
+		_tickTimer = new TickTimer();
+
 	}
 
 	public void PhysicsTick(double delta) { }
@@ -80,11 +80,11 @@ public partial class MainLevel : Node, IInputState, ITick {
 	}
 
 	private void _SwapDvds(Vector2I dvdSlot) {
-		Dvd heldDvd = _dvdService.GetHeldDvd();
-		Dvd dvdInSlot = _dvdService.GetDvdFromShelf(dvdSlot);
+		Merchandise heldMerchandise = _merchandiseService.GetHeldDvd();
+		Merchandise merchandiseInSlot = _merchandiseService.GetDvdFromShelf(dvdSlot);
 
-		_dvdService.SetHeldDvd(dvdInSlot);
-		_dvdService.SetShelfDvd(heldDvd, dvdSlot);
+		_merchandiseService.SetHeldDvd(merchandiseInSlot);
+		_merchandiseService.SetShelfDvd(heldMerchandise, dvdSlot);
 
 		// _shelfView.SetDvdTexture(dvdSlot, );
 	}

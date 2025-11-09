@@ -33,6 +33,6 @@ public partial class ServiceLocator : Node, IAutoload {
 		AddService(ServiceName.RepositoryLocator, repositoryLocator, true);
 		AddService(ServiceName.GameClock, new GameClock(), true);
 		AddService(ServiceName.InputStateMachine, new InputStateMachine(), true);
-		AddService(ServiceName.Dvd, new DvdService(repositoryLocator.GetRepository<DvdRepository>(RepositoryName.Dvd)), false);
+		AddService(ServiceName.Merchandise, new MerchandiseService(repositoryLocator.GetRepository<MerchandiseRepository>(RepositoryName.Merchandise)), false);
 	}
 }

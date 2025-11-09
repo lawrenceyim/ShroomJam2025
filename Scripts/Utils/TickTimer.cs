@@ -1,0 +1,57 @@
+using System;
+using Godot;
+
+public class TickTimer : ITick {
+    public event Action TimedOut;
+    private int _minTicksInclusive;
+    private int _maxTicksExclusive;
+    private int _ticksLeft;
+    private Random _random;
+    private bool _loop;
+    private bool _stopped = true;
+
+    public TickTimer() { }
+
+    public void StartFixedTimer(bool loop, int ticks) {
+        _ticksLeft = ticks;
+        _minTicksInclusive = ticks;
+        _maxTicksExclusive = ticks + 1;
+        _loop = loop;
+        _stopped = false;
+    }
+
+    public void StartRandomTimer(bool loop, int minTicksInclusive, int maxTicksExclusive) {
+        _minTicksInclusive = minTicksInclusive;
+        _maxTicksExclusive = maxTicksExclusive;
+        _loop = loop;
+        _ticksLeft = _random.Next(_minTicksInclusive, _maxTicksExclusive);
+        _stopped = false;
+    }
+
+    public void PhysicsTick(double delta) {
+        if (_stopped) {
+            return;
+        }
+
+        _ticksLeft--;
+
+        if (_ticksLeft == 0) {
+            TimedOut?.Invoke();
+
+            if (!_loop) {
+                _stopped = true;
+                return;
+            }
+
+            _ticksLeft = _random.Next(_minTicksInclusive, _maxTicksExclusive);
+        }
+    }
+
+    public void Stop() {
+        _stopped = true;
+    }
+
+    public void Start() {
+        _stopped = false;
+    }
+}

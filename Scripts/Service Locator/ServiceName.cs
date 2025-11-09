@@ -2,7 +2,7 @@ namespace ServiceSystem;
 
 public enum ServiceName {
 	GameClock,
-	Dvd,
+	Merchandise,
 	InputStateMachine,
 	PlayerData,
 	RepositoryLocator,

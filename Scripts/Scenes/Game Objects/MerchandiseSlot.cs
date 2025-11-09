@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public partial class DvdSlot : Sprite2D {
+public partial class MerchandiseSlot : Sprite2D {
 	[Export]
 	private Area2D _area2D;
 

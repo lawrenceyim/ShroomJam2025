@@ -1,15 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://6ap52pswgcp2"]
 
-[ext_resource type="Texture2D" uid="uid://chmhvj6n2nijc" path="res://Assets/Sprites/Shelf.webp" id="1_afo3j"]
 [ext_resource type="Script" uid="uid://cch04puu0b1cu" path="res://Scripts/Scenes/Game Level/ShelfView.cs" id="1_ivvb1"]
-[ext_resource type="PackedScene" uid="uid://ygjnrx4svv16" path="res://Scenes/Game Object/Dvd Slot.tscn" id="2_ivvb1"]
+[ext_resource type="PackedScene" uid="uid://ygjnrx4svv16" path="res://Scenes/Game Object/Merchandise Slot.tscn" id="2_ivvb1"]
+[ext_resource type="Texture2D" uid="uid://brrmhq4xxb7xj" path="res://Assets/Sprites/big shelf.webp" id="3_041vq"]
 
 [node name="Shelf View" type="Node2D"]
 script = ExtResource("1_ivvb1")
 _dvdSlotPackedScene = ExtResource("2_ivvb1")
 
-[node name="Shelf" type="Sprite2D" parent="."]
-texture = ExtResource("1_afo3j")
-centered = false
-
 [node name="Shelf Camera2D" type="Camera2D" parent="."]
+
+[node name="BigShelf" type="Sprite2D" parent="."]
+position = Vector2(-640, -360)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("3_041vq")
+centered = false

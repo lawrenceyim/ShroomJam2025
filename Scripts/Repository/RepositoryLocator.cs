@@ -12,7 +12,7 @@ public partial class RepositoryLocator : Node, IService {
 		AddRepository(RepositoryName.PackedScene, GetNode<PackedSceneRepository>(PackedSceneRepository.AutoloadPath));
 		AddRepository(RepositoryName.Scene, GetNode<SceneRepository>(SceneRepository.AutoloadPath));
 		AddRepository(RepositoryName.Texture, GetNode<Texture2dRepository>(Texture2dRepository.AutoloadPath));
-		AddRepository(RepositoryName.Dvd, new DvdRepository());
+		AddRepository(RepositoryName.Merchandise, new MerchandiseRepository());
 	}
 
 	public void AddRepository(RepositoryName repositoryName, IRepository repository) {

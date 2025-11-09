@@ -1,4 +1,4 @@
-public enum DvdColor {
+public enum MerchandiseColor {
     Red,
     Blue,
     Green,
