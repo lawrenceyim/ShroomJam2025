@@ -13,7 +13,7 @@ public partial class CustomerView : Node2D, ITick {
 	private readonly Random _random = new Random();
 	private readonly TickTimer _dayTimer = new TickTimer();
 	private readonly TickTimer _customerTimer = new TickTimer();
-	private readonly int _secondsPerCustomerMood = 3;
+	private readonly int _secondsPerCustomerMood = 7;
 	private Texture2dRepository _texture2DRepository;
 	private int _ticksPerSecond;
 
@@ -29,8 +29,8 @@ public partial class CustomerView : Node2D, ITick {
 	private Sprite2D? _leavingCustomerSprite;
 	private CurrentCustomerState _currentCustomerState;
 	private CurrentCustomerMood _currentCustomerMood;
-	private CustomerMovement _currentCustomerMovement;
-	private CustomerMovement _leavingCustomerMovement;
+	private CustomerMovement? _currentCustomerMovement;
+	private CustomerMovement? _leavingCustomerMovement;
 
 	public void Initialize(Texture2dRepository texture2DRepository) {
 		_ticksPerSecond = Engine.PhysicsTicksPerSecond;
