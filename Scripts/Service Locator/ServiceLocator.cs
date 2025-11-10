@@ -36,5 +36,6 @@ public partial class ServiceLocator : Node, IAutoload {
         AddService(ServiceName.Merchandise, new MerchandiseService(repositoryLocator.GetRepository<MerchandiseRepository>(RepositoryName.Merchandise)), false);
         AddService(ServiceName.PlayerData, new PlayerDataSerivce(repositoryLocator.GetRepository<PlayerDataRepository>(RepositoryName.PlayerData)), false);
         AddService(ServiceName.Upgrade, new UpgradeService(GetService<PlayerDataSerivce>(ServiceName.PlayerData)), false);
+        AddService(ServiceName.Transaction, new TransactionService(), false);
     }
 }

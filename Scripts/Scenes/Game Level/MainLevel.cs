@@ -21,7 +21,7 @@ public partial class MainLevel : Node, IInputState, ITick {
     private ServiceLocator _serviceLocator;
     private PackedSceneRepository _packedSceneRepository;
     private InputStateMachine _inputStateMachine;
-    private TickTimer _tickTimer;
+    private TransactionService _transactionService;
     private MerchandiseService _merchandiseService;
     private GameClock _gameClock;
     private ActiveView _activeView = ActiveView.CustomerView;
@@ -31,6 +31,7 @@ public partial class MainLevel : Node, IInputState, ITick {
         _merchandiseService = _serviceLocator.GetService<MerchandiseService>(ServiceName.Merchandise);
         _inputStateMachine = _serviceLocator.GetService<InputStateMachine>(ServiceName.InputStateMachine);
         _gameClock = _serviceLocator.GetService<GameClock>(ServiceName.GameClock);
+        _transactionService = _serviceLocator.GetService<TransactionService>(ServiceName.Transaction);
 
         _gameClock.AddActiveScene(this, GetInstanceId());
         _inputStateMachine.SetState(this);
@@ -43,8 +44,6 @@ public partial class MainLevel : Node, IInputState, ITick {
         _customerView.Initialize(
             repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture)
         );
-
-        _tickTimer = new TickTimer();
     }
 
     public override void _ExitTree() {
@@ -89,11 +88,10 @@ public partial class MainLevel : Node, IInputState, ITick {
     private void _HandleMouseClick() {
         switch (_activeView) {
             case ActiveView.CustomerView:
-                if (_customerView.IsMerchandiseSellSlotHovered() 
-                    && _customerView.IsCustomerReadytoPurchase()
-                    && _merchandiseService.GetHeldMerchandise() is not null) { 
+                if (_IsTransactionValid()) {
                     _SellHeldMerchandise();
                 }
+
                 break;
             case ActiveView.ShelfView:
                 Vector2I? hoveredDvdSlot = _shelfView.GetHoveredSlot();
@@ -107,7 +105,9 @@ public partial class MainLevel : Node, IInputState, ITick {
 
     private void _SellHeldMerchandise() {
         CustomerSaleDto saleDto = _customerView.GetCustomerSale();
-        
+        int profit = _transactionService.SellMerchandise(saleDto);
+        // update held merch UI
+        _customerView.MerchandiseSold(profit);
     }
 
     private void _SwapMerchandise(Vector2I dvdSlot) {
@@ -118,6 +118,12 @@ public partial class MainLevel : Node, IInputState, ITick {
         _merchandiseService.SetShelfMerchandise(heldMerchandise, dvdSlot);
 
         // _shelfView.SetDvdTexture(dvdSlot, );
+    }
+
+    private bool _IsTransactionValid() {
+        return _customerView.IsMerchandiseSellSlotHovered()
+               && _customerView.IsCustomerReadytoPurchase()
+               && _merchandiseService.GetHeldMerchandise() is not null;
     }
 
     private enum ActiveView {

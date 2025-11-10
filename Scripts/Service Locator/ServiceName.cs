@@ -6,5 +6,6 @@ public enum ServiceName {
 	InputStateMachine,
 	PlayerData,
 	RepositoryLocator,
+	Transaction,
 	Upgrade,
 }
