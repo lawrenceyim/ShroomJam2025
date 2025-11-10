@@ -2,7 +2,7 @@ using Godot;
 
 public class CustomerMovement {
     private const int _customerVerticalTicks = 20;
-    private const float _customerHorizontalSpeed = 5; // Per tick
+    private const float _customerHorizontalSpeed = 7; // Per tick
     private const float _customerVerticalSpeed = 1; // Per tick
     private bool _customerVerticallyUp = true;
     private int _customerVerticalTicksLeft = _customerVerticalTicks;

@@ -2,56 +2,62 @@ using System;
 using Godot;
 
 public class TickTimer : ITick {
-    public event Action TimedOut;
-    private int _minTicksInclusive;
-    private int _maxTicksExclusive;
-    private int _ticksLeft;
-    private Random _random;
-    private bool _loop;
-    private bool _stopped = true;
+	public event Action TimedOut;
+	private readonly Random _random = new Random();
+	private int _minTicksInclusive;
+	private int _maxTicksExclusive;
+	private int _ticksLeft;
+	private bool _loop;
+	private bool _stopped = true;
 
-    public TickTimer() { }
+	public TickTimer() { }
 
-    public void StartFixedTimer(bool loop, int ticks) {
-        _ticksLeft = ticks;
-        _minTicksInclusive = ticks;
-        _maxTicksExclusive = ticks + 1;
-        _loop = loop;
-        _stopped = false;
-    }
+	public void StartFixedTimer(bool loop, int ticks) {
+		_ticksLeft = ticks;
+		_minTicksInclusive = ticks;
+		_maxTicksExclusive = ticks + 1;
+		_loop = loop;
+		_stopped = false;
+	}
 
-    public void StartRandomTimer(bool loop, int minTicksInclusive, int maxTicksExclusive) {
-        _minTicksInclusive = minTicksInclusive;
-        _maxTicksExclusive = maxTicksExclusive;
-        _loop = loop;
-        _ticksLeft = _random.Next(_minTicksInclusive, _maxTicksExclusive);
-        _stopped = false;
-    }
+	public void StartRandomTimer(bool loop, int minTicksInclusive, int maxTicksExclusive) {
+		_minTicksInclusive = minTicksInclusive;
+		_maxTicksExclusive = maxTicksExclusive;
+		_loop = loop;
+		_ticksLeft = _random.Next(_minTicksInclusive, _maxTicksExclusive);
+		_stopped = false;
+	}
 
-    public void PhysicsTick(double delta) {
-        if (_stopped) {
-            return;
-        }
+	public void PhysicsTick(double delta) {
+		if (_stopped) {
+			return;
+		}
 
-        _ticksLeft--;
+		GD.Print($"Ticks left _ticks: {_ticksLeft}");
 
-        if (_ticksLeft == 0) {
-            TimedOut?.Invoke();
+		_ticksLeft--;
 
-            if (!_loop) {
-                _stopped = true;
-                return;
-            }
+		if (_ticksLeft == 0) {
+			TimedOut?.Invoke();
 
-            _ticksLeft = _random.Next(_minTicksInclusive, _maxTicksExclusive);
-        }
-    }
+			if (!_loop) {
+				_stopped = true;
+				return;
+			}
 
-    public void Stop() {
-        _stopped = true;
-    }
+			_ticksLeft = _random.Next(_minTicksInclusive, _maxTicksExclusive);
+		}
+	}
 
-    public void Start() {
-        _stopped = false;
-    }
+	public int GetTicksLeft() {
+		return _ticksLeft;
+	}
+
+	public void Stop() {
+		_stopped = true;
+	}
+
+	public void Start() {
+		_stopped = false;
+	}
 }
