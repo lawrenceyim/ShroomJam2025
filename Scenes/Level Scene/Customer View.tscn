@@ -3,10 +3,17 @@
 [ext_resource type="Script" uid="uid://bwa7a85coc2e5" path="res://Scripts/Scenes/Game Level/CustomerView.cs" id="1_5qpia"]
 [ext_resource type="Texture2D" uid="uid://d37wqmvv7gusp" path="res://Assets/Sprites/tableprotoype.png" id="2_j8kt0"]
 
-[node name="Customer View" type="Node2D"]
+[node name="Customer View" type="Node2D" node_paths=PackedStringArray("_merchandiseSellSlot")]
 script = ExtResource("1_5qpia")
+_merchandiseSellSlot = NodePath("Area2D Merchandise Sell Slot")
 
 [node name="Customer Camera2D" type="Camera2D" parent="."]
 
 [node name="Tableprotoype" type="Sprite2D" parent="."]
 texture = ExtResource("2_j8kt0")
+
+[node name="Area2D Merchandise Sell Slot" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D Merchandise Sell Slot"]
+position = Vector2(-141, 282)
+polygon = PackedVector2Array(-4, 2, 50, -225, 234, -226, 288, 4)

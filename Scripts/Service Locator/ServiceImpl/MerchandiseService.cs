@@ -12,19 +12,19 @@ public class MerchandiseService : IService {
         return _merchandiseRepository.GetShelfSize();
     }
 
-    public Merchandise GetDvdFromShelf(Vector2I position) {
+    public Merchandise GetMerchandiseFromShelf(Vector2I position) {
         return _merchandiseRepository.GetDvd(position);
     }
 
-    public Merchandise GetHeldDvd() {
+    public Merchandise GetHeldMerchandise() {
         return _merchandiseRepository.GetHeldDvd();
     }
 
-    public void SetHeldDvd(Merchandise merchandise) {
+    public void SetHeldMerchandise(Merchandise merchandise) {
         _merchandiseRepository.SetHeldDvd(merchandise);
     }
 
-    public void SetShelfDvd(Merchandise merchandise, Vector2I position) {
+    public void SetShelfMerchandise(Merchandise merchandise, Vector2I position) {
         _merchandiseRepository.AddDvd(merchandise, position);
     }
 }
