@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dxr4cm5blttwr"]
+[gd_scene load_steps=19 format=3 uid="uid://dxr4cm5blttwr"]
 
 [ext_resource type="Script" uid="uid://lpnp3bv46sai" path="res://Scripts/Repository/Impl/Texture2dRepository.cs" id="1_na3yd"]
 [ext_resource type="Texture2D" uid="uid://d1b1lqruisjqx" path="res://Assets/Sprites/CustomerNeutral.webp" id="2_hjbrh"]
@@ -9,6 +9,15 @@
 [ext_resource type="Texture2D" uid="uid://de2mpi0ptvg0o" path="res://Assets/Sprites/customers/rich_woman_happy.webp" id="7_tpql7"]
 [ext_resource type="Texture2D" uid="uid://efs1pfaylg7v" path="res://Assets/Sprites/customers/rich_woman_neutral.webp" id="8_yfyut"]
 [ext_resource type="Texture2D" uid="uid://67i2s38ip6sx" path="res://Assets/Sprites/customers/rich_woman_angry.webp" id="9_eqx7b"]
+[ext_resource type="Texture2D" uid="uid://7q6gy50f08dx" path="res://Assets/Sprites/customers/average_happy_man.webp" id="10_yuplx"]
+[ext_resource type="Texture2D" uid="uid://dl6tvwlt6yvel" path="res://Assets/Sprites/customers/average_neutral_man.webp" id="11_eckbs"]
+[ext_resource type="Texture2D" uid="uid://bvd4eai1n7n8x" path="res://Assets/Sprites/customers/average_man_angry.webp" id="12_fy877"]
+[ext_resource type="Texture2D" uid="uid://tgbrp8xehr20" path="res://Assets/Sprites/customers/average_happy_woman.webp" id="13_s78xu"]
+[ext_resource type="Texture2D" uid="uid://dxhmv5ic08c1" path="res://Assets/Sprites/customers/average_neutral_woman.webp" id="14_yw2n2"]
+[ext_resource type="Texture2D" uid="uid://b6bkt5l02gvxs" path="res://Assets/Sprites/customers/average_angry_woman.webp" id="15_58myn"]
+[ext_resource type="Texture2D" uid="uid://deqmnm5w1u2m0" path="res://Assets/Sprites/customers/poor_woman_happy.webp" id="16_b5a4h"]
+[ext_resource type="Texture2D" uid="uid://7ug1k0ccpk66" path="res://Assets/Sprites/customers/poor_woman_neutral.webp" id="17_oxdwn"]
+[ext_resource type="Texture2D" uid="uid://cw20m4gfcoxvc" path="res://Assets/Sprites/customers/poor_woman_angry.webp" id="18_bd18n"]
 
 [node name="Texture2dRepository" type="Node"]
 script = ExtResource("1_na3yd")
@@ -20,5 +29,17 @@ _textures = Dictionary[int, Texture2D]({
 4: ExtResource("6_2xmdi"),
 5: ExtResource("7_tpql7"),
 6: ExtResource("8_yfyut"),
-7: ExtResource("9_eqx7b")
+7: ExtResource("9_eqx7b"),
+8: ExtResource("10_yuplx"),
+9: ExtResource("11_eckbs"),
+10: ExtResource("12_fy877"),
+11: ExtResource("13_s78xu"),
+12: ExtResource("14_yw2n2"),
+13: ExtResource("15_58myn"),
+14: null,
+15: null,
+16: null,
+17: ExtResource("16_b5a4h"),
+18: ExtResource("17_oxdwn"),
+19: ExtResource("18_bd18n")
 })
