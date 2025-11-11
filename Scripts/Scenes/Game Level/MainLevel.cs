@@ -58,35 +58,27 @@ public partial class MainLevel : Node, IInputState, ITick {
     public void ProcessInput(InputEventDto dto) {
         switch (dto) {
             case KeyDto keyDto:
-                switch (keyDto.Identifier) {
-                    case SwitchView:
-                        if (!keyDto.Pressed) {
-                            break;
-                        }
-
-                        _SwitchView();
-                        break;
-                }
-
+                ProcessKeyInput(keyDto);
                 break;
             case MouseButtonDto mouseButtonDto:
-                _HandleMouseClick();
+                _ProcessMouseButtonInput();
                 break;
         }
     }
 
-    private void _SwitchView() {
-        if (_customerViewCamera.IsCurrent()) {
-            _shelfViewCamera.MakeCurrent();
-            _activeView = ActiveView.ShelfView;
-        }
-        else if (_shelfViewCamera.IsCurrent()) {
-            _customerViewCamera.MakeCurrent();
-            _activeView = ActiveView.CustomerView;
+    private void ProcessKeyInput(KeyDto dto) {
+        switch (dto.Identifier) {
+            case SwitchView:
+                if (!dto.Pressed) {
+                    break;
+                }
+
+                _SwitchView();
+                break;
         }
     }
 
-    private void _HandleMouseClick() {
+    private void _ProcessMouseButtonInput() {
         switch (_activeView) {
             case ActiveView.CustomerView:
                 if (_IsTransactionValid()) {
@@ -101,6 +93,17 @@ public partial class MainLevel : Node, IInputState, ITick {
                 }
 
                 break;
+        }
+    }
+
+    private void _SwitchView() {
+        if (_customerViewCamera.IsCurrent()) {
+            _shelfViewCamera.MakeCurrent();
+            _activeView = ActiveView.ShelfView;
+        }
+        else if (_shelfViewCamera.IsCurrent()) {
+            _customerViewCamera.MakeCurrent();
+            _activeView = ActiveView.CustomerView;
         }
     }
 
