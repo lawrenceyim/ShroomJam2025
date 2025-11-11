@@ -34,4 +34,5 @@ public enum Texture2dId {
     PoorWomanHappy = 17,
     PoorWomanNeutral = 18,
     PoorWomanAngry = 19,
+    SlotPlaceholder = 20,
 }

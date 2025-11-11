@@ -6,11 +6,12 @@
 
 [node name="Shelf View" type="Node2D"]
 script = ExtResource("1_ivvb1")
-_dvdSlotPackedScene = ExtResource("2_ivvb1")
+_merchandiseSlotPackedScene = ExtResource("2_ivvb1")
 
 [node name="Shelf Camera2D" type="Camera2D" parent="."]
 
 [node name="BigShelf" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(-640, -360)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("3_041vq")

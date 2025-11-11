@@ -61,7 +61,7 @@ public partial class MainLevel : Node, IInputState, ITick {
                 ProcessKeyInput(keyDto);
                 break;
             case MouseButtonDto mouseButtonDto:
-                _ProcessMouseButtonInput();
+                _ProcessMouseButtonInput(mouseButtonDto);
                 break;
         }
     }
@@ -78,7 +78,11 @@ public partial class MainLevel : Node, IInputState, ITick {
         }
     }
 
-    private void _ProcessMouseButtonInput() {
+    private void _ProcessMouseButtonInput(MouseButtonDto dto) {
+        if (!dto.Pressed) {
+            return;
+        }
+
         switch (_activeView) {
             case ActiveView.CustomerView:
                 if (_IsTransactionValid()) {
@@ -114,13 +118,25 @@ public partial class MainLevel : Node, IInputState, ITick {
         _customerView.MerchandiseSold(profit);
     }
 
-    private void _SwapMerchandise(Vector2I dvdSlot) {
+    private void _SetHandMerchandiseTexture(Texture2D texture) { }
+
+    private void _SetShelfMerchandiseTexture(Vector2I position, Texture2D texture) {
+        _shelfView.SetMerchandiseTexture(position, texture);
+    }
+
+    private void _SwapMerchandise(Vector2I position) {
         Merchandise heldMerchandise = _merchandiseService.GetHeldMerchandise();
-        Merchandise merchandiseInSlot = _merchandiseService.GetMerchandiseFromShelf(dvdSlot);
+        Merchandise merchandiseInSlot = _merchandiseService.GetMerchandiseFromShelf(position);
+        GD.Print($"Before swap. Held is {_merchandiseService.GetHeldMerchandise()}. Slot is {_merchandiseService.GetMerchandiseFromShelf(position)}");
 
         _merchandiseService.SetHeldMerchandise(merchandiseInSlot);
-        _merchandiseService.SetShelfMerchandise(heldMerchandise, dvdSlot);
+        _merchandiseService.SetShelfMerchandise(heldMerchandise, position);
 
+        GD.Print($"After swap. Held is {_merchandiseService.GetHeldMerchandise()}. Slot is {_merchandiseService.GetMerchandiseFromShelf(position)}");
+
+        _shelfView.RefreshShelfMerchandiseTexture(position);
+
+        // _shelfView.ToggleMerchandiseVisiblity(position);
         // _shelfView.SetDvdTexture(dvdSlot, );
     }
 

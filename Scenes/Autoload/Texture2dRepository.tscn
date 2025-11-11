@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dxr4cm5blttwr"]
+[gd_scene load_steps=20 format=3 uid="uid://dxr4cm5blttwr"]
 
 [ext_resource type="Script" uid="uid://lpnp3bv46sai" path="res://Scripts/Repository/Impl/Texture2dRepository.cs" id="1_na3yd"]
 [ext_resource type="Texture2D" uid="uid://d1b1lqruisjqx" path="res://Assets/Sprites/CustomerNeutral.webp" id="2_hjbrh"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://deqmnm5w1u2m0" path="res://Assets/Sprites/customers/poor_woman_happy.webp" id="16_b5a4h"]
 [ext_resource type="Texture2D" uid="uid://7ug1k0ccpk66" path="res://Assets/Sprites/customers/poor_woman_neutral.webp" id="17_oxdwn"]
 [ext_resource type="Texture2D" uid="uid://cw20m4gfcoxvc" path="res://Assets/Sprites/customers/poor_woman_angry.webp" id="18_bd18n"]
+[ext_resource type="Texture2D" uid="uid://dnpvpmfcqsqb3" path="res://Assets/Sprites/Empty slot.webp" id="19_eckbs"]
 
 [node name="Texture2dRepository" type="Node"]
 script = ExtResource("1_na3yd")
@@ -41,5 +42,6 @@ _textures = Dictionary[int, Texture2D]({
 16: null,
 17: ExtResource("16_b5a4h"),
 18: ExtResource("17_oxdwn"),
-19: ExtResource("18_bd18n")
+19: ExtResource("18_bd18n"),
+20: ExtResource("19_eckbs")
 })
