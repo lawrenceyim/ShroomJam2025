@@ -39,7 +39,7 @@ public partial class ShelfView : Node2D {
 				Merchandise merchandise = _merchandiseService.GetMerchandiseFromShelf(new Vector2I(column, row));
 				if (merchandise != null) {
 					// set sprite based on tier and color of the dvd                    
-					SetDvdTexture(position, _texture2dRepository.GetTexture(Texture2dId.CustomerPlaceholder));
+					SetDvdTexture(position, _texture2dRepository.GetTexture(Texture2dId.MerchandisePlaceholder));
 				}
 			}
 		}

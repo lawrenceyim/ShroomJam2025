@@ -33,6 +33,7 @@ public partial class MainLevel : Node, IInputState, ITick {
         _gameClock = _serviceLocator.GetService<GameClock>(ServiceName.GameClock);
         _transactionService = _serviceLocator.GetService<TransactionService>(ServiceName.Transaction);
 
+        _merchandiseService.RestockMerchandise();
         _gameClock.AddActiveScene(this, GetInstanceId());
         _inputStateMachine.SetState(this);
         RepositoryLocator repositoryLocator = _serviceLocator.GetService<RepositoryLocator>(ServiceName.RepositoryLocator);

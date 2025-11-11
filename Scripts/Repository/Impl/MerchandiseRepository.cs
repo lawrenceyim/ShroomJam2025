@@ -9,28 +9,20 @@ public class MerchandiseRepository : IRepository {
     private Merchandise _heldMerchandise;
     private Dictionary<Vector2I, Merchandise> _shelf = new Dictionary<Vector2I, Merchandise>();
 
-    public void RemoveDvd(Vector2I position) {
-        _shelf.Remove(position);
-    }
-
-    public void AddDvd(Merchandise merchandise, Vector2I position) {
+    public void SetMerchandise(Merchandise merchandise, Vector2I position) {
         _shelf[position] = merchandise;
     }
 
-    public Merchandise GetDvd(Vector2I position) {
+    public Merchandise GetMerchandise(Vector2I position) {
         return _shelf.GetValueOrDefault(position, null);
     }
 
-    public void SetHeldDvd(Merchandise heldMerchandise) {
+    public void SetHeldMerchandise(Merchandise heldMerchandise) {
         _heldMerchandise = heldMerchandise;
     }
 
-    public Merchandise GetHeldDvd() {
+    public Merchandise GetHeldMerchandise() {
         return _heldMerchandise;
-    }
-
-    public void RemoveHeldDvd() {
-        _heldMerchandise = null;
     }
 
     public Vector2I GetShelfSize() {

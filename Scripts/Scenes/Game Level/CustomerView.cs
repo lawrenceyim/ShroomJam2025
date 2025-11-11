@@ -10,8 +10,6 @@ public partial class CustomerView : Node2D, ITick {
 	[Export]
 	private Area2D _merchandiseSellSlot;
 
-	private readonly int _numberOfColors = Enum.GetNames(typeof(MerchandiseColor)).Length;
-	private readonly int _numberOfMerchandiseTypes = Enum.GetNames(typeof(MerchandiseType)).Length;
 	private readonly int _numberOfCustomerIds = Enum.GetNames(typeof(CustomerId)).Length;
 
 	private readonly Random _random = new Random();
@@ -134,8 +132,8 @@ public partial class CustomerView : Node2D, ITick {
 	}
 
 	private void _GenerateCustomer() {
-		_colorWanted = _SelectRandomColor();
-		_merchandiseTypeWanted = _SelectRandomMerchandisesType();
+		_colorWanted = MerchandiseUtil.GetRandomMerchandiseColor();
+		_merchandiseTypeWanted = MerchandiseUtil.GetRandomMerchandiseType();
 		_customerId = _SelectRandomCustomerId();
 		_customerMood = CustomerMood.Happy;
 		Sprite2D sprite = new Sprite2D();
@@ -151,15 +149,6 @@ public partial class CustomerView : Node2D, ITick {
 		_customerReadytoPurchase = false;
 	}
 
-	private MerchandiseColor _SelectRandomColor() {
-		int choice = _random.Next(0, _numberOfColors);
-		return (MerchandiseColor)choice;
-	}
-
-	private MerchandiseType _SelectRandomMerchandisesType() {
-		int choice = _random.Next(0, _numberOfMerchandiseTypes);
-		return (MerchandiseType)choice;
-	}
 
 	// TODO: change this to be probabilistic based on upgrades
 	private CustomerId _SelectRandomCustomerId() {

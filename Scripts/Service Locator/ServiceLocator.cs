@@ -31,10 +31,13 @@ public partial class ServiceLocator : Node, IAutoload {
     private void _InstantiateServices() {
         RepositoryLocator repositoryLocator = new();
         AddService(ServiceName.RepositoryLocator, repositoryLocator, true);
+
+        PlayerDataRepository playerDataRepository = repositoryLocator.GetRepository<PlayerDataRepository>(RepositoryName.PlayerData);
+        MerchandiseRepository merchandiseRepository = repositoryLocator.GetRepository<MerchandiseRepository>(RepositoryName.Merchandise);
         AddService(ServiceName.GameClock, new GameClock(), true);
         AddService(ServiceName.InputStateMachine, new InputStateMachine(), true);
-        AddService(ServiceName.Merchandise, new MerchandiseService(repositoryLocator.GetRepository<MerchandiseRepository>(RepositoryName.Merchandise)), false);
-        AddService(ServiceName.PlayerData, new PlayerDataSerivce(repositoryLocator.GetRepository<PlayerDataRepository>(RepositoryName.PlayerData)), false);
+        AddService(ServiceName.Merchandise, new MerchandiseService(merchandiseRepository, playerDataRepository), false);
+        AddService(ServiceName.PlayerData, new PlayerDataSerivce(playerDataRepository), false);
         AddService(ServiceName.Upgrade, new UpgradeService(GetService<PlayerDataSerivce>(ServiceName.PlayerData)), false);
         AddService(ServiceName.Transaction, new TransactionService(), false);
     }
