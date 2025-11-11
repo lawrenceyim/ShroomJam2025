@@ -1,4 +1,5 @@
 using System;
+using Godot;
 using ServiceSystem;
 
 namespace InputSystem;
@@ -15,7 +16,11 @@ public class TransactionService : IService {
 	
 	// Returns transaction profit
 	public int SellMerchandise(CustomerSaleDto saleDto) {
+		GD.Print($"Sale DTO: {saleDto}");
+		GD.Print($"MERCHJ SERVICE IS NULL {_merchandiseService is null}");
 		Merchandise merchandise = _merchandiseService.GetHeldMerchandise();
+		GD.Print($"HELD Merch: {merchandise}");
+
 		_merchandiseService.SetHeldMerchandise(null);
 		
 		int profit = _ComputeSalesAmount(saleDto, merchandise);

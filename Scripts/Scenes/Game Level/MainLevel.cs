@@ -32,7 +32,10 @@ public partial class MainLevel : Node, IInputState, ITick {
         _inputStateMachine = _serviceLocator.GetService<InputStateMachine>(ServiceName.InputStateMachine);
         _gameClock = _serviceLocator.GetService<GameClock>(ServiceName.GameClock);
         _transactionService = _serviceLocator.GetService<TransactionService>(ServiceName.Transaction);
-
+        
+        PlayerDataSerivce playerDataService = _serviceLocator.GetService<PlayerDataSerivce>(ServiceName.PlayerData);
+        _transactionService.Initialize(_merchandiseService, playerDataService);
+        
         _merchandiseService.RestockMerchandise();
         _gameClock.AddActiveScene(this, GetInstanceId());
         _inputStateMachine.SetState(this);
@@ -113,6 +116,7 @@ public partial class MainLevel : Node, IInputState, ITick {
 
     private void _SellHeldMerchandise() {
         CustomerSaleDto saleDto = _customerView.GetCustomerSale();
+        GD.Print($"Sale DTO: {saleDto}");
         int profit = _transactionService.SellMerchandise(saleDto);
         // update held merch UI
         _customerView.MerchandiseSold(profit);
