@@ -5,10 +5,10 @@ public partial class ShelfView : Node2D {
 	[Export]
 	private PackedScene _dvdSlotPackedScene;
 
-	private readonly Vector2I _originPosition = new Vector2I(-500, -200);
+	private readonly Vector2I _originPosition = new Vector2I(-500, -210);
 
 	private readonly int _xOffset = 170;
-	private readonly int _yOffset = 200;
+	private readonly int _yOffset = 205;
 	private MerchandiseService _merchandiseService;
 	private PackedSceneRepository _packedSceneRepository;
 	private Vector2I? _hoveredSlot;
