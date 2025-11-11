@@ -10,6 +10,9 @@ public partial class CustomerView : Node2D, ITick {
 	[Export]
 	private Area2D _merchandiseSellSlot;
 
+	[Export]
+	private Label _profitLabel;
+
 	private readonly int _numberOfCustomerIds = Enum.GetNames(typeof(CustomerId)).Length;
 
 	private readonly Random _random = new Random();
@@ -17,7 +20,7 @@ public partial class CustomerView : Node2D, ITick {
 	private readonly TickTimer _customerTimer = new TickTimer();
 	private readonly int _secondsPerCustomerMood = 7;
 	private int _ticksPerSecond;
-	
+
 	private Texture2dRepository _texture2DRepository;
 
 	private MerchandiseColor _colorWanted;
@@ -35,7 +38,7 @@ public partial class CustomerView : Node2D, ITick {
 	private CustomerMovement? _currentCustomerMovement;
 	private CustomerMovement? _leavingCustomerMovement;
 	private bool _merchandiseSellSlotHovered = false;
-	
+
 	private bool _customerReadytoPurchase = false;
 
 	public void Initialize(Texture2dRepository texture2DRepository) {
@@ -59,10 +62,10 @@ public partial class CustomerView : Node2D, ITick {
 	}
 
 	public void MerchandiseSold(int amount) {
-		// TODO: update a label that displays profit from transaction
+		_profitLabel.Text = $"${amount}";
 		_GenerateCustomer();
 	}
-	
+
 	public bool IsMerchandiseSellSlotHovered() {
 		return _merchandiseSellSlotHovered;
 	}
