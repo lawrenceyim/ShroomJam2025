@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyf732jckodxg"
-path="res://.godot/imported/vhs shelf.webp-9a483cc774c24e8de4ec4ebe112687bd.ctex"
+uid="uid://jbhhuqo17apt"
+path="res://.godot/imported/dvd shelf.webp-9130bd2a4abfb1a52675e02b5aa50ffa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/vhs shelf.webp"
-dest_files=["res://.godot/imported/vhs shelf.webp-9a483cc774c24e8de4ec4ebe112687bd.ctex"]
+source_file="res://Assets/Sprites/placeholders/dvd shelf.webp"
+dest_files=["res://.godot/imported/dvd shelf.webp-9130bd2a4abfb1a52675e02b5aa50ffa.ctex"]
 
 [params]
 

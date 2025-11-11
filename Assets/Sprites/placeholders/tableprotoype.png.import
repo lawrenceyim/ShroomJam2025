@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chmhvj6n2nijc"
-path="res://.godot/imported/Shelf.webp-b0905e6a0fa06ca1a4c88d5915c3ac3f.ctex"
+uid="uid://d37wqmvv7gusp"
+path="res://.godot/imported/tableprotoype.png-dcb1bbeec0a4053d8c0c2b07a97bef54.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Shelf.webp"
-dest_files=["res://.godot/imported/Shelf.webp-b0905e6a0fa06ca1a4c88d5915c3ac3f.ctex"]
+source_file="res://Assets/Sprites/placeholders/tableprotoype.png"
+dest_files=["res://.godot/imported/tableprotoype.png-dcb1bbeec0a4053d8c0c2b07a97bef54.ctex"]
 
 [params]
 

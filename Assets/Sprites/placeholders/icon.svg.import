@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jbhhuqo17apt"
-path="res://.godot/imported/dvd shelf.webp-7f5e38e53ed001a291b388368266a55e.ctex"
+uid="uid://4q335xxs2p"
+path="res://.godot/imported/icon.svg-e485786c637a0947504270179daaba4e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/dvd shelf.webp"
-dest_files=["res://.godot/imported/dvd shelf.webp-7f5e38e53ed001a291b388368266a55e.ctex"]
+source_file="res://Assets/Sprites/placeholders/icon.svg"
+dest_files=["res://.godot/imported/icon.svg-e485786c637a0947504270179daaba4e.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
