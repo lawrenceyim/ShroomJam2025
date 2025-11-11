@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://b542syw0tbdyd"]
+[gd_scene load_steps=5 format=3 uid="uid://b542syw0tbdyd"]
 
 [ext_resource type="Script" uid="uid://bwa7a85coc2e5" path="res://Scripts/Scenes/Game Level/CustomerView.cs" id="1_5qpia"]
 [ext_resource type="Texture2D" uid="uid://dgyvlqpiewss1" path="res://Assets/Sprites/tablesprite.png" id="2_j8kt0"]
+[ext_resource type="Texture2D" uid="uid://505doa76foq0" path="res://Assets/Sprites/placeholders/cash register.webp" id="3_kaucv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sl153"]
+font_size = 40
+font_color = Color(0, 0, 0, 1)
 
 [node name="Customer View" type="Node2D" node_paths=PackedStringArray("_merchandiseSellSlot", "_profitLabel")]
 script = ExtResource("1_5qpia")
@@ -21,9 +26,14 @@ centered = false
 position = Vector2(-197, 277)
 polygon = PackedVector2Array(-4, -1, 56, -170, 336, -170, 436, -2, 433, -3)
 
+[node name="CashRegister" type="Sprite2D" parent="Area2D Merchandise Sell Slot"]
+position = Vector2(-427, 111)
+texture = ExtResource("3_kaucv")
+
 [node name="Profit Label" type="Label" parent="."]
-offset_left = -600.0
-offset_top = -35.0
-offset_right = -484.0
-offset_bottom = 8.0
-text = "profit label"
+offset_left = -496.0
+offset_top = -67.0
+offset_right = -380.0
+offset_bottom = -12.0
+text = "$0"
+label_settings = SubResource("LabelSettings_sl153")
