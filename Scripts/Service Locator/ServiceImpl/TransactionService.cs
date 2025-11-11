@@ -47,6 +47,7 @@ public class TransactionService : IService {
 			CustomerMood.Angry => 0,
 			_ => 0
 		};
+		
 		float totalTipRatio = 1 + (baseTip * tipModifier);
 
 		if (merchandise.Color == saleDto.colorWanted) {

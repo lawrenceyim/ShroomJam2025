@@ -16,8 +16,12 @@ public partial class MainLevel : Node, IInputState, ITick {
     [Export]
     private ShelfView _shelfView;
 
+    [Export]
+    private Label _dayTimerLabel;
+
     private const string SwitchView = "Space";
 
+    private readonly TickTimer _dayTimer = new TickTimer();
     private ServiceLocator _serviceLocator;
     private PackedSceneRepository _packedSceneRepository;
     private InputStateMachine _inputStateMachine;
@@ -32,10 +36,10 @@ public partial class MainLevel : Node, IInputState, ITick {
         _inputStateMachine = _serviceLocator.GetService<InputStateMachine>(ServiceName.InputStateMachine);
         _gameClock = _serviceLocator.GetService<GameClock>(ServiceName.GameClock);
         _transactionService = _serviceLocator.GetService<TransactionService>(ServiceName.Transaction);
-        
+
         PlayerDataSerivce playerDataService = _serviceLocator.GetService<PlayerDataSerivce>(ServiceName.PlayerData);
         _transactionService.Initialize(_merchandiseService, playerDataService);
-        
+
         _merchandiseService.RestockMerchandise();
         _gameClock.AddActiveScene(this, GetInstanceId());
         _inputStateMachine.SetState(this);
@@ -48,6 +52,9 @@ public partial class MainLevel : Node, IInputState, ITick {
         _customerView.Initialize(
             repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture)
         );
+
+        _dayTimer.StartFixedTimer(false, 60 * Engine.PhysicsTicksPerSecond);
+        _dayTimer.TimedOut += _EndDay;
     }
 
     public override void _ExitTree() {
@@ -56,6 +63,7 @@ public partial class MainLevel : Node, IInputState, ITick {
 
     public void PhysicsTick(double delta) {
         _customerView.PhysicsTick(delta);
+        _UpdateDayTimer();
     }
 
     public void ProcessInput(InputEventDto dto) {
@@ -67,6 +75,11 @@ public partial class MainLevel : Node, IInputState, ITick {
                 _ProcessMouseButtonInput(mouseButtonDto);
                 break;
         }
+    }
+
+    private void _UpdateDayTimer() {
+        _dayTimer.PhysicsTick(0);
+        _dayTimerLabel.Text = $"{_dayTimer.GetTicksLeft() / 60}";
     }
 
     private void ProcessKeyInput(KeyDto dto) {
@@ -139,9 +152,12 @@ public partial class MainLevel : Node, IInputState, ITick {
         GD.Print($"After swap. Held is {_merchandiseService.GetHeldMerchandise()}. Slot is {_merchandiseService.GetMerchandiseFromShelf(position)}");
 
         _shelfView.RefreshShelfMerchandiseTexture(position);
+        // Refresh Hand Held Merchandise Sprite
+    }
 
-        // _shelfView.ToggleMerchandiseVisiblity(position);
-        // _shelfView.SetDvdTexture(dvdSlot, );
+    private void _EndDay() {
+        // TODO: Implement transition to EoD screen
+        throw new System.NotImplementedException();
     }
 
     private bool _IsTransactionValid() {
