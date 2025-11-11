@@ -17,11 +17,13 @@ public partial class MainLevel : Node, IInputState, ITick {
     private ShelfView _shelfView;
 
     [Export]
-    private Label _dayTimerLabel;
+    private Label _dayTimerLabel; // This should be in customer view but oh well
 
     private const string SwitchView = "Space";
 
+    private const int SecondsPerDay = 120;
     private readonly TickTimer _dayTimer = new TickTimer();
+    private readonly int _ticksPerSeconds = Engine.PhysicsTicksPerSecond; // Avoid latency from marshalling
     private ServiceLocator _serviceLocator;
     private PackedSceneRepository _packedSceneRepository;
     private InputStateMachine _inputStateMachine;
@@ -53,7 +55,7 @@ public partial class MainLevel : Node, IInputState, ITick {
             repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture)
         );
 
-        _dayTimer.StartFixedTimer(false, 60 * Engine.PhysicsTicksPerSecond);
+        _dayTimer.StartFixedTimer(false, SecondsPerDay * _ticksPerSeconds);
         _dayTimer.TimedOut += _EndDay;
     }
 
@@ -79,7 +81,11 @@ public partial class MainLevel : Node, IInputState, ITick {
 
     private void _UpdateDayTimer() {
         _dayTimer.PhysicsTick(0);
-        _dayTimerLabel.Text = $"{_dayTimer.GetTicksLeft() / 60}";
+        int seconds = _dayTimer.GetTicksLeft() / _ticksPerSeconds;
+        int minutes = seconds / 60;
+        seconds %= 60;
+
+        _dayTimerLabel.Text = $"{minutes:D2}:{seconds:D2}";
     }
 
     private void ProcessKeyInput(KeyDto dto) {
