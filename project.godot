@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Shroom Jam 2025"
+run/main_scene="uid://bvfndfuef4jrr"
 config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
 config/icon="res://Assets/Sprites/placeholders/icon.svg"
 

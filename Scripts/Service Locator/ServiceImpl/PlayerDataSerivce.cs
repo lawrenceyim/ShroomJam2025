@@ -1,7 +1,7 @@
 using ServiceSystem;
 
 public class PlayerDataSerivce : IService {
-    private PlayerDataRepository _playerDataRepository;
+    private readonly PlayerDataRepository _playerDataRepository;
 
     public PlayerDataSerivce(PlayerDataRepository playerDataRepository) {
         _playerDataRepository = playerDataRepository;

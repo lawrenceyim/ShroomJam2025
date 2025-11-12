@@ -3,7 +3,7 @@ using Godot;
 using ServiceSystem;
 
 public partial class GameClock : Node, IService {
-    private Dictionary<ulong, ITick> _activeScenes = new();
+    private readonly Dictionary<ulong, ITick> _activeScenes = new();
     private bool _paused = false;
 
     public void AddActiveScene(ITick scene, ulong id) {

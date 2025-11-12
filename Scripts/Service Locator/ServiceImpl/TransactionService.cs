@@ -6,12 +6,12 @@ namespace InputSystem;
 
 public class TransactionService : IService {
 	private MerchandiseService _merchandiseService;
-	private PlayerDataSerivce _playerDataSerivce;
-	private int _valuePerTier = 100;
+	private PlayerDataSerivce _playerDataService;
+	private const int ValuePerTier = 100;
 
-	public void Initialize(MerchandiseService merchandiseService, PlayerDataSerivce playerDataSerivce) {
+	public void Initialize(MerchandiseService merchandiseService, PlayerDataSerivce playerDataService) {
 		_merchandiseService = merchandiseService;
-		_playerDataSerivce = playerDataSerivce;
+		_playerDataService = playerDataService;
 	}
 	
 	// Returns transaction profit
@@ -24,14 +24,14 @@ public class TransactionService : IService {
 		_merchandiseService.SetHeldMerchandise(null);
 		
 		int profit = _ComputeSalesAmount(saleDto, merchandise);
-		int money = _playerDataSerivce.GetMoney();
+		int money = _playerDataService.GetMoney();
 		money += profit;
-		_playerDataSerivce.SetMoney(money);
+		_playerDataService.SetMoney(money);
 		return profit;
 	}
 
 	private int _ComputeSalesAmount(CustomerSaleDto saleDto, Merchandise merchandise) {
-		float amount = (merchandise.Tier + 1) * _valuePerTier;
+		float amount = (merchandise.Tier + 1) * ValuePerTier;
 		float baseTip = saleDto.customerId switch {
 			CustomerId.RichMale => 1,
 			CustomerId.RichFemale => 1,

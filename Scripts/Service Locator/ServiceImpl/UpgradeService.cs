@@ -1,10 +1,10 @@
 using ServiceSystem;
 
 public class UpgradeService : IService {
-    private PlayerDataSerivce _playerDataSerivce;
-    private int _customerRarityUpgradeMaxLevel = 10;
-    private int _merchandiseRarityUpgradeMaxLevel = 20;
-    private int _costPerLevel = 100;
+    private readonly PlayerDataSerivce _playerDataSerivce;
+    private const int CustomerRarityUpgradeMaxLevel = 25;
+    private const int MerchandiseRarityUpgradeMaxLevel = 20;
+    private const int CostPerLevel = 100;
 
     public UpgradeService(PlayerDataSerivce playerDataSerivce) {
         _playerDataSerivce = playerDataSerivce;
@@ -32,8 +32,8 @@ public class UpgradeService : IService {
 
     public int ComputeUpgradeCost(UpgradeType upgradeType) {
         return upgradeType switch {
-            UpgradeType.CustomerRarity => _costPerLevel * _playerDataSerivce.GetCustomerRarityUpgradeLevel(),
-            UpgradeType.MerchandiseRarity => _costPerLevel * _playerDataSerivce.GetMerchandiseRarityUpgradeLevel(),
+            UpgradeType.CustomerRarity => CostPerLevel * _playerDataSerivce.GetCustomerRarityUpgradeLevel(),
+            UpgradeType.MerchandiseRarity => CostPerLevel * _playerDataSerivce.GetMerchandiseRarityUpgradeLevel(),
         };
     }
 
@@ -46,8 +46,8 @@ public class UpgradeService : IService {
 
     public int GetMaxUpgradeLevel(UpgradeType upgradeType) {
         return upgradeType switch {
-            UpgradeType.CustomerRarity => _customerRarityUpgradeMaxLevel,
-            UpgradeType.MerchandiseRarity => _merchandiseRarityUpgradeMaxLevel,
+            UpgradeType.CustomerRarity => CustomerRarityUpgradeMaxLevel,
+            UpgradeType.MerchandiseRarity => MerchandiseRarityUpgradeMaxLevel,
         };
     }
 
