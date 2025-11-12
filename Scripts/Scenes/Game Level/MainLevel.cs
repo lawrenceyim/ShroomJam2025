@@ -17,7 +17,11 @@ public partial class MainLevel : Node, IInputState, ITick {
     private ShelfView _shelfView;
 
     [Export]
-    private Label _dayTimerLabel;
+    private HeldMerchandiseDisplay _handCustomerView;
+
+    [Export]
+    private HeldMerchandiseDisplay _handShelfView;
+
 
     private const string SwitchView = "Space";
 
@@ -29,6 +33,7 @@ public partial class MainLevel : Node, IInputState, ITick {
     private InputStateMachine _inputStateMachine;
     private TransactionService _transactionService;
     private MerchandiseService _merchandiseService;
+    private Texture2dRepository _texture2dRepository;
     private GameClock _gameClock;
     private ActiveView _activeView = ActiveView.CustomerView;
 
@@ -47,14 +52,18 @@ public partial class MainLevel : Node, IInputState, ITick {
         _inputStateMachine.SetState(this);
         RepositoryLocator repositoryLocator = _serviceLocator.GetService<RepositoryLocator>(ServiceName.RepositoryLocator);
         _packedSceneRepository = repositoryLocator.GetRepository<PackedSceneRepository>(RepositoryName.PackedScene);
+        _texture2dRepository = repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture);
+
         _shelfView.Initialize(
-            _serviceLocator.GetService<MerchandiseService>(ServiceName.Merchandise),
-            repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture)
+            _merchandiseService,
+            _texture2dRepository
         );
         _customerView.Initialize(
-            repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture),
+            _texture2dRepository,
             playerDataService
         );
+
+        _DisplayHand(false);
 
         _dayTimer.StartFixedTimer(false, SecondsPerDay * _ticksPerSeconds);
         _dayTimer.TimedOut += _EndDay;
@@ -132,6 +141,7 @@ public partial class MainLevel : Node, IInputState, ITick {
         // update held merch UI
         _customerView.MerchandiseSold(profit);
 
+        _DisplayHand(false);
         _merchandiseService.SetMerchandiseCount(_merchandiseService.GetMerchandiseCount() - 1);
 
         GD.Print($"Merchandise left: {_merchandiseService.GetMerchandiseCount()}");
@@ -140,8 +150,6 @@ public partial class MainLevel : Node, IInputState, ITick {
             _EndDay();
         }
     }
-
-    private void _SetHandMerchandiseTexture(Texture2D texture) { }
 
     private void _SetShelfMerchandiseTexture(Vector2I position, Texture2D texture) {
         _shelfView.SetMerchandiseTexture(position, texture);
@@ -160,12 +168,31 @@ public partial class MainLevel : Node, IInputState, ITick {
                  $"Slot is {_merchandiseService.GetMerchandiseFromShelf(position)?.ToString()}");
 
         _shelfView.RefreshShelfMerchandiseTexture(position);
-        // Refresh Hand Held Merchandise Sprite
+        _RefreshHandDisplay();
     }
 
     private void _EndDay() {
         // TODO: Implement transition to EoD screen
         GD.Print("End of Day");
+    }
+
+    private void _DisplayHand(bool visible) {
+        _handCustomerView.Visible = visible;
+        _handShelfView.Visible = visible;
+    }
+
+    private void _RefreshHandDisplay() {
+        Merchandise held = _merchandiseService.GetHeldMerchandise();
+
+        if (held is null) {
+            _DisplayHand(false);
+            return;
+        }
+
+        _DisplayHand(true);
+        Texture2dId textureId = MerchandiseUtil.GetMerchandiseTextureId(held.Color, held.Type, held.Tier);
+        _handCustomerView.SetMerchandise(_texture2dRepository.GetTexture(textureId));
+        _handShelfView.SetMerchandise(_texture2dRepository.GetTexture(textureId));
     }
 
     private bool _IsTransactionValid() {

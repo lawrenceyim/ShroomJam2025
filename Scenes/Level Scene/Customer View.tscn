@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://b542syw0tbdyd"]
+[gd_scene load_steps=7 format=3 uid="uid://b542syw0tbdyd"]
 
 [ext_resource type="Script" uid="uid://bwa7a85coc2e5" path="res://Scripts/Scenes/Game Level/CustomerView.cs" id="1_5qpia"]
 [ext_resource type="Texture2D" uid="uid://dgyvlqpiewss1" path="res://Assets/Sprites/tablesprite.png" id="2_j8kt0"]
 [ext_resource type="Texture2D" uid="uid://505doa76foq0" path="res://Assets/Sprites/placeholders/cash register.webp" id="3_kaucv"]
 [ext_resource type="Texture2D" uid="uid://ceqdtkw2640cb" path="res://Assets/Sprites/merchandise/RedDvd.png" id="4_sl153"]
+[ext_resource type="PackedScene" uid="uid://b8k5v0yxsjqr8" path="res://Scenes/Game Object/Hand.tscn" id="5_wtheq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sl153"]
 font_size = 40
@@ -54,3 +55,6 @@ offset_right = 30.0
 offset_bottom = -247.0
 text = "Clock"
 horizontal_alignment = 1
+
+[node name="Hand" parent="." instance=ExtResource("5_wtheq")]
+position = Vector2(-640, 84)

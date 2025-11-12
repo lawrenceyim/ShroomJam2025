@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8k5v0yxsjqr8"]
+
+[ext_resource type="Texture2D" uid="uid://bd25aeyxbo18j" path="res://Assets/Sprites/hand.webp" id="1_dw2a7"]
+[ext_resource type="Texture2D" uid="uid://dnpvpmfcqsqb3" path="res://Assets/Sprites/Empty slot.webp" id="2_n0dl5"]
+[ext_resource type="Script" uid="uid://c4cx0qecceaiv" path="res://Scripts/Scenes/Game Objects/HeldMerchandiseDisplay.cs" id="3_n0dl5"]
+
+[node name="Hand" type="Sprite2D" node_paths=PackedStringArray("_merchandise")]
+texture = ExtResource("1_dw2a7")
+centered = false
+script = ExtResource("3_n0dl5")
+_merchandise = NodePath("EmptySlot")
+
+[node name="EmptySlot" type="Sprite2D" parent="."]
+z_index = 5
+position = Vector2(81, 58)
+texture = ExtResource("2_n0dl5")
+centered = false

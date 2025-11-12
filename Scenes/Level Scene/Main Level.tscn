@@ -4,13 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://b542syw0tbdyd" path="res://Scenes/Level Scene/Customer View.tscn" id="3_14an5"]
 [ext_resource type="PackedScene" uid="uid://6ap52pswgcp2" path="res://Scenes/Level Scene/Shelf View.tscn" id="3_jurmy"]
 
-[node name="GameLevel" type="Node2D" node_paths=PackedStringArray("_customerViewCamera", "_customerView", "_shelfViewCamera", "_shelfView", "_dayTimerLabel")]
+[node name="GameLevel" type="Node2D" node_paths=PackedStringArray("_customerViewCamera", "_customerView", "_shelfViewCamera", "_shelfView", "_handCustomerView", "_handShelfView")]
 script = ExtResource("1_if62t")
 _customerViewCamera = NodePath("Customer View/Customer Camera2D")
 _customerView = NodePath("Customer View")
 _shelfViewCamera = NodePath("ShelfView/Shelf Camera2D")
 _shelfView = NodePath("ShelfView")
-_dayTimerLabel = NodePath("")
+_handCustomerView = NodePath("Customer View/Hand")
+_handShelfView = NodePath("ShelfView/Hand")
 
 [node name="Customer View" parent="." instance=ExtResource("3_14an5")]
 position = Vector2(-2, 0)
