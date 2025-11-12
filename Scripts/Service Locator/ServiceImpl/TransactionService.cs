@@ -31,7 +31,7 @@ public class TransactionService : IService {
 	}
 
 	private int _ComputeSalesAmount(CustomerSaleDto saleDto, Merchandise merchandise) {
-		float amount = (merchandise.Tier + 1) * ValuePerTier;
+		float amount = merchandise.Tier * ValuePerTier;
 		float baseTip = saleDto.customerId switch {
 			CustomerId.RichMale => 1,
 			CustomerId.RichFemale => 1,
@@ -50,7 +50,8 @@ public class TransactionService : IService {
 		
 		float totalTipRatio = 1 + (baseTip * tipModifier);
 
-		if (merchandise.Color == saleDto.colorWanted) {
+		if (merchandise.Color != saleDto.colorWanted) {
+			GD.Print($"COLOR DID NOT MATCH. {amount} => {amount / 2}");
 			amount /= 2;
 		}
 
@@ -58,8 +59,10 @@ public class TransactionService : IService {
 			amount /= 2;
 		}
 
-		amount += amount * totalTipRatio;
-
+		amount *= totalTipRatio;
+		
+		GD.Print($"Amount {amount} Total Tip Ratio {totalTipRatio}");
+		
 		return Math.Max(1, (int)amount);
 	}
 }
