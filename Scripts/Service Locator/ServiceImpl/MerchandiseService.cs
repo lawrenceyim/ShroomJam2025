@@ -55,7 +55,7 @@ public class MerchandiseService : IService {
 	private Merchandise _GenerateRandomMerchandise(int rarityUpgradeLevel) {
 		int merchandiseRollIncrease = rarityUpgradeLevel * MerchandiseRollPerLevel;
 		int threshold = BaseMerchandiseRoll + merchandiseRollIncrease;
-		int rolledRarity = _random.Next(0, threshold + 1) / BaseMerchandiseRoll;
+		int rolledRarity = Math.Clamp(_random.Next(0, threshold + 1) / BaseMerchandiseRoll + 1, 1, 5);
 
 		return new Merchandise(
 			rolledRarity,

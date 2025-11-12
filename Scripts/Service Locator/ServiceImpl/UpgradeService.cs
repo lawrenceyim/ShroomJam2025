@@ -2,7 +2,7 @@ using ServiceSystem;
 
 public class UpgradeService : IService {
     private readonly PlayerDataSerivce _playerDataSerivce;
-    private const int CustomerRarityUpgradeMaxLevel = 25;
+    private const int CustomerRarityUpgradeMaxLevel = 20;
     private const int MerchandiseRarityUpgradeMaxLevel = 20;
     private const int CostPerLevel = 100;
 

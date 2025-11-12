@@ -8,7 +8,7 @@ public class CustomerGeneratorComponent {
     public CustomerId GetRandomCustomerId(int rarityUpgradeLevel) {
         int merchandiseRollIncrease = rarityUpgradeLevel * CustomerRollPerLevel;
         int threshold = BaseCustomerRoll + merchandiseRollIncrease;
-        int rolledRarity = _random.Next(0, threshold + 1) / BaseCustomerRoll;
+        int rolledRarity = Math.Clamp(_random.Next(0, threshold + 1) / BaseCustomerRoll, 0, 2);
         bool isMale = _random.Next(0, 2) == 1;
 
         return rolledRarity switch {
