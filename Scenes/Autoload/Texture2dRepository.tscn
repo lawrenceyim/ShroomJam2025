@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dxr4cm5blttwr"]
+[gd_scene load_steps=38 format=3 uid="uid://dxr4cm5blttwr"]
 
 [ext_resource type="Script" uid="uid://lpnp3bv46sai" path="res://Scripts/Repository/Impl/Texture2dRepository.cs" id="1_na3yd"]
 [ext_resource type="Texture2D" uid="uid://d1b1lqruisjqx" path="res://Assets/Sprites/CustomerNeutral.webp" id="2_hjbrh"]
@@ -22,6 +22,21 @@
 [ext_resource type="Texture2D" uid="uid://bg17igyj88avb" path="res://Assets/Sprites/customers/poor_angry_man.webp" id="18_b5a4h"]
 [ext_resource type="Texture2D" uid="uid://cw20m4gfcoxvc" path="res://Assets/Sprites/customers/poor_woman_angry.webp" id="18_bd18n"]
 [ext_resource type="Texture2D" uid="uid://dnpvpmfcqsqb3" path="res://Assets/Sprites/Empty slot.webp" id="19_eckbs"]
+[ext_resource type="Texture2D" uid="uid://mew23mshgext" path="res://Assets/Sprites/merchandise/Blue1.png" id="23_8xl7u"]
+[ext_resource type="Texture2D" uid="uid://2mswchg1ktti" path="res://Assets/Sprites/merchandise/Blue2.png" id="24_w2clf"]
+[ext_resource type="Texture2D" uid="uid://da4k6myymg1bf" path="res://Assets/Sprites/merchandise/Blue3.png" id="25_2kcp5"]
+[ext_resource type="Texture2D" uid="uid://dgn8omr8288rl" path="res://Assets/Sprites/merchandise/Blue4.png" id="26_abfgh"]
+[ext_resource type="Texture2D" uid="uid://fs4sidbiuqrk" path="res://Assets/Sprites/merchandise/Blue5.png" id="27_3ohqm"]
+[ext_resource type="Texture2D" uid="uid://bq5d2l3ewnj4i" path="res://Assets/Sprites/merchandise/Red1.png" id="28_y7k30"]
+[ext_resource type="Texture2D" uid="uid://q6kix0vr2gxv" path="res://Assets/Sprites/merchandise/Red2.png" id="29_8qp72"]
+[ext_resource type="Texture2D" uid="uid://cnwws7l8vvj5i" path="res://Assets/Sprites/merchandise/Red3.png" id="30_bnagl"]
+[ext_resource type="Texture2D" uid="uid://d0a8fjuku6lhs" path="res://Assets/Sprites/merchandise/Red4.png" id="31_15eaj"]
+[ext_resource type="Texture2D" uid="uid://dt065rr6qd5xu" path="res://Assets/Sprites/merchandise/Red5.png" id="32_hcl0c"]
+[ext_resource type="Texture2D" uid="uid://b5ivvmb211wvs" path="res://Assets/Sprites/merchandise/Green1.png" id="33_kudxj"]
+[ext_resource type="Texture2D" uid="uid://b7ppghmm1wwnc" path="res://Assets/Sprites/merchandise/Green2.png" id="34_ks6nl"]
+[ext_resource type="Texture2D" uid="uid://bemiok5rssssn" path="res://Assets/Sprites/merchandise/Green3.png" id="35_it240"]
+[ext_resource type="Texture2D" uid="uid://dxi4mwye3o7xe" path="res://Assets/Sprites/merchandise/Green4.png" id="36_2dfsn"]
+[ext_resource type="Texture2D" uid="uid://5y4ox3ifijsw" path="res://Assets/Sprites/merchandise/Green5.png" id="37_jxwsu"]
 
 [node name="Texture2dRepository" type="Node"]
 script = ExtResource("1_na3yd")
@@ -46,5 +61,20 @@ _textures = Dictionary[int, Texture2D]({
 17: ExtResource("16_b5a4h"),
 18: ExtResource("17_oxdwn"),
 19: ExtResource("18_bd18n"),
-20: ExtResource("19_eckbs")
+20: ExtResource("19_eckbs"),
+21: ExtResource("23_8xl7u"),
+22: ExtResource("24_w2clf"),
+23: ExtResource("25_2kcp5"),
+24: ExtResource("26_abfgh"),
+25: ExtResource("27_3ohqm"),
+26: ExtResource("28_y7k30"),
+27: ExtResource("29_8qp72"),
+28: ExtResource("30_bnagl"),
+29: ExtResource("31_15eaj"),
+30: ExtResource("32_hcl0c"),
+31: ExtResource("33_kudxj"),
+32: ExtResource("34_ks6nl"),
+33: ExtResource("35_it240"),
+34: ExtResource("36_2dfsn"),
+35: ExtResource("37_jxwsu")
 })
