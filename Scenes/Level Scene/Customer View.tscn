@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b542syw0tbdyd"]
+[gd_scene load_steps=12 format=3 uid="uid://b542syw0tbdyd"]
 
 [ext_resource type="Script" uid="uid://bwa7a85coc2e5" path="res://Scripts/Scenes/Game Level/CustomerView.cs" id="1_5qpia"]
 [ext_resource type="Texture2D" uid="uid://dgyvlqpiewss1" path="res://Assets/Sprites/tablesprite.png" id="2_j8kt0"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://brrifuemrx73x" path="res://Assets/Sprites/thought bubble.webp" id="6_6tr70"]
 [ext_resource type="PackedScene" uid="uid://c5n7jcnie0d8k" path="res://Scenes/Game Object/Settings.tscn" id="7_14180"]
 [ext_resource type="Texture2D" uid="uid://dwmum8qqbyfb5" path="res://Assets/Sprites/BackgroundDark.png" id="8_xv01k"]
+[ext_resource type="Texture2D" uid="uid://wwunrmufu7ve" path="res://Assets/Sprites/Sideway arrow.webp" id="9_cje0c"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sl153"]
 font_size = 40
@@ -88,3 +89,7 @@ texture = ExtResource("4_sl153")
 [node name="Customer Settings Menu" parent="." instance=ExtResource("7_14180")]
 visible = false
 position = Vector2(-640, -360)
+
+[node name="SidewayArrow" type="Sprite2D" parent="."]
+position = Vector2(575, 200)
+texture = ExtResource("9_cje0c")
