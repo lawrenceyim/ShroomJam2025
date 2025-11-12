@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b542syw0tbdyd"]
+[gd_scene load_steps=11 format=3 uid="uid://b542syw0tbdyd"]
 
 [ext_resource type="Script" uid="uid://bwa7a85coc2e5" path="res://Scripts/Scenes/Game Level/CustomerView.cs" id="1_5qpia"]
 [ext_resource type="Texture2D" uid="uid://dgyvlqpiewss1" path="res://Assets/Sprites/tablesprite.png" id="2_j8kt0"]
@@ -7,10 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://b8k5v0yxsjqr8" path="res://Scenes/Game Object/Hand.tscn" id="5_wtheq"]
 [ext_resource type="Texture2D" uid="uid://brrifuemrx73x" path="res://Assets/Sprites/thought bubble.webp" id="6_6tr70"]
 [ext_resource type="PackedScene" uid="uid://c5n7jcnie0d8k" path="res://Scenes/Game Object/Settings.tscn" id="7_14180"]
+[ext_resource type="Texture2D" uid="uid://dwmum8qqbyfb5" path="res://Assets/Sprites/BackgroundDark.png" id="8_xv01k"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sl153"]
 font_size = 40
 font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xv01k"]
+font_size = 75
 
 [node name="Customer View" type="Node2D" node_paths=PackedStringArray("_dayTimerLabel", "_merchandiseSellSlotArea", "_merchandiseSellSlotHighlight", "_profitLabel", "_desiredMerchandiseSprite", "_thoughtBubble")]
 script = ExtResource("1_5qpia")
@@ -20,6 +24,10 @@ _merchandiseSellSlotHighlight = NodePath("Area2D Merchandise Sell Slot/Polygon2D
 _profitLabel = NodePath("Profit Label")
 _desiredMerchandiseSprite = NodePath("ThoughtBubble/Desired Merchandise")
 _thoughtBubble = NodePath("ThoughtBubble")
+
+[node name="BackgroundDark" type="Sprite2D" parent="."]
+z_index = -20
+texture = ExtResource("8_xv01k")
 
 [node name="Customer Camera2D" type="Camera2D" parent="."]
 
@@ -57,11 +65,12 @@ label_settings = SubResource("LabelSettings_sl153")
 
 [node name="Day Timer Label" type="Label" parent="."]
 z_index = 10
-offset_left = -19.0
-offset_top = -315.0
-offset_right = 23.0
-offset_bottom = -292.0
-text = "Clock"
+offset_left = -160.0
+offset_top = -341.0
+offset_right = 174.0
+offset_bottom = -238.0
+text = "1:59"
+label_settings = SubResource("LabelSettings_xv01k")
 horizontal_alignment = 1
 
 [node name="Hand" parent="." instance=ExtResource("5_wtheq")]
