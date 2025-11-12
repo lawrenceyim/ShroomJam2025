@@ -12,10 +12,11 @@
 font_size = 40
 font_color = Color(0, 0, 0, 1)
 
-[node name="Customer View" type="Node2D" node_paths=PackedStringArray("_dayTimerLabel", "_merchandiseSellSlot", "_profitLabel", "_desiredMerchandiseSprite", "_thoughtBubble")]
+[node name="Customer View" type="Node2D" node_paths=PackedStringArray("_dayTimerLabel", "_merchandiseSellSlotArea", "_merchandiseSellSlotHighlight", "_profitLabel", "_desiredMerchandiseSprite", "_thoughtBubble")]
 script = ExtResource("1_5qpia")
 _dayTimerLabel = NodePath("Day Timer Label")
-_merchandiseSellSlot = NodePath("Area2D Merchandise Sell Slot")
+_merchandiseSellSlotArea = NodePath("Area2D Merchandise Sell Slot")
+_merchandiseSellSlotHighlight = NodePath("Area2D Merchandise Sell Slot/Polygon2D")
 _profitLabel = NodePath("Profit Label")
 _desiredMerchandiseSprite = NodePath("ThoughtBubble/Desired Merchandise")
 _thoughtBubble = NodePath("ThoughtBubble")
@@ -27,7 +28,16 @@ position = Vector2(-640, -360)
 texture = ExtResource("2_j8kt0")
 centered = false
 
+[node name="CashRegister" type="Sprite2D" parent="."]
+position = Vector2(-426, 109)
+texture = ExtResource("3_kaucv")
+
 [node name="Area2D Merchandise Sell Slot" type="Area2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="Area2D Merchandise Sell Slot"]
+position = Vector2(-197, 277)
+color = Color(1, 1, 0, 0.39215687)
+polygon = PackedVector2Array(-4, -1, 56, -170, 336, -170, 436, -2, 433, -3)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D Merchandise Sell Slot"]
 position = Vector2(-197, 277)

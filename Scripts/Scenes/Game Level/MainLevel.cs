@@ -72,6 +72,7 @@ public partial class MainLevel : Node, IInputState, ITick {
 		);
 
 		_DisplayHand(false);
+		_customerView.HighlightSellSlot(false);
 
 		_dayTimer.StartFixedTimer(false, SecondsPerDay * _ticksPerSeconds);
 		_dayTimer.TimedOut += _EndDay;
@@ -177,12 +178,10 @@ public partial class MainLevel : Node, IInputState, ITick {
 	private void _SellHeldMerchandise() {
 		CustomerSaleDto saleDto = _customerView.GetCustomerSale();
 		int profit = _transactionService.SellMerchandise(saleDto);
-		// update held merch UI
 		_customerView.MerchandiseSold(profit);
-
 		_DisplayHand(false);
+		_customerView.HighlightSellSlot(false);
 		_merchandiseService.SetMerchandiseCount(_merchandiseService.GetMerchandiseCount() - 1);
-
 		GD.Print($"Merchandise left: {_merchandiseService.GetMerchandiseCount()}");
 		if (_merchandiseService.GetMerchandiseCount() == 0) {
 			GD.Print("Sold out");
@@ -197,17 +196,11 @@ public partial class MainLevel : Node, IInputState, ITick {
 	private void _SwapMerchandise(Vector2I position) {
 		Merchandise heldMerchandise = _merchandiseService.GetHeldMerchandise();
 		Merchandise merchandiseInSlot = _merchandiseService.GetMerchandiseFromShelf(position);
-		GD.Print($"Before swap. Held is {_merchandiseService.GetHeldMerchandise()?.ToString()}. " +
-				 $"Slot is {_merchandiseService.GetMerchandiseFromShelf(position)?.ToString()}");
-
 		_merchandiseService.SetHeldMerchandise(merchandiseInSlot);
 		_merchandiseService.SetShelfMerchandise(heldMerchandise, position);
-
-		GD.Print($"After swap. Held is {_merchandiseService.GetHeldMerchandise()?.ToString()}. " +
-				 $"Slot is {_merchandiseService.GetMerchandiseFromShelf(position)?.ToString()}");
-
 		_shelfView.RefreshShelfMerchandiseTexture(position);
 		_RefreshHandDisplay();
+		_customerView.HighlightSellSlot(_merchandiseService.GetHeldMerchandise() is not null);
 	}
 
 	private void _EndDay() {

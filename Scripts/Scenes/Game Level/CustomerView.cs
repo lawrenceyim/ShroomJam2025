@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class CustomerView : Node2D, ITick {
@@ -7,7 +8,10 @@ public partial class CustomerView : Node2D, ITick {
 	private Label _dayTimerLabel;
 
 	[Export]
-	private Area2D _merchandiseSellSlot;
+	private Area2D _merchandiseSellSlotArea;
+
+	[Export]
+	private Polygon2D _merchandiseSellSlotHighlight;
 
 	[Export]
 	private Label _profitLabel;
@@ -28,6 +32,8 @@ public partial class CustomerView : Node2D, ITick {
 
 	private Texture2dRepository _texture2DRepository;
 	private PlayerDataSerivce _playerDataService;
+	private readonly Color _originalSlotColor = new Color(1, 1, 0, 0);
+	private readonly Color _highlightedSlotColor = new Color(1, 1, 0, .5f);
 
 	private MerchandiseColor _colorWanted;
 	private MerchandiseType _merchandiseTypeWanted;
@@ -44,15 +50,19 @@ public partial class CustomerView : Node2D, ITick {
 	private CustomerMovement? _currentCustomerMovement;
 	private CustomerMovement? _leavingCustomerMovement;
 	private bool _merchandiseSellSlotHovered = false;
-
 	private bool _customerReadyToPurchase = false;
+
+	private bool _highlightActive = false;
+	private bool _highlightLerpingIn = true;
+	private int _ticksPerLerp = 60;
+	private int _tickLerpCounter = 0;
 
 	public void Initialize(Texture2dRepository texture2DRepository, PlayerDataSerivce playerDataService) {
 		_texture2DRepository = texture2DRepository;
 		_playerDataService = playerDataService;
 		_customerTimer.TimedOut += _ChangeCustomerMood;
-		_merchandiseSellSlot.MouseEntered += () => { _merchandiseSellSlotHovered = true; };
-		_merchandiseSellSlot.MouseExited += () => { _merchandiseSellSlotHovered = false; };
+		_merchandiseSellSlotArea.MouseEntered += () => { _merchandiseSellSlotHovered = true; };
+		_merchandiseSellSlotArea.MouseExited += () => { _merchandiseSellSlotHovered = false; };
 		_GenerateCustomer();
 	}
 
@@ -81,6 +91,7 @@ public partial class CustomerView : Node2D, ITick {
 	public void PhysicsTick(double delta) {
 		_customerTimer.PhysicsTick(delta);
 		_UpdateCustomer();
+		_LerpHighlight();
 	}
 
 	private void _ChangeCustomerMood() {
@@ -109,6 +120,39 @@ public partial class CustomerView : Node2D, ITick {
 		seconds %= 60;
 
 		_dayTimerLabel.Text = $"{minutes:D2}:{seconds:D2}";
+	}
+
+	private void _LerpHighlight() {
+		if (!_highlightActive || _customerState != CustomerState.Waiting) {
+			return;
+		}
+
+		float t = (float)_tickLerpCounter / _ticksPerLerp;
+		_merchandiseSellSlotHighlight.Color = _highlightLerpingIn
+			? _originalSlotColor.Lerp(_highlightedSlotColor, t)
+			: _highlightedSlotColor.Lerp(_originalSlotColor, t);
+
+		_tickLerpCounter++;
+		if (_tickLerpCounter >= _ticksPerLerp) {
+			_highlightLerpingIn = !_highlightLerpingIn;
+			_tickLerpCounter = 0;
+		}
+	}
+
+	public void HighlightSellSlot(bool highlighted) {
+		if (!highlighted) {
+			GD.Print("Highlight SellSlot Invisible");
+			_merchandiseSellSlotHighlight.Visible = false;
+			_highlightActive = false;
+			_merchandiseSellSlotHighlight.Color = _originalSlotColor;
+			return;
+		}
+
+		GD.Print("Highlight SellSlot Visible");
+		_merchandiseSellSlotHighlight.Visible = true;
+		_tickLerpCounter = 0;
+		_highlightLerpingIn = true;
+		_highlightActive = true;
 	}
 
 	private void _UpdateCustomer() {
