@@ -136,10 +136,17 @@ public partial class MainLevel : Node, IInputState, ITick {
 
     private void _SellHeldMerchandise() {
         CustomerSaleDto saleDto = _customerView.GetCustomerSale();
-        GD.Print($"Sale DTO: {saleDto}");
         int profit = _transactionService.SellMerchandise(saleDto);
         // update held merch UI
         _customerView.MerchandiseSold(profit);
+
+        _merchandiseService.SetMerchandiseCount(_merchandiseService.GetMerchandiseCount() - 1);
+
+        GD.Print($"Merchandise left: {_merchandiseService.GetMerchandiseCount()}");
+        if (_merchandiseService.GetMerchandiseCount() == 0) {
+            GD.Print("Sold out");
+            _EndDay();
+        }
     }
 
     private void _SetHandMerchandiseTexture(Texture2D texture) { }
@@ -164,7 +171,7 @@ public partial class MainLevel : Node, IInputState, ITick {
 
     private void _EndDay() {
         // TODO: Implement transition to EoD screen
-        throw new System.NotImplementedException();
+        GD.Print("End of Day");
     }
 
     private bool _IsTransactionValid() {

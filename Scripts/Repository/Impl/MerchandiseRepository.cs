@@ -8,6 +8,7 @@ public class MerchandiseRepository : IRepository {
 
     private Merchandise _heldMerchandise;
     private Dictionary<Vector2I, Merchandise> _shelf = new Dictionary<Vector2I, Merchandise>();
+    private int _merchandiseCount = 0;
 
     public void SetMerchandise(Merchandise merchandise, Vector2I position) {
         _shelf[position] = merchandise;
@@ -32,5 +33,13 @@ public class MerchandiseRepository : IRepository {
     public void SetShelfSize(Vector2I shelfSize) {
         _numberOfColumns = shelfSize.X;
         _numberOfRows = shelfSize.Y;
+    }
+
+    public void SetMerchandiseCount(int merchandiseCount) {
+        _merchandiseCount = merchandiseCount;
+    }
+
+    public int GetMerchandiseCount() {
+        return _merchandiseCount;
     }
 }

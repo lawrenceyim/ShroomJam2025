@@ -38,6 +38,7 @@ public class MerchandiseService : IService {
 		Merchandise merchandise = GetHeldMerchandise();
 		SetHeldMerchandise(null);
 		Vector2I shelfSize = GetShelfSize();
+		_merchandiseRepository.SetMerchandiseCount(shelfSize.X * shelfSize.Y);
 
 		for (int c = 0; c < shelfSize.X; c++) {
 			for (int r = 0; r < shelfSize.Y; r++) {
@@ -61,5 +62,13 @@ public class MerchandiseService : IService {
 			MerchandiseUtil.GetRandomMerchandiseColor(),
 			MerchandiseUtil.GetRandomMerchandiseType()
 		);
+	}
+
+	public int GetMerchandiseCount() {
+		return _merchandiseRepository.GetMerchandiseCount();
+	}
+
+	public void SetMerchandiseCount(int count) {
+		_merchandiseRepository.SetMerchandiseCount(count);
 	}
 }
