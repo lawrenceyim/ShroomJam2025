@@ -1,7 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://lk8jyyaf7tol"]
+[gd_scene load_steps=4 format=3 uid="uid://lk8jyyaf7tol"]
 
 [ext_resource type="Script" uid="uid://dpvupoxpi3shy" path="res://Scripts/Repository/Impl/SceneRepository.cs" id="1_oydej"]
+[ext_resource type="PackedScene" uid="uid://ckkj6aw5bbkmj" path="res://Scenes/Start Menu.tscn" id="2_swuga"]
+[ext_resource type="PackedScene" uid="uid://bvfndfuef4jrr" path="res://Scenes/Level Scene/Main Level.tscn" id="3_lomx7"]
 
 [node name="SceneRepository" type="Node2D"]
 script = ExtResource("1_oydej")
-_packedScenes = Dictionary[int, PackedScene]({})
+_packedScenes = Dictionary[int, PackedScene]({
+0: ExtResource("2_swuga"),
+1: ExtResource("3_lomx7"),
+2: null,
+3: null
+})

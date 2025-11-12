@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckkj6aw5bbkmj"]
+
+[ext_resource type="Script" uid="uid://cmhnho16oan0b" path="res://Scripts/Scenes/Main Menu/StartMenu.cs" id="1_y5olr"]
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("_startButton")]
+script = ExtResource("1_y5olr")
+_startButton = NodePath("Button")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 335.0
+offset_top = 224.0
+offset_right = 943.0
+offset_bottom = 364.0
+text = "start"
