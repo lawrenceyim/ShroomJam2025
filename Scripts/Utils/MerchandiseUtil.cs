@@ -1,4 +1,5 @@
 using System;
+using Godot;
 
 public class MerchandiseUtil {
     private static readonly int _numberOfColors = Enum.GetNames(typeof(MerchandiseColor)).Length;
@@ -7,6 +8,7 @@ public class MerchandiseUtil {
 
     public static MerchandiseColor GetRandomMerchandiseColor() {
         int choice = _random.Next(0, _numberOfColors);
+        GD.Print($"COLOR OF CHOICE {(MerchandiseColor)choice} {choice})");
         return (MerchandiseColor)choice;
     }
 

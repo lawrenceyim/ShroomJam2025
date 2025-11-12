@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://dxr4cm5blttwr"]
+[gd_scene load_steps=41 format=3 uid="uid://dxr4cm5blttwr"]
 
 [ext_resource type="Script" uid="uid://lpnp3bv46sai" path="res://Scripts/Repository/Impl/Texture2dRepository.cs" id="1_na3yd"]
 [ext_resource type="Texture2D" uid="uid://d1b1lqruisjqx" path="res://Assets/Sprites/CustomerNeutral.webp" id="2_hjbrh"]
@@ -37,6 +37,9 @@
 [ext_resource type="Texture2D" uid="uid://bemiok5rssssn" path="res://Assets/Sprites/merchandise/Green3.png" id="35_it240"]
 [ext_resource type="Texture2D" uid="uid://dxi4mwye3o7xe" path="res://Assets/Sprites/merchandise/Green4.png" id="36_2dfsn"]
 [ext_resource type="Texture2D" uid="uid://5y4ox3ifijsw" path="res://Assets/Sprites/merchandise/Green5.png" id="37_jxwsu"]
+[ext_resource type="Texture2D" uid="uid://bgfqx02guoly3" path="res://Assets/Sprites/merchandise/BlueDvd.png" id="38_abfgh"]
+[ext_resource type="Texture2D" uid="uid://ceqdtkw2640cb" path="res://Assets/Sprites/merchandise/RedDvd.png" id="39_3ohqm"]
+[ext_resource type="Texture2D" uid="uid://c2kstoby1jyhv" path="res://Assets/Sprites/merchandise/GreenDvd.png" id="40_y7k30"]
 
 [node name="Texture2dRepository" type="Node"]
 script = ExtResource("1_na3yd")
@@ -76,5 +79,8 @@ _textures = Dictionary[int, Texture2D]({
 32: ExtResource("34_ks6nl"),
 33: ExtResource("35_it240"),
 34: ExtResource("36_2dfsn"),
-35: ExtResource("37_jxwsu")
+35: ExtResource("37_jxwsu"),
+36: ExtResource("38_abfgh"),
+37: ExtResource("39_3ohqm"),
+38: ExtResource("40_y7k30")
 })

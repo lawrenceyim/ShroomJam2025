@@ -10,22 +10,13 @@ _customerViewCamera = NodePath("Customer View/Customer Camera2D")
 _customerView = NodePath("Customer View")
 _shelfViewCamera = NodePath("ShelfView/Shelf Camera2D")
 _shelfView = NodePath("ShelfView")
-_dayTimerLabel = NodePath("Label")
+_dayTimerLabel = NodePath("")
 
 [node name="Customer View" parent="." instance=ExtResource("3_14an5")]
 position = Vector2(-2, 0)
 
 [node name="ShelfView" parent="." instance=ExtResource("3_jurmy")]
 position = Vector2(3000, 9)
-
-[node name="Label" type="Label" parent="."]
-z_index = 10
-offset_left = -12.0
-offset_top = -270.0
-offset_right = 30.0
-offset_bottom = -247.0
-text = "Clock"
-horizontal_alignment = 1
 
 [editable path="Customer View"]
 [editable path="ShelfView"]

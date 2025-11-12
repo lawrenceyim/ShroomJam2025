@@ -17,7 +17,7 @@ public partial class MainLevel : Node, IInputState, ITick {
     private ShelfView _shelfView;
 
     [Export]
-    private Label _dayTimerLabel; // This should be in customer view but oh well
+    private Label _dayTimerLabel;
 
     private const string SwitchView = "Space";
 
@@ -65,8 +65,9 @@ public partial class MainLevel : Node, IInputState, ITick {
     }
 
     public void PhysicsTick(double delta) {
+        _dayTimer.PhysicsTick(delta);
         _customerView.PhysicsTick(delta);
-        _UpdateDayTimer();
+        _customerView.UpdateDayTimer(_dayTimer.GetTicksLeft());
     }
 
     public void ProcessInput(InputEventDto dto) {
@@ -78,15 +79,6 @@ public partial class MainLevel : Node, IInputState, ITick {
                 _ProcessMouseButtonInput(mouseButtonDto);
                 break;
         }
-    }
-
-    private void _UpdateDayTimer() {
-        _dayTimer.PhysicsTick(0);
-        int seconds = _dayTimer.GetTicksLeft() / _ticksPerSeconds;
-        int minutes = seconds / 60;
-        seconds %= 60;
-
-        _dayTimerLabel.Text = $"{minutes:D2}:{seconds:D2}";
     }
 
     private void ProcessKeyInput(KeyDto dto) {
@@ -178,7 +170,7 @@ public partial class MainLevel : Node, IInputState, ITick {
 
     private bool _IsTransactionValid() {
         return _customerView.IsMerchandiseSellSlotHovered()
-               && _customerView.IsCustomerReadytoPurchase()
+               && _customerView.IsCustomerReadyToPurchase()
                && _merchandiseService.GetHeldMerchandise() is not null;
     }
 

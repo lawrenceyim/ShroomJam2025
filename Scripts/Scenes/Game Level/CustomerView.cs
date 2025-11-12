@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using Godot;
-using InputSystem;
 
 public partial class CustomerView : Node2D, ITick {
 	[Export]
@@ -13,11 +12,13 @@ public partial class CustomerView : Node2D, ITick {
 	[Export]
 	private Label _profitLabel;
 
-	private readonly int _numberOfCustomerIds = Enum.GetNames(typeof(CustomerId)).Length;
+	[Export]
+	private Sprite2D _desiredMerchandiseSprite;
 
+	private readonly int _numberOfCustomerIds = Enum.GetNames(typeof(CustomerId)).Length;
+	private readonly int _ticksPerSeconds = Engine.PhysicsTicksPerSecond;
 	private readonly CustomerGeneratorComponent _customerGenerator = new();
 	private readonly Random _random = new Random();
-	private readonly TickTimer _dayTimer = new TickTimer();
 	private readonly TickTimer _customerTimer = new TickTimer();
 	private readonly int _secondsPerCustomerMood = 7;
 	private readonly int _ticksPerSecond = Engine.PhysicsTicksPerSecond;
@@ -41,13 +42,11 @@ public partial class CustomerView : Node2D, ITick {
 	private CustomerMovement? _leavingCustomerMovement;
 	private bool _merchandiseSellSlotHovered = false;
 
-	private bool _customerReadytoPurchase = false;
+	private bool _customerReadyToPurchase = false;
 
 	public void Initialize(Texture2dRepository texture2DRepository, PlayerDataSerivce playerDataService) {
 		_texture2DRepository = texture2DRepository;
 		_playerDataService = playerDataService;
-		_dayTimer.StartFixedTimer(false, 90 * _ticksPerSecond);
-		_dayTimer.TimedOut += () => { }; // TODO: END OF DAY
 		_customerTimer.TimedOut += _ChangeCustomerMood;
 		_merchandiseSellSlot.MouseEntered += () => { _merchandiseSellSlotHovered = true; };
 		_merchandiseSellSlot.MouseExited += () => { _merchandiseSellSlotHovered = false; };
@@ -72,12 +71,11 @@ public partial class CustomerView : Node2D, ITick {
 		return _merchandiseSellSlotHovered;
 	}
 
-	public bool IsCustomerReadytoPurchase() {
-		return _customerReadytoPurchase;
+	public bool IsCustomerReadyToPurchase() {
+		return _customerReadyToPurchase;
 	}
 
 	public void PhysicsTick(double delta) {
-		_dayTimer.PhysicsTick(delta);
 		_customerTimer.PhysicsTick(delta);
 		_UpdateCustomer();
 	}
@@ -102,9 +100,12 @@ public partial class CustomerView : Node2D, ITick {
 		GD.Print("Exiting ChangeCustomerMood");
 	}
 
-	private void _UpdateDayTimer() {
-		int secondsLeft = _dayTimer.GetTicksLeft() % _ticksPerSecond;
-		_dayTimerLabel.Text = secondsLeft.ToString();
+	public void UpdateDayTimer(int ticksLeft) {
+		int seconds = ticksLeft / _ticksPerSeconds;
+		int minutes = seconds / 60;
+		seconds %= 60;
+
+		_dayTimerLabel.Text = $"{minutes:D2}:{seconds:D2}";
 	}
 
 	private void _UpdateCustomer() {
@@ -123,13 +124,13 @@ public partial class CustomerView : Node2D, ITick {
 					_currentCustomerSprite.Position += _currentCustomerMovement.Movement();
 					if (Math.Abs(_currentCustomerSprite.Position.X - _customerStopPointX) < 25) {
 						_customerState = CustomerState.Waiting;
-						_customerReadytoPurchase = true;
+						_customerReadyToPurchase = true;
 						_customerTimer.StartFixedTimer(true, _secondsPerCustomerMood * _ticksPerSecond);
 					}
 
 					break;
 				case CustomerState.Waiting:
-					// TODO: display what the customer wants
+					_ToggleVisibilityOfDesiredMerchandise(true);
 					break;
 			}
 		}
@@ -150,7 +151,29 @@ public partial class CustomerView : Node2D, ITick {
 		_customerState = CustomerState.Entering;
 		_leavingCustomerMovement = _currentCustomerMovement;
 		_currentCustomerMovement = new CustomerMovement();
-		_customerReadytoPurchase = false;
+		_customerReadyToPurchase = false;
+		_UpdateDesiredMerchandise();
+		_ToggleVisibilityOfDesiredMerchandise(false);
+	}
+
+	private void _ToggleVisibilityOfDesiredMerchandise(bool visible) {
+		_desiredMerchandiseSprite.Visible = visible;
+	}
+
+	private void _UpdateDesiredMerchandise() {
+		switch (_colorWanted) {
+			case MerchandiseColor.Blue:
+				_desiredMerchandiseSprite.Texture = _texture2DRepository.GetTexture(Texture2dId.BlueDvdBlank);
+				break;
+			case MerchandiseColor.Red:
+				_desiredMerchandiseSprite.Texture = _texture2DRepository.GetTexture(Texture2dId.RedDvdBlank);
+				break;
+			case MerchandiseColor.Green:
+				_desiredMerchandiseSprite.Texture = _texture2DRepository.GetTexture(Texture2dId.GreenDvdBlank);
+				break;
+			default:
+				break;
+		}
 	}
 
 	private Texture2D _GetCustomerSprite() {

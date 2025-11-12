@@ -50,4 +50,7 @@ public enum Texture2dId {
     GreenDvd3 = 33,
     GreenDvd4 = 34,
     GreenDvd5 = 35,
+    BlueDvdBlank = 36,
+    RedDvdBlank = 37,
+    GreenDvdBlank = 38,
 }

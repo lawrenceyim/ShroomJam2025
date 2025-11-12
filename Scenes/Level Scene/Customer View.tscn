@@ -1,17 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://b542syw0tbdyd"]
+[gd_scene load_steps=6 format=3 uid="uid://b542syw0tbdyd"]
 
 [ext_resource type="Script" uid="uid://bwa7a85coc2e5" path="res://Scripts/Scenes/Game Level/CustomerView.cs" id="1_5qpia"]
 [ext_resource type="Texture2D" uid="uid://dgyvlqpiewss1" path="res://Assets/Sprites/tablesprite.png" id="2_j8kt0"]
 [ext_resource type="Texture2D" uid="uid://505doa76foq0" path="res://Assets/Sprites/placeholders/cash register.webp" id="3_kaucv"]
+[ext_resource type="Texture2D" uid="uid://ceqdtkw2640cb" path="res://Assets/Sprites/merchandise/RedDvd.png" id="4_sl153"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sl153"]
 font_size = 40
 font_color = Color(0, 0, 0, 1)
 
-[node name="Customer View" type="Node2D" node_paths=PackedStringArray("_merchandiseSellSlot", "_profitLabel")]
+[node name="Customer View" type="Node2D" node_paths=PackedStringArray("_dayTimerLabel", "_merchandiseSellSlot", "_profitLabel", "_desiredMerchandiseSprite")]
 script = ExtResource("1_5qpia")
+_dayTimerLabel = NodePath("Day Timer Label")
 _merchandiseSellSlot = NodePath("Area2D Merchandise Sell Slot")
 _profitLabel = NodePath("Profit Label")
+_desiredMerchandiseSprite = NodePath("Desired Merchandise")
 
 [node name="Customer Camera2D" type="Camera2D" parent="."]
 
@@ -37,3 +40,17 @@ offset_right = -380.0
 offset_bottom = -12.0
 text = "$0"
 label_settings = SubResource("LabelSettings_sl153")
+
+[node name="Desired Merchandise" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(0, -225)
+texture = ExtResource("4_sl153")
+
+[node name="Day Timer Label" type="Label" parent="."]
+z_index = 10
+offset_left = -12.0
+offset_top = -270.0
+offset_right = 30.0
+offset_bottom = -247.0
+text = "Clock"
+horizontal_alignment = 1
