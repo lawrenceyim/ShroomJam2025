@@ -95,7 +95,6 @@ public partial class CustomerView : Node2D, ITick {
 	}
 
 	private void _ChangeCustomerMood() {
-		GD.Print("Change CustomerMood");
 		switch (_customerMood) {
 			case CustomerMood.Happy:
 				_customerMood = CustomerMood.Neutral;
@@ -110,8 +109,6 @@ public partial class CustomerView : Node2D, ITick {
 				_GenerateCustomer();
 				break;
 		}
-
-		GD.Print("Exiting ChangeCustomerMood");
 	}
 
 	public void UpdateDayTimer(int ticksLeft) {
@@ -141,14 +138,12 @@ public partial class CustomerView : Node2D, ITick {
 
 	public void HighlightSellSlot(bool highlighted) {
 		if (!highlighted) {
-			GD.Print("Highlight SellSlot Invisible");
 			_merchandiseSellSlotHighlight.Visible = false;
 			_highlightActive = false;
 			_merchandiseSellSlotHighlight.Color = _originalSlotColor;
 			return;
 		}
 
-		GD.Print("Highlight SellSlot Visible");
 		_merchandiseSellSlotHighlight.Visible = true;
 		_tickLerpCounter = 0;
 		_highlightLerpingIn = true;
@@ -225,39 +220,8 @@ public partial class CustomerView : Node2D, ITick {
 	}
 
 	private Texture2D _GetCustomerSprite() {
-		return _customerId switch {
-			CustomerId.RichMale => _customerMood switch {
-				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.RichManHappy),
-				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.RichManNeutral),
-				_ => _texture2DRepository.GetTexture(Texture2dId.RichManAngry)
-			},
-			CustomerId.RichFemale => _customerMood switch {
-				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.RichWomanHappy),
-				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.RichWomanNeutral),
-				_ => _texture2DRepository.GetTexture(Texture2dId.RichWomanAngry)
-			},
-			CustomerId.RegularMale => _customerMood switch {
-				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.AverageManHappy),
-				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.AverageManNeutral),
-				_ => _texture2DRepository.GetTexture(Texture2dId.AverageManAngry)
-			},
-			CustomerId.RegularFemale => _customerMood switch {
-				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.AverageWomanHappy),
-				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.AverageWomanNeutral),
-				_ => _texture2DRepository.GetTexture(Texture2dId.AverageWomanAngry)
-			},
-			CustomerId.PoorMale => _customerMood switch {
-				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.PoorManHappy),
-				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.PoorManNeutral),
-				_ => _texture2DRepository.GetTexture(Texture2dId.PoorManAngry)
-			},
-			CustomerId.PoorFemale => _customerMood switch {
-				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.PoorWomanHappy),
-				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.PoorWomanNeutral),
-				_ => _texture2DRepository.GetTexture(Texture2dId.PoorWomanAngry)
-			},
-			_ => _texture2DRepository.GetTexture(Texture2dId.CustomerPlaceholder)
-		};
+		Texture2dId textureId = CustomerUtil.GetCustomerTexture(_customerId, _customerMood);
+		return _texture2DRepository.GetTexture(textureId);
 	}
 
 	private enum CustomerState {
