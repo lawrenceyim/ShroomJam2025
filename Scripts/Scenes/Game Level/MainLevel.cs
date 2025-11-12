@@ -158,12 +158,14 @@ public partial class MainLevel : Node, IInputState, ITick {
     private void _SwapMerchandise(Vector2I position) {
         Merchandise heldMerchandise = _merchandiseService.GetHeldMerchandise();
         Merchandise merchandiseInSlot = _merchandiseService.GetMerchandiseFromShelf(position);
-        GD.Print($"Before swap. Held is {_merchandiseService.GetHeldMerchandise()}. Slot is {_merchandiseService.GetMerchandiseFromShelf(position)}");
+        GD.Print($"Before swap. Held is {_merchandiseService.GetHeldMerchandise()?.ToString()}. " +
+                 $"Slot is {_merchandiseService.GetMerchandiseFromShelf(position)?.ToString()}");
 
         _merchandiseService.SetHeldMerchandise(merchandiseInSlot);
         _merchandiseService.SetShelfMerchandise(heldMerchandise, position);
 
-        GD.Print($"After swap. Held is {_merchandiseService.GetHeldMerchandise()}. Slot is {_merchandiseService.GetMerchandiseFromShelf(position)}");
+        GD.Print($"After swap. Held is {_merchandiseService.GetHeldMerchandise()?.ToString()}. " +
+                 $"Slot is {_merchandiseService.GetMerchandiseFromShelf(position)?.ToString()}");
 
         _shelfView.RefreshShelfMerchandiseTexture(position);
         // Refresh Hand Held Merchandise Sprite

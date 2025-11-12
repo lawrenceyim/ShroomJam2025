@@ -19,7 +19,6 @@ public partial class ShelfView : Node2D {
         _merchandiseService = merchandiseService;
         _texture2dRepository = texture2dRepository;
         Vector2I shelfSize = merchandiseService.GetShelfSize();
-        GD.Print(shelfSize);
 
         for (int column = 0; column < shelfSize.X; column++) {
             for (int row = 0; row < shelfSize.Y; row++) {
@@ -28,19 +27,13 @@ public partial class ShelfView : Node2D {
                 merchandiseSlot.Initialize(position);
                 merchandiseSlot.Position = _originPosition + new Vector2I(column * _xOffset, row * _yOffset);
                 merchandiseSlot.Initialize(position);
-                merchandiseSlot.MouseEntered += (Vector2I position) => {
-                    GD.Print(position);
-                    _hoveredSlot = position;
-                };
+                merchandiseSlot.MouseEntered += (Vector2I position) => { _hoveredSlot = position; };
                 merchandiseSlot.MouseExited += () => _hoveredSlot = null;
                 _merchandiseSlots[position] = merchandiseSlot;
                 AddChild(merchandiseSlot);
 
                 Merchandise merchandise = _merchandiseService.GetMerchandiseFromShelf(new Vector2I(column, row));
-                if (merchandise != null) {
-                    // set sprite based on tier and color of the dvd                    
-                    SetMerchandiseTexture(position, _texture2dRepository.GetTexture(Texture2dId.MerchandisePlaceholder));
-                }
+                RefreshShelfMerchandiseTexture(position);
             }
         }
     }
@@ -49,11 +42,11 @@ public partial class ShelfView : Node2D {
         _merchandiseSlots[position].SetTexture(texture);
     }
 
-    // TODO : Write actual code later
     public void RefreshShelfMerchandiseTexture(Vector2I position) {
         Merchandise merchandise = _merchandiseService.GetMerchandiseFromShelf(position);
         if (merchandise is not null) {
-            SetMerchandiseTexture(position, _texture2dRepository.GetTexture(Texture2dId.MerchandisePlaceholder));
+            Texture2dId textureId = MerchandiseUtil.GetMerchandiseTextureId(merchandise.Color, merchandise.Type, merchandise.Tier);
+            SetMerchandiseTexture(position, _texture2dRepository.GetTexture(textureId));
         }
         else {
             SetMerchandiseTexture(position, _texture2dRepository.GetTexture(Texture2dId.SlotPlaceholder));

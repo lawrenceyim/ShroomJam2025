@@ -48,6 +48,8 @@ public class MerchandiseService : IService {
 				if (_merchandiseRepository.GetMerchandise(position) is null) {
 					_merchandiseRepository.SetMerchandise(merchandise, position);
 				}
+
+				merchandise = null;
 			}
 		}
 	}

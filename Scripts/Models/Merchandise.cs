@@ -8,4 +8,8 @@ public class Merchandise {
         Color = color;
         Type = type;
     }
+
+    public override string ToString() {
+        return $"Tier: {Tier}, Color: {Color}, Type: {Type}";
+    }
 }
