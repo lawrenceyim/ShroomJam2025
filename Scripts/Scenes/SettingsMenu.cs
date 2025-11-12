@@ -47,8 +47,10 @@ public partial class SettingsMenu : Node2D, IInputState {
 			return;
 		}
 
-		if (keyDto.Identifier == Unpause) {
-			ResumeDay?.Invoke();
+		switch (keyDto.Identifier) {
+			case Unpause:
+				ResumeDay?.Invoke();
+				break;
 		}
 	}
 
@@ -59,6 +61,7 @@ public partial class SettingsMenu : Node2D, IInputState {
 
 		switch (_hoveredArea) {
 			case HoveredArea.Restart:
+				RestartDay?.Invoke();
 				break;
 			case HoveredArea.Mute:
 				GlobalSettings.MuteVolume = !GlobalSettings.MuteVolume;
