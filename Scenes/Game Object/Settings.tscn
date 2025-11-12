@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://c5n7jcnie0d8k"]
+
+[ext_resource type="Script" uid="uid://d1x1tv4wy6edx" path="res://Scripts/Scenes/SettingsMenu.cs" id="1_ibx62"]
+[ext_resource type="Texture2D" uid="uid://bug8p0o8e5360" path="res://Assets/Sprites/Settings Sprites/SettingsBase.png" id="1_ssuah"]
+[ext_resource type="Texture2D" uid="uid://c05o7ooov28h7" path="res://Assets/Sprites/Settings Sprites/RestartButton.png" id="2_teoh3"]
+[ext_resource type="Texture2D" uid="uid://d4ic3ysa0g03l" path="res://Assets/Sprites/Settings Sprites/ResumeButton.png" id="3_yto0x"]
+[ext_resource type="Texture2D" uid="uid://cvfrjiuycfrv2" path="res://Assets/Sprites/Settings Sprites/Checkbox.png" id="4_70vku"]
+[ext_resource type="Texture2D" uid="uid://co1talms7aud2" path="res://Assets/Sprites/Settings Sprites/Checkmark.png" id="5_ibx62"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_teoh3"]
+size = Vector2(247, 85)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibx62"]
+size = Vector2(134, 123)
+
+[node name="Settings Menu" type="Node2D" node_paths=PackedStringArray("_mutedCheckMark", "_restartArea2D", "_resumeArea2D", "_muteArea2D")]
+z_index = 20
+script = ExtResource("1_ibx62")
+_mutedCheckMark = NodePath("Buttons/Checkbox/Checkmark")
+_restartArea2D = NodePath("Buttons/RestartButton/Restart Area2D")
+_resumeArea2D = NodePath("Buttons/ResumeButton/Resume Area2D")
+_muteArea2D = NodePath("Buttons/Checkbox/Mute Area2D")
+
+[node name="SettingsBase" type="Sprite2D" parent="."]
+texture = ExtResource("1_ssuah")
+centered = false
+
+[node name="Buttons" type="Node2D" parent="."]
+position = Vector2(815, 256)
+
+[node name="RestartButton" type="Sprite2D" parent="Buttons"]
+texture = ExtResource("2_teoh3")
+
+[node name="Restart Area2D" type="Area2D" parent="Buttons/RestartButton"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/RestartButton/Restart Area2D"]
+position = Vector2(-1.5, 8.5)
+shape = SubResource("RectangleShape2D_teoh3")
+
+[node name="ResumeButton" type="Sprite2D" parent="Buttons"]
+position = Vector2(-4, 100)
+texture = ExtResource("3_yto0x")
+
+[node name="Resume Area2D" type="Area2D" parent="Buttons/ResumeButton"]
+position = Vector2(5, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/ResumeButton/Resume Area2D"]
+position = Vector2(-1.5, 8.5)
+shape = SubResource("RectangleShape2D_teoh3")
+
+[node name="Checkbox" type="Sprite2D" parent="Buttons"]
+position = Vector2(-360, 116)
+texture = ExtResource("4_70vku")
+
+[node name="Checkmark" type="Sprite2D" parent="Buttons/Checkbox"]
+texture = ExtResource("5_ibx62")
+
+[node name="Mute Area2D" type="Area2D" parent="Buttons/Checkbox"]
+position = Vector2(5, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/Checkbox/Mute Area2D"]
+position = Vector2(-14, 7.5)
+shape = SubResource("RectangleShape2D_ibx62")

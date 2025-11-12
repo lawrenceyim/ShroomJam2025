@@ -79,8 +79,8 @@ public partial class MainLevel : Node, IInputState, ITick {
 		_customerView.UpdateDayTimer(_dayTimer.GetTicksLeft());
 	}
 
-	public void ProcessInput(InputEventDto dto) {
-		switch (dto) {
+	public void ProcessInput(InputEventDto eventDto) {
+		switch (eventDto) {
 			case KeyDto keyDto:
 				ProcessKeyInput(keyDto);
 				break;
