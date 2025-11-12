@@ -15,13 +15,15 @@ public partial class CustomerView : Node2D, ITick {
 
 	private readonly int _numberOfCustomerIds = Enum.GetNames(typeof(CustomerId)).Length;
 
+	private readonly CustomerGeneratorComponent _customerGenerator = new();
 	private readonly Random _random = new Random();
 	private readonly TickTimer _dayTimer = new TickTimer();
 	private readonly TickTimer _customerTimer = new TickTimer();
 	private readonly int _secondsPerCustomerMood = 7;
-	private int _ticksPerSecond;
+	private readonly int _ticksPerSecond = Engine.PhysicsTicksPerSecond;
 
 	private Texture2dRepository _texture2DRepository;
+	private PlayerDataSerivce _playerDataService;
 
 	private MerchandiseColor _colorWanted;
 	private MerchandiseType _merchandiseTypeWanted;
@@ -41,9 +43,9 @@ public partial class CustomerView : Node2D, ITick {
 
 	private bool _customerReadytoPurchase = false;
 
-	public void Initialize(Texture2dRepository texture2DRepository) {
-		_ticksPerSecond = Engine.PhysicsTicksPerSecond;
+	public void Initialize(Texture2dRepository texture2DRepository, PlayerDataSerivce playerDataService) {
 		_texture2DRepository = texture2DRepository;
+		_playerDataService = playerDataService;
 		_dayTimer.StartFixedTimer(false, 90 * _ticksPerSecond);
 		_dayTimer.TimedOut += () => { }; // TODO: END OF DAY
 		_customerTimer.TimedOut += _ChangeCustomerMood;
@@ -100,7 +102,6 @@ public partial class CustomerView : Node2D, ITick {
 		GD.Print("Exiting ChangeCustomerMood");
 	}
 
-	// TODO: Add this later
 	private void _UpdateDayTimer() {
 		int secondsLeft = _dayTimer.GetTicksLeft() % _ticksPerSecond;
 		_dayTimerLabel.Text = secondsLeft.ToString();
@@ -137,7 +138,7 @@ public partial class CustomerView : Node2D, ITick {
 	private void _GenerateCustomer() {
 		_colorWanted = MerchandiseUtil.GetRandomMerchandiseColor();
 		_merchandiseTypeWanted = MerchandiseUtil.GetRandomMerchandiseType();
-		_customerId = _SelectRandomCustomerId();
+		_customerId = _customerGenerator.GetRandomCustomerId(_playerDataService.GetCustomerRarityUpgradeLevel());
 		_customerMood = CustomerMood.Happy;
 		Sprite2D sprite = new Sprite2D();
 		sprite.Texture = _GetCustomerSprite();
@@ -152,39 +153,41 @@ public partial class CustomerView : Node2D, ITick {
 		_customerReadytoPurchase = false;
 	}
 
-
-	// TODO: change this to be probabilistic based on upgrades
-	private CustomerId _SelectRandomCustomerId() {
-		return _random.Next(0, 2) == 1 ? CustomerId.RichMale : CustomerId.RichFemale;
-		// int choice = _random.Next(0, _numberOfCustomerIds);
-		// return (CustomerId)choice;
-	}
-
 	private Texture2D _GetCustomerSprite() {
-		switch (_customerId) {
-			case CustomerId.RichMale:
-				switch (_customerMood) {
-					case CustomerMood.Happy:
-						return _texture2DRepository.GetTexture(Texture2dId.RichManHappy);
-					case CustomerMood.Neutral:
-						return _texture2DRepository.GetTexture(Texture2dId.RichManNeutral);
-					default:
-						return _texture2DRepository.GetTexture(Texture2dId.RichManAngry);
-				}
-			case CustomerId.RichFemale:
-				switch (_customerMood) {
-					case CustomerMood.Happy:
-						return _texture2DRepository.GetTexture(Texture2dId.RichWomanHappy);
-					case CustomerMood.Neutral:
-						return _texture2DRepository.GetTexture(Texture2dId.RichWomanNeutral);
-					default:
-						return _texture2DRepository.GetTexture(Texture2dId.RichWomanAngry);
-				}
-			default:
-				return _texture2DRepository.GetTexture(Texture2dId.CustomerPlaceholder);
-		}
+		return _customerId switch {
+			CustomerId.RichMale => _customerMood switch {
+				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.RichManHappy),
+				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.RichManNeutral),
+				_ => _texture2DRepository.GetTexture(Texture2dId.RichManAngry)
+			},
+			CustomerId.RichFemale => _customerMood switch {
+				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.RichWomanHappy),
+				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.RichWomanNeutral),
+				_ => _texture2DRepository.GetTexture(Texture2dId.RichWomanAngry)
+			},
+			CustomerId.RegularMale => _customerMood switch {
+				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.AverageManHappy),
+				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.AverageManNeutral),
+				_ => _texture2DRepository.GetTexture(Texture2dId.AverageManAngry)
+			},
+			CustomerId.RegularFemale => _customerMood switch {
+				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.AverageWomanHappy),
+				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.AverageWomanNeutral),
+				_ => _texture2DRepository.GetTexture(Texture2dId.AverageWomanAngry)
+			},
+			CustomerId.PoorMale => _customerMood switch {
+				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.PoorManHappy),
+				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.PoorManNeutral),
+				_ => _texture2DRepository.GetTexture(Texture2dId.PoorManAngry)
+			},
+			CustomerId.PoorFemale => _customerMood switch {
+				CustomerMood.Happy => _texture2DRepository.GetTexture(Texture2dId.PoorWomanHappy),
+				CustomerMood.Neutral => _texture2DRepository.GetTexture(Texture2dId.PoorWomanNeutral),
+				_ => _texture2DRepository.GetTexture(Texture2dId.PoorWomanAngry)
+			},
+			_ => _texture2DRepository.GetTexture(Texture2dId.CustomerPlaceholder)
+		};
 	}
-
 
 	private enum CustomerState {
 		Entering,

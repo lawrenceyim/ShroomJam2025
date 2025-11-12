@@ -52,7 +52,8 @@ public partial class MainLevel : Node, IInputState, ITick {
             repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture)
         );
         _customerView.Initialize(
-            repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture)
+            repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture),
+            playerDataService
         );
 
         _dayTimer.StartFixedTimer(false, SecondsPerDay * _ticksPerSeconds);

@@ -3,11 +3,11 @@ using Godot;
 using ServiceSystem;
 
 public class MerchandiseService : IService {
-	private MerchandiseRepository _merchandiseRepository;
-	private PlayerDataRepository _playerDataRepository;
-	private int _merchandiseRollPerLevel = 20;
-	private int _baseMerchandiseRoll = 100;
-	private Random _random = new();
+	private const int MerchandiseRollPerLevel = 20;
+	private const int BaseMerchandiseRoll = 100;
+	private readonly MerchandiseRepository _merchandiseRepository;
+	private readonly PlayerDataRepository _playerDataRepository;
+	private readonly Random _random = new();
 
 	public MerchandiseService(MerchandiseRepository merchandiseRepository, PlayerDataRepository playerDataRepository) {
 		_merchandiseRepository = merchandiseRepository;
@@ -52,9 +52,9 @@ public class MerchandiseService : IService {
 	}
 
 	private Merchandise _GenerateRandomMerchandise(int rarityUpgradeLevel) {
-		int merchandiseRollIncrease = rarityUpgradeLevel * _merchandiseRollPerLevel;
-		int threshold = _baseMerchandiseRoll + merchandiseRollIncrease;
-		int rolledRarity = _random.Next(0, threshold + 1) / _baseMerchandiseRoll;
+		int merchandiseRollIncrease = rarityUpgradeLevel * MerchandiseRollPerLevel;
+		int threshold = BaseMerchandiseRoll + merchandiseRollIncrease;
+		int rolledRarity = _random.Next(0, threshold + 1) / BaseMerchandiseRoll;
 
 		return new Merchandise(
 			rolledRarity,
