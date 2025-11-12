@@ -15,6 +15,9 @@ public partial class CustomerView : Node2D, ITick {
 	[Export]
 	private Sprite2D _desiredMerchandiseSprite;
 
+	[Export]
+	private Sprite2D _thoughtBubble;
+
 	private readonly int _numberOfCustomerIds = Enum.GetNames(typeof(CustomerId)).Length;
 	private readonly int _ticksPerSeconds = Engine.PhysicsTicksPerSecond;
 	private readonly CustomerGeneratorComponent _customerGenerator = new();
@@ -158,6 +161,7 @@ public partial class CustomerView : Node2D, ITick {
 
 	private void _ToggleVisibilityOfDesiredMerchandise(bool visible) {
 		_desiredMerchandiseSprite.Visible = visible;
+		_thoughtBubble.Visible = visible;
 	}
 
 	private void _UpdateDesiredMerchandise() {
