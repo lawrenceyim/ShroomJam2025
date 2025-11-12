@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://6ap52pswgcp2"]
+[gd_scene load_steps=6 format=3 uid="uid://6ap52pswgcp2"]
 
 [ext_resource type="Script" uid="uid://cch04puu0b1cu" path="res://Scripts/Scenes/Game Level/ShelfView.cs" id="1_ivvb1"]
 [ext_resource type="PackedScene" uid="uid://ygjnrx4svv16" path="res://Scenes/Game Object/Merchandise Slot.tscn" id="2_ivvb1"]
 [ext_resource type="Texture2D" uid="uid://brrmhq4xxb7xj" path="res://Assets/Sprites/big shelf.webp" id="3_041vq"]
 [ext_resource type="PackedScene" uid="uid://b8k5v0yxsjqr8" path="res://Scenes/Game Object/Hand.tscn" id="4_2osr5"]
+[ext_resource type="PackedScene" uid="uid://c5n7jcnie0d8k" path="res://Scenes/Game Object/Settings.tscn" id="5_sth0q"]
 
 [node name="Shelf View" type="Node2D"]
 script = ExtResource("1_ivvb1")
@@ -20,3 +21,7 @@ centered = false
 
 [node name="Hand" parent="." instance=ExtResource("4_2osr5")]
 position = Vector2(-640, 84)
+
+[node name="Shelf Settings Menu" parent="." instance=ExtResource("5_sth0q")]
+visible = false
+position = Vector2(-640, -360)

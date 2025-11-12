@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b542syw0tbdyd"]
+[gd_scene load_steps=9 format=3 uid="uid://b542syw0tbdyd"]
 
 [ext_resource type="Script" uid="uid://bwa7a85coc2e5" path="res://Scripts/Scenes/Game Level/CustomerView.cs" id="1_5qpia"]
 [ext_resource type="Texture2D" uid="uid://dgyvlqpiewss1" path="res://Assets/Sprites/tablesprite.png" id="2_j8kt0"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ceqdtkw2640cb" path="res://Assets/Sprites/merchandise/RedDvd.png" id="4_sl153"]
 [ext_resource type="PackedScene" uid="uid://b8k5v0yxsjqr8" path="res://Scenes/Game Object/Hand.tscn" id="5_wtheq"]
 [ext_resource type="Texture2D" uid="uid://brrifuemrx73x" path="res://Assets/Sprites/thought bubble.webp" id="6_6tr70"]
+[ext_resource type="PackedScene" uid="uid://c5n7jcnie0d8k" path="res://Scenes/Game Object/Settings.tscn" id="7_14180"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sl153"]
 font_size = 40
@@ -64,3 +65,7 @@ texture = ExtResource("6_6tr70")
 z_index = 10
 position = Vector2(-41, 4)
 texture = ExtResource("4_sl153")
+
+[node name="Customer Settings Menu" parent="." instance=ExtResource("7_14180")]
+visible = false
+position = Vector2(-640, -360)

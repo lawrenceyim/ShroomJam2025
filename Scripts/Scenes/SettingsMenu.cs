@@ -18,6 +18,7 @@ public partial class SettingsMenu : Node2D, IInputState {
 	[Export]
 	private Area2D _muteArea2D;
 
+	private const string Unpause = "Escape";
 	private HoveredArea _hoveredArea = HoveredArea.None;
 
 	public override void _Ready() {
@@ -31,20 +32,41 @@ public partial class SettingsMenu : Node2D, IInputState {
 	}
 
 	public void ProcessInput(InputEventDto eventDto) {
-		if (eventDto is MouseButtonDto dto) {
-			switch (_hoveredArea) {
-				case HoveredArea.Restart:
-					break;
-				case HoveredArea.Mute:
-					GlobalSettings.MuteVolume = !GlobalSettings.MuteVolume;
-					_mutedCheckMark.Visible = GlobalSettings.MuteVolume;
-					break;
-				case HoveredArea.Resume:
-					ResumeDay?.Invoke();
-					break;
-				default:
-					break;
-			}
+		switch (eventDto) {
+			case KeyDto keyDto:
+				_ProcessKeyDto(keyDto);
+				break;
+			case MouseButtonDto mouseButtonDto:
+				_ProcessMouseButtonInput(mouseButtonDto);
+				break;
+		}
+	}
+
+	private void _ProcessKeyDto(KeyDto keyDto) {
+		if (!keyDto.Pressed) {
+			return;
+		}
+
+		if (keyDto.Identifier == Unpause) {
+			ResumeDay?.Invoke();
+		}
+	}
+
+	private void _ProcessMouseButtonInput(MouseButtonDto dto) {
+		if (!dto.Pressed) {
+			return;
+		}
+
+		switch (_hoveredArea) {
+			case HoveredArea.Restart:
+				break;
+			case HoveredArea.Mute:
+				GlobalSettings.MuteVolume = !GlobalSettings.MuteVolume;
+				_mutedCheckMark.Visible = GlobalSettings.MuteVolume;
+				break;
+			case HoveredArea.Resume:
+				ResumeDay?.Invoke();
+				break;
 		}
 	}
 

@@ -4,205 +4,239 @@ using RepositorySystem;
 using ServiceSystem;
 
 public partial class MainLevel : Node, IInputState, ITick {
-	[Export]
-	private Camera2D _customerViewCamera;
+    [Export]
+    private Camera2D _customerViewCamera;
 
-	[Export]
-	private CustomerView _customerView;
+    [Export]
+    private CustomerView _customerView;
 
-	[Export]
-	private Camera2D _shelfViewCamera;
+    [Export]
+    private Camera2D _shelfViewCamera;
 
-	[Export]
-	private ShelfView _shelfView;
+    [Export]
+    private ShelfView _shelfView;
 
-	[Export]
-	private HeldMerchandiseDisplay _handCustomerView;
+    [Export]
+    private HeldMerchandiseDisplay _handCustomerView;
 
-	[Export]
-	private HeldMerchandiseDisplay _handShelfView;
+    [Export]
+    private HeldMerchandiseDisplay _handShelfView;
 
+    [Export]
+    private SettingsMenu _customerSettingsMenu;
 
-	private const string SwitchView = "Space";
+    [Export]
+    private SettingsMenu _shelfSettingsMenu;
 
-	private const int SecondsPerDay = 120;
-	private readonly TickTimer _dayTimer = new TickTimer();
-	private readonly int _ticksPerSeconds = Engine.PhysicsTicksPerSecond; // Avoid latency from marshalling
-	private ServiceLocator _serviceLocator;
-	private PackedSceneRepository _packedSceneRepository;
-	private InputStateMachine _inputStateMachine;
-	private TransactionService _transactionService;
-	private MerchandiseService _merchandiseService;
-	private Texture2dRepository _texture2dRepository;
-	private GameClock _gameClock;
-	private ActiveView _activeView = ActiveView.CustomerView;
+    private const string SwitchView = "Space";
+    private const string Pause = "Escape";
 
-	public override void _Ready() {
-		_serviceLocator = GetNode<ServiceLocator>(ServiceLocator.AutoloadPath);
-		_merchandiseService = _serviceLocator.GetService<MerchandiseService>(ServiceName.Merchandise);
-		_inputStateMachine = _serviceLocator.GetService<InputStateMachine>(ServiceName.InputStateMachine);
-		_gameClock = _serviceLocator.GetService<GameClock>(ServiceName.GameClock);
-		_transactionService = _serviceLocator.GetService<TransactionService>(ServiceName.Transaction);
+    private const int SecondsPerDay = 120;
+    private readonly TickTimer _dayTimer = new TickTimer();
+    private readonly int _ticksPerSeconds = Engine.PhysicsTicksPerSecond; // Avoid latency from marshalling
+    private ServiceLocator _serviceLocator;
+    private PackedSceneRepository _packedSceneRepository;
+    private InputStateMachine _inputStateMachine;
+    private TransactionService _transactionService;
+    private MerchandiseService _merchandiseService;
+    private Texture2dRepository _texture2dRepository;
+    private GameClock _gameClock;
+    private ActiveView _activeView = ActiveView.CustomerView;
 
-		PlayerDataSerivce playerDataService = _serviceLocator.GetService<PlayerDataSerivce>(ServiceName.PlayerData);
-		_transactionService.Initialize(_merchandiseService, playerDataService);
+    public override void _Ready() {
+        _serviceLocator = GetNode<ServiceLocator>(ServiceLocator.AutoloadPath);
+        _merchandiseService = _serviceLocator.GetService<MerchandiseService>(ServiceName.Merchandise);
+        _inputStateMachine = _serviceLocator.GetService<InputStateMachine>(ServiceName.InputStateMachine);
+        _gameClock = _serviceLocator.GetService<GameClock>(ServiceName.GameClock);
+        _transactionService = _serviceLocator.GetService<TransactionService>(ServiceName.Transaction);
 
-		_merchandiseService.RestockMerchandise();
-		_gameClock.AddActiveScene(this, GetInstanceId());
-		_inputStateMachine.SetState(this);
-		RepositoryLocator repositoryLocator = _serviceLocator.GetService<RepositoryLocator>(ServiceName.RepositoryLocator);
-		_packedSceneRepository = repositoryLocator.GetRepository<PackedSceneRepository>(RepositoryName.PackedScene);
-		_texture2dRepository = repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture);
+        PlayerDataSerivce playerDataService = _serviceLocator.GetService<PlayerDataSerivce>(ServiceName.PlayerData);
+        _transactionService.Initialize(_merchandiseService, playerDataService);
 
-		_shelfView.Initialize(
-			_merchandiseService,
-			_texture2dRepository
-		);
-		_customerView.Initialize(
-			_texture2dRepository,
-			playerDataService
-		);
+        _merchandiseService.RestockMerchandise();
+        _gameClock.AddActiveScene(this, GetInstanceId());
+        _inputStateMachine.SetState(this);
+        RepositoryLocator repositoryLocator = _serviceLocator.GetService<RepositoryLocator>(ServiceName.RepositoryLocator);
+        _packedSceneRepository = repositoryLocator.GetRepository<PackedSceneRepository>(RepositoryName.PackedScene);
+        _texture2dRepository = repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture);
 
-		_DisplayHand(false);
+        _shelfView.Initialize(
+            _merchandiseService,
+            _texture2dRepository
+        );
+        _customerView.Initialize(
+            _texture2dRepository,
+            playerDataService
+        );
 
-		_dayTimer.StartFixedTimer(false, SecondsPerDay * _ticksPerSeconds);
-		_dayTimer.TimedOut += _EndDay;
-	}
+        _DisplayHand(false);
 
-	public override void _ExitTree() {
-		_gameClock.RemoveActiveScene(GetInstanceId());
-	}
+        _dayTimer.StartFixedTimer(false, SecondsPerDay * _ticksPerSeconds);
+        _dayTimer.TimedOut += _EndDay;
 
-	public void PhysicsTick(double delta) {
-		_dayTimer.PhysicsTick(delta);
-		_customerView.PhysicsTick(delta);
-		_customerView.UpdateDayTimer(_dayTimer.GetTicksLeft());
-	}
+        _customerSettingsMenu.ResumeDay += Unpause;
+        _shelfSettingsMenu.ResumeDay += Unpause;
+    }
 
-	public void ProcessInput(InputEventDto eventDto) {
-		switch (eventDto) {
-			case KeyDto keyDto:
-				ProcessKeyInput(keyDto);
-				break;
-			case MouseButtonDto mouseButtonDto:
-				_ProcessMouseButtonInput(mouseButtonDto);
-				break;
-		}
-	}
+    public override void _ExitTree() {
+        _gameClock.RemoveActiveScene(GetInstanceId());
+    }
 
-	private void ProcessKeyInput(KeyDto dto) {
-		switch (dto.Identifier) {
-			case SwitchView:
-				if (!dto.Pressed) {
-					break;
-				}
+    public void PhysicsTick(double delta) {
+        _dayTimer.PhysicsTick(delta);
+        _customerView.PhysicsTick(delta);
+        _customerView.UpdateDayTimer(_dayTimer.GetTicksLeft());
+    }
 
-				_SwitchView();
-				break;
-		}
-	}
+    public void ProcessInput(InputEventDto eventDto) {
+        switch (eventDto) {
+            case KeyDto keyDto:
+                ProcessKeyInput(keyDto);
+                break;
+            case MouseButtonDto mouseButtonDto:
+                _ProcessMouseButtonInput(mouseButtonDto);
+                break;
+        }
+    }
 
-	private void _ProcessMouseButtonInput(MouseButtonDto dto) {
-		if (!dto.Pressed) {
-			return;
-		}
+    private void ProcessKeyInput(KeyDto dto) {
+        if (!dto.Pressed) {
+            return;
+        }
 
-		switch (_activeView) {
-			case ActiveView.CustomerView:
-				if (_IsTransactionValid()) {
-					_SellHeldMerchandise();
-				}
+        switch (dto.Identifier) {
+            case Pause:
+                PauseGame();
+                break;
+            case SwitchView:
+                _SwitchView();
+                break;
+        }
+    }
 
-				break;
-			case ActiveView.ShelfView:
-				Vector2I? hoveredDvdSlot = _shelfView.GetHoveredSlot();
-				if (hoveredDvdSlot != null) {
-					_SwapMerchandise(hoveredDvdSlot.Value);
-				}
+    private void PauseGame() {
+        _gameClock.SetPauseState(true);
 
-				break;
-		}
-	}
+        switch (_activeView) {
+            case ActiveView.CustomerView:
+                _inputStateMachine.SetState(_customerSettingsMenu);
+                _customerSettingsMenu.Visible = true;
+                break;
+            case ActiveView.ShelfView:
+                _inputStateMachine.SetState(_shelfSettingsMenu);
+                _shelfSettingsMenu.Visible = true;
+                break;
+        }
+    }
 
-	private void _SwitchView() {
-		if (_customerViewCamera.IsCurrent()) {
-			_shelfViewCamera.MakeCurrent();
-			_activeView = ActiveView.ShelfView;
-		}
-		else if (_shelfViewCamera.IsCurrent()) {
-			_customerViewCamera.MakeCurrent();
-			_activeView = ActiveView.CustomerView;
-		}
-	}
+    private void Unpause() {
+        _inputStateMachine.SetState(this);
+        _gameClock.SetPauseState(false);
+        _customerSettingsMenu.Visible = false;
+        _shelfSettingsMenu.Visible = false;
+    }
 
-	private void _SellHeldMerchandise() {
-		CustomerSaleDto saleDto = _customerView.GetCustomerSale();
-		int profit = _transactionService.SellMerchandise(saleDto);
-		// update held merch UI
-		_customerView.MerchandiseSold(profit);
+    private void _ProcessMouseButtonInput(MouseButtonDto dto) {
+        if (!dto.Pressed) {
+            return;
+        }
 
-		_DisplayHand(false);
-		_merchandiseService.SetMerchandiseCount(_merchandiseService.GetMerchandiseCount() - 1);
+        switch (_activeView) {
+            case ActiveView.CustomerView:
+                if (_IsTransactionValid()) {
+                    _SellHeldMerchandise();
+                }
 
-		GD.Print($"Merchandise left: {_merchandiseService.GetMerchandiseCount()}");
-		if (_merchandiseService.GetMerchandiseCount() == 0) {
-			GD.Print("Sold out");
-			_EndDay();
-		}
-	}
+                break;
+            case ActiveView.ShelfView:
+                Vector2I? hoveredDvdSlot = _shelfView.GetHoveredSlot();
+                if (hoveredDvdSlot != null) {
+                    _SwapMerchandise(hoveredDvdSlot.Value);
+                }
 
-	private void _SetShelfMerchandiseTexture(Vector2I position, Texture2D texture) {
-		_shelfView.SetMerchandiseTexture(position, texture);
-	}
+                break;
+        }
+    }
 
-	private void _SwapMerchandise(Vector2I position) {
-		Merchandise heldMerchandise = _merchandiseService.GetHeldMerchandise();
-		Merchandise merchandiseInSlot = _merchandiseService.GetMerchandiseFromShelf(position);
-		GD.Print($"Before swap. Held is {_merchandiseService.GetHeldMerchandise()?.ToString()}. " +
-				 $"Slot is {_merchandiseService.GetMerchandiseFromShelf(position)?.ToString()}");
+    private void _SwitchView() {
+        if (_customerViewCamera.IsCurrent()) {
+            _shelfViewCamera.MakeCurrent();
+            _activeView = ActiveView.ShelfView;
+        }
+        else if (_shelfViewCamera.IsCurrent()) {
+            _customerViewCamera.MakeCurrent();
+            _activeView = ActiveView.CustomerView;
+        }
+    }
 
-		_merchandiseService.SetHeldMerchandise(merchandiseInSlot);
-		_merchandiseService.SetShelfMerchandise(heldMerchandise, position);
+    private void _SellHeldMerchandise() {
+        CustomerSaleDto saleDto = _customerView.GetCustomerSale();
+        int profit = _transactionService.SellMerchandise(saleDto);
+        // update held merch UI
+        _customerView.MerchandiseSold(profit);
 
-		GD.Print($"After swap. Held is {_merchandiseService.GetHeldMerchandise()?.ToString()}. " +
-				 $"Slot is {_merchandiseService.GetMerchandiseFromShelf(position)?.ToString()}");
+        _DisplayHand(false);
+        _merchandiseService.SetMerchandiseCount(_merchandiseService.GetMerchandiseCount() - 1);
 
-		_shelfView.RefreshShelfMerchandiseTexture(position);
-		_RefreshHandDisplay();
-	}
+        GD.Print($"Merchandise left: {_merchandiseService.GetMerchandiseCount()}");
+        if (_merchandiseService.GetMerchandiseCount() == 0) {
+            GD.Print("Sold out");
+            _EndDay();
+        }
+    }
 
-	private void _EndDay() {
-		// TODO: Implement transition to EoD screen
-		GD.Print("End of Day");
-	}
+    private void _SetShelfMerchandiseTexture(Vector2I position, Texture2D texture) {
+        _shelfView.SetMerchandiseTexture(position, texture);
+    }
 
-	private void _DisplayHand(bool visible) {
-		_handCustomerView.Visible = visible;
-		_handShelfView.Visible = visible;
-	}
+    private void _SwapMerchandise(Vector2I position) {
+        Merchandise heldMerchandise = _merchandiseService.GetHeldMerchandise();
+        Merchandise merchandiseInSlot = _merchandiseService.GetMerchandiseFromShelf(position);
+        GD.Print($"Before swap. Held is {_merchandiseService.GetHeldMerchandise()?.ToString()}. " +
+                 $"Slot is {_merchandiseService.GetMerchandiseFromShelf(position)?.ToString()}");
 
-	private void _RefreshHandDisplay() {
-		Merchandise held = _merchandiseService.GetHeldMerchandise();
+        _merchandiseService.SetHeldMerchandise(merchandiseInSlot);
+        _merchandiseService.SetShelfMerchandise(heldMerchandise, position);
 
-		if (held is null) {
-			_DisplayHand(false);
-			return;
-		}
+        GD.Print($"After swap. Held is {_merchandiseService.GetHeldMerchandise()?.ToString()}. " +
+                 $"Slot is {_merchandiseService.GetMerchandiseFromShelf(position)?.ToString()}");
 
-		_DisplayHand(true);
-		Texture2dId textureId = MerchandiseUtil.GetMerchandiseTextureId(held.Color, held.Type, held.Tier);
-		_handCustomerView.SetMerchandise(_texture2dRepository.GetTexture(textureId));
-		_handShelfView.SetMerchandise(_texture2dRepository.GetTexture(textureId));
-	}
+        _shelfView.RefreshShelfMerchandiseTexture(position);
+        _RefreshHandDisplay();
+    }
 
-	private bool _IsTransactionValid() {
-		return _customerView.IsMerchandiseSellSlotHovered()
-			   && _customerView.IsCustomerReadyToPurchase()
-			   && _merchandiseService.GetHeldMerchandise() is not null;
-	}
+    private void _EndDay() {
+        // TODO: Implement transition to EoD screen
+        GD.Print("End of Day");
+    }
 
-	private enum ActiveView {
-		CustomerView,
-		ShelfView
-	}
+    private void _DisplayHand(bool visible) {
+        _handCustomerView.Visible = visible;
+        _handShelfView.Visible = visible;
+    }
+
+    private void _RefreshHandDisplay() {
+        Merchandise held = _merchandiseService.GetHeldMerchandise();
+
+        if (held is null) {
+            _DisplayHand(false);
+            return;
+        }
+
+        _DisplayHand(true);
+        Texture2dId textureId = MerchandiseUtil.GetMerchandiseTextureId(held.Color, held.Type, held.Tier);
+        _handCustomerView.SetMerchandise(_texture2dRepository.GetTexture(textureId));
+        _handShelfView.SetMerchandise(_texture2dRepository.GetTexture(textureId));
+    }
+
+    private bool _IsTransactionValid() {
+        return _customerView.IsMerchandiseSellSlotHovered()
+               && _customerView.IsCustomerReadyToPurchase()
+               && _merchandiseService.GetHeldMerchandise() is not null;
+    }
+
+    private enum ActiveView {
+        CustomerView,
+        ShelfView
+    }
 }
