@@ -32,7 +32,7 @@ public class TransactionService : IService {
 	}
 
 	public void AddProfitFromDayToPlayerMoney() {
-		_playerDataService.SetMoney(_playerDataService.GetMoney() + _profitFromDay);
+		_playerDataService.AddMoney(_profitFromDay);
 		ResetProfitFromDay();
 	}
 

@@ -11,6 +11,14 @@ public class PlayerDataService : IService {
         _playerDataRepository.SetMoney(money);
     }
 
+    public void AddMoney(int money) {
+        _playerDataRepository.AddMoney(money);
+    }
+
+    public int GetCareerProfit() {
+        return _playerDataRepository.GetCareerProfit();
+    }
+
     public int GetMoney() {
         return _playerDataRepository.GetMoney();
     }
