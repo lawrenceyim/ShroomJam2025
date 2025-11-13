@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ckkj6aw5bbkmj"]
+[gd_scene load_steps=5 format=3 uid="uid://ckkj6aw5bbkmj"]
 
 [ext_resource type="Script" uid="uid://cmhnho16oan0b" path="res://Scripts/Scenes/Main Menu/StartMenu.cs" id="1_y5olr"]
 [ext_resource type="Texture2D" uid="uid://cva0n2gioalyg" path="res://Assets/Sprites/start menu.png" id="2_5j06u"]
 [ext_resource type="Texture2D" uid="uid://wqsg0lgu8w8v" path="res://Assets/Sprites/play button.webp" id="3_ifmnt"]
+[ext_resource type="AudioStream" uid="uid://buf4rg5udndk8" path="res://Assets/Audio/breakroom.wav" id="4_ifmnt"]
 
 [node name="Node2D" type="Node2D" node_paths=PackedStringArray("_startButton")]
 script = ExtResource("1_y5olr")
@@ -23,3 +24,8 @@ offset_left = -125.0
 offset_top = 59.0
 offset_right = 122.0
 offset_bottom = 143.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ifmnt")
+volume_db = -25.0
+autoplay = true
