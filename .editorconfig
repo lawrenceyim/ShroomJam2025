@@ -2,6 +2,7 @@
 [*.cs]
 csharp_new_line_before_open_brace = none
 csharp_space_after_keywords_in_control_flow_statements = true
+csharp_new_line_before_else = false
 
 # Use camelCase for variables and methods
 dotnet_naming_rule.members_should_be_camel_case.severity = suggestion

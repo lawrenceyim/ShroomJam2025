@@ -212,8 +212,7 @@ public partial class MainLevel : Node, IInputState, ITick {
         if (_customerViewCamera.IsCurrent()) {
             _shelfViewCamera.MakeCurrent();
             _activeView = ActiveView.ShelfView;
-        }
-        else if (_shelfViewCamera.IsCurrent()) {
+        } else if (_shelfViewCamera.IsCurrent()) {
             _customerViewCamera.MakeCurrent();
             _activeView = ActiveView.CustomerView;
         }
@@ -221,12 +220,21 @@ public partial class MainLevel : Node, IInputState, ITick {
 
     private void _SellHeldMerchandise() {
         CustomerSaleDto saleDto = _customerView.GetCustomerSale();
+        Merchandise heldMerchandise = _merchandiseService.GetHeldMerchandise();
         int profit = _transactionService.SellMerchandise(saleDto);
         _customerView.MerchandiseSold(profit);
         _DisplayHand(false);
         _customerView.SetHoldingItem(false);
         _merchandiseService.SetMerchandiseCount(_merchandiseService.GetMerchandiseCount() - 1);
-        _PlaySoundEffect(SoundEffectId.SaleMade); // TODO: Replace later
+
+        if (saleDto.customerMood == CustomerMood.Happy
+            && saleDto.colorWanted == heldMerchandise.Color
+            && saleDto.merchandiseTypeWanted == heldMerchandise.Type) {
+            _PlaySoundEffect(SoundEffectId.GreatSaleMade);
+        } else {
+            _PlaySoundEffect(SoundEffectId.SaleMade);
+        }
+
         if (_merchandiseService.GetMerchandiseCount() == 0) {
             _EndDay();
         }
@@ -247,8 +255,7 @@ public partial class MainLevel : Node, IInputState, ITick {
 
         if (_merchandiseService.GetHeldMerchandise() is not null) {
             _PlaySoundEffect(SoundEffectId.MerchandisePickedUp);
-        }
-        else {
+        } else {
             _PlaySoundEffect(SoundEffectId.MerchandisePutDown);
         }
     }
@@ -303,8 +310,7 @@ public partial class MainLevel : Node, IInputState, ITick {
         if (GlobalSettings.MuteVolume) {
             _musicPlayer.Stop();
             _soundEffectPlayer.Stop();
-        }
-        else {
+        } else {
             _musicPlayer.Play();
         }
     }
