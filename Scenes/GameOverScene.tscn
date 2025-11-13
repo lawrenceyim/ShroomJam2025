@@ -1,10 +1,44 @@
-[gd_scene load_steps=2 format=3 uid="uid://blwpbpb6edri7"]
+[gd_scene load_steps=7 format=3 uid="uid://blwpbpb6edri7"]
 
+[ext_resource type="Texture2D" uid="uid://dwmum8qqbyfb5" path="res://Assets/Sprites/BackgroundDark.png" id="1_bv81r"]
 [ext_resource type="Texture2D" uid="uid://160yd3vb5uq4" path="res://Assets/Sprites/Game Over/bad ending.webp" id="1_re8an"]
+[ext_resource type="Script" uid="uid://go8tlseedfu1" path="res://Scripts/Scenes/GameOver.cs" id="2_543kh"]
+[ext_resource type="Texture2D" uid="uid://dgyvlqpiewss1" path="res://Assets/Sprites/tablesprite.png" id="2_gv64c"]
+[ext_resource type="Texture2D" uid="uid://505doa76foq0" path="res://Assets/Sprites/placeholders/cash register.webp" id="3_jlaih"]
+[ext_resource type="AudioStream" uid="uid://b2mttv8hipxhh" path="res://Assets/Audio/Sound Effects/AngryCustomerLeaves.wav" id="6_gv64c"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("_endingSprite", "_soundEffectPlayer")]
+script = ExtResource("2_543kh")
+_endingSprite = NodePath("BadEnding")
+_soundEffectPlayer = NodePath("Sfx Player")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="Sprites"]
+z_index = -20
+texture = ExtResource("1_bv81r")
+
+[node name="Tablesprite" type="Sprite2D" parent="Sprites"]
+modulate = Color(0.4627451, 0.5058824, 0.5294118, 1)
+z_index = 10
+position = Vector2(-640, -360)
+texture = ExtResource("2_gv64c")
+centered = false
+
+[node name="CashRegister" type="Sprite2D" parent="Sprites"]
+modulate = Color(0.4627451, 0.5058824, 0.5294118, 1)
+z_index = 15
+position = Vector2(-427, 111)
+texture = ExtResource("3_jlaih")
 
 [node name="BadEnding" type="Sprite2D" parent="."]
+z_index = 50
 texture = ExtResource("1_re8an")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("2_543kh")
+
+[node name="Sfx Player" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_gv64c")
+volume_db = -25.0
+autoplay = true

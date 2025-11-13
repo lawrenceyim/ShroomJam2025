@@ -53,4 +53,7 @@ public enum Texture2dId {
     BlueDvdBlank = 36,
     RedDvdBlank = 37,
     GreenDvdBlank = 38,
+    BadEnding = 39,
+    NeutralEnding = 40,
+    GoodEnding = 41,
 }
