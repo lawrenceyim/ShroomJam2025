@@ -49,6 +49,9 @@ public partial class MainLevel : Node, IInputState, ITick {
     [Export]
     private Button[] _pauseButtons;
 
+    [Export]
+    private Sprite2D[] _pauseButtonSprites;
+
     private const string SwitchView = "Space";
     private const string Pause = "Escape";
 
@@ -166,6 +169,10 @@ public partial class MainLevel : Node, IInputState, ITick {
     private void PauseGame() {
         _gameClock.SetPauseState(true);
 
+        foreach (Sprite2D sprite in _pauseButtonSprites) {
+            sprite.Visible = false;
+        }
+
         switch (_activeView) {
             case ActiveView.CustomerView:
                 _inputStateMachine.SetState(_customerSettingsMenu);
@@ -183,6 +190,10 @@ public partial class MainLevel : Node, IInputState, ITick {
         _gameClock.SetPauseState(false);
         _customerSettingsMenu.Hide();
         _shelfSettingsMenu.Hide();
+
+        foreach (Sprite2D sprite in _pauseButtonSprites) {
+            sprite.Visible = true;
+        }
     }
 
     private void _ProcessMouseButtonInput(MouseButtonDto dto) {
