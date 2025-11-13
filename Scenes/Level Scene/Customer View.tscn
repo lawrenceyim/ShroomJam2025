@@ -3,11 +3,11 @@
 [ext_resource type="Script" uid="uid://bwa7a85coc2e5" path="res://Scripts/Scenes/Game Level/CustomerView.cs" id="1_5qpia"]
 [ext_resource type="Texture2D" uid="uid://dgyvlqpiewss1" path="res://Assets/Sprites/tablesprite.png" id="2_j8kt0"]
 [ext_resource type="Texture2D" uid="uid://505doa76foq0" path="res://Assets/Sprites/placeholders/cash register.webp" id="3_kaucv"]
+[ext_resource type="Texture2D" uid="uid://cxumk5va6unok" path="res://Assets/Sprites/BackgroundLight.png" id="4_cje0c"]
 [ext_resource type="Texture2D" uid="uid://ceqdtkw2640cb" path="res://Assets/Sprites/merchandise/RedDvd.png" id="4_sl153"]
 [ext_resource type="PackedScene" uid="uid://b8k5v0yxsjqr8" path="res://Scenes/Game Object/Hand.tscn" id="5_wtheq"]
 [ext_resource type="Texture2D" uid="uid://brrifuemrx73x" path="res://Assets/Sprites/thought bubble.webp" id="6_6tr70"]
 [ext_resource type="PackedScene" uid="uid://c5n7jcnie0d8k" path="res://Scenes/Game Object/Settings.tscn" id="7_14180"]
-[ext_resource type="Texture2D" uid="uid://dwmum8qqbyfb5" path="res://Assets/Sprites/BackgroundDark.png" id="8_xv01k"]
 [ext_resource type="Texture2D" uid="uid://wwunrmufu7ve" path="res://Assets/Sprites/Sideway arrow.webp" id="9_cje0c"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sl153"]
@@ -68,9 +68,9 @@ position = Vector2(-640, -360)
 
 [node name="Sprites" type="Node2D" parent="."]
 
-[node name="BackgroundDark" type="Sprite2D" parent="Sprites"]
+[node name="Background" type="Sprite2D" parent="Sprites"]
 z_index = -20
-texture = ExtResource("8_xv01k")
+texture = ExtResource("4_cje0c")
 
 [node name="ThoughtBubble" type="Sprite2D" parent="Sprites"]
 position = Vector2(42, -71)
