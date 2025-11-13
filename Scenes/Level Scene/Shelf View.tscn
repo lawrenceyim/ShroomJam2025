@@ -27,6 +27,12 @@ position = Vector2(-640, 84)
 visible = false
 position = Vector2(-640, -360)
 
-[node name="SidewayArrow" type="Sprite2D" parent="."]
+[node name="To Customer SidewayArrow" type="Sprite2D" parent="."]
 position = Vector2(575, 200)
 texture = ExtResource("6_b1872")
+
+[node name="To Customer Area2D" type="Area2D" parent="To Customer SidewayArrow"]
+position = Vector2(-17, 68)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="To Customer SidewayArrow/To Customer Area2D"]
+polygon = PackedVector2Array(-1, 5, 72, -69, -1, -141)

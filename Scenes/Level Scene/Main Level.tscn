@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b542syw0tbdyd" path="res://Scenes/Level Scene/Customer View.tscn" id="3_14an5"]
 [ext_resource type="PackedScene" uid="uid://6ap52pswgcp2" path="res://Scenes/Level Scene/Shelf View.tscn" id="3_jurmy"]
 
-[node name="GameLevel" type="Node2D" node_paths=PackedStringArray("_customerViewCamera", "_customerView", "_shelfViewCamera", "_shelfView", "_handCustomerView", "_handShelfView", "_customerSettingsMenu", "_shelfSettingsMenu")]
+[node name="GameLevel" type="Node2D" node_paths=PackedStringArray("_customerViewCamera", "_customerView", "_shelfViewCamera", "_shelfView", "_handCustomerView", "_handShelfView", "_customerSettingsMenu", "_shelfSettingsMenu", "_toCustomerArrow", "_toShelfArrow", "_toCustomerArrowArea", "_toShelfArrowArea")]
 script = ExtResource("1_if62t")
 _customerViewCamera = NodePath("Customer View/Customer Camera2D")
 _customerView = NodePath("Customer View")
@@ -14,6 +14,10 @@ _handCustomerView = NodePath("Customer View/Sprites/Hand")
 _handShelfView = NodePath("ShelfView/Hand")
 _customerSettingsMenu = NodePath("Customer View/Customer Settings Menu")
 _shelfSettingsMenu = NodePath("ShelfView/Shelf Settings Menu")
+_toCustomerArrow = NodePath("ShelfView/To Customer SidewayArrow")
+_toShelfArrow = NodePath("Customer View/Sprites/To Shelf SidewayArrow")
+_toCustomerArrowArea = NodePath("ShelfView/To Customer SidewayArrow/To Customer Area2D")
+_toShelfArrowArea = NodePath("Customer View/Sprites/To Shelf SidewayArrow/To Shelf Area2D")
 
 [node name="Customer View" parent="." instance=ExtResource("3_14an5")]
 position = Vector2(-2, 0)

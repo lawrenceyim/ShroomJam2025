@@ -96,7 +96,13 @@ texture = ExtResource("3_kaucv")
 z_index = 20
 position = Vector2(-640, 84)
 
-[node name="SidewayArrow" type="Sprite2D" parent="Sprites"]
+[node name="To Shelf SidewayArrow" type="Sprite2D" parent="Sprites"]
 z_index = 30
 position = Vector2(575, 200)
 texture = ExtResource("9_cje0c")
+
+[node name="To Shelf Area2D" type="Area2D" parent="Sprites/To Shelf SidewayArrow"]
+position = Vector2(-17, 68)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprites/To Shelf SidewayArrow/To Shelf Area2D"]
+polygon = PackedVector2Array(-1, 5, 72, -69, -1, -141)

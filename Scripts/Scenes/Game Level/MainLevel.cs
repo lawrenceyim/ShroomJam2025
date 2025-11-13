@@ -28,11 +28,27 @@ public partial class MainLevel : Node, IInputState, ITick {
 	[Export]
 	private SettingsMenu _shelfSettingsMenu;
 
+	[Export]
+	private Sprite2D _toCustomerArrow;
+
+	[Export]
+	private Sprite2D _toShelfArrow;
+
+	[Export]
+	private Area2D _toCustomerArrowArea;
+
+	[Export]
+	private Area2D _toShelfArrowArea;
+
 	private const string SwitchView = "Space";
 	private const string Pause = "Escape";
 
 	private const int SecondsPerDay = 120;
-	private readonly TickTimer _dayTimer = new TickTimer();
+	private readonly TickTimer _dayTimer = new();
+	private readonly Color _originalArrowColor = new(1, 1, 1, 1);
+	private readonly Color _highlightedArrowColor = new(1, 0, 1, 1);
+	private readonly BlinkingComponent _toShelfBlinkingComponent = new();
+	private readonly BlinkingComponent _toCustomerBlinkingComponent = new();
 	private readonly int _ticksPerSeconds = Engine.PhysicsTicksPerSecond; // Avoid latency from marshalling
 	private ServiceLocator _serviceLocator;
 	private PackedSceneRepository _packedSceneRepository;
@@ -43,6 +59,8 @@ public partial class MainLevel : Node, IInputState, ITick {
 	private SceneRepository _sceneRepository;
 	private GameClock _gameClock;
 	private ActiveView _activeView = ActiveView.CustomerView;
+	private bool _toCustomerArrowHovered = false;
+	private bool _toShelfArrowHovered = false;
 
 	public override void _Ready() {
 		_serviceLocator = GetNode<ServiceLocator>(ServiceLocator.AutoloadPath);
@@ -70,6 +88,12 @@ public partial class MainLevel : Node, IInputState, ITick {
 			_texture2dRepository,
 			playerDataService
 		);
+		_toCustomerBlinkingComponent.Instantiate(_toCustomerArrow, 1, _originalArrowColor, _highlightedArrowColor);
+		_toShelfBlinkingComponent.Instantiate(_toShelfArrow, 1, _originalArrowColor, _highlightedArrowColor);
+		_toCustomerArrowArea.MouseEntered += () => _toCustomerArrowHovered = true;
+		_toShelfArrowArea.MouseEntered += () => _toShelfArrowHovered = true;
+		_toCustomerArrowArea.MouseExited += () => _toCustomerArrowHovered = false;
+		_toShelfArrowArea.MouseExited += () => _toShelfArrowHovered = false;
 
 		_DisplayHand(false);
 
@@ -148,12 +172,22 @@ public partial class MainLevel : Node, IInputState, ITick {
 
 		switch (_activeView) {
 			case ActiveView.CustomerView:
+				if (_toShelfArrowHovered) {
+					_SwitchView();
+					return;
+				}
+
 				if (_IsTransactionValid()) {
 					_SellHeldMerchandise();
 				}
 
 				break;
 			case ActiveView.ShelfView:
+				if (_toCustomerArrowHovered) {
+					_SwitchView();
+					return;
+				}
+
 				Vector2I? hoveredDvdSlot = _shelfView.GetHoveredSlot();
 				if (hoveredDvdSlot != null) {
 					_SwapMerchandise(hoveredDvdSlot.Value);
