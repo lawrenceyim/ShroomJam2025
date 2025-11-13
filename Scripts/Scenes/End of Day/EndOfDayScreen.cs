@@ -73,7 +73,7 @@ public partial class EndOfDayScreen : Node2D {
         }
 
         _moneyCounter = Math.Min(_moneyCounter + 25, _moneyEarned);
-        _profitLabel.Text = $"Profit: {_moneyCounter}";
+        _profitLabel.Text = $"{_moneyCounter}";
     }
 
     private void _UpgradeRarity(UpgradeService.UpgradeType upgradeType) {
