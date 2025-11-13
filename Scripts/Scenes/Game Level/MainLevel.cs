@@ -215,9 +215,7 @@ public partial class MainLevel : Node, IInputState, ITick {
 		_DisplayHand(false);
 		_customerView.SetHoldingItem(false);
 		_merchandiseService.SetMerchandiseCount(_merchandiseService.GetMerchandiseCount() - 1);
-		GD.Print($"Merchandise left: {_merchandiseService.GetMerchandiseCount()}");
 		if (_merchandiseService.GetMerchandiseCount() == 0) {
-			GD.Print("Sold out");
 			_EndDay();
 		}
 	}

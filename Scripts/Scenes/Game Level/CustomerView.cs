@@ -25,7 +25,7 @@ public partial class CustomerView : Node2D, ITick {
 	private readonly int _numberOfCustomerIds = Enum.GetNames(typeof(CustomerId)).Length;
 	private readonly int _ticksPerSeconds = Engine.PhysicsTicksPerSecond;
 	private readonly CustomerGeneratorComponent _customerGenerator = new();
-	private readonly Random _random = new Random();
+	private readonly Random _random = new();
 	private readonly TickTimer _customerTimer = new TickTimer();
 	private readonly int _secondsPerCustomerMood = 7;
 	private readonly int _ticksPerSecond = Engine.PhysicsTicksPerSecond;
@@ -34,6 +34,7 @@ public partial class CustomerView : Node2D, ITick {
 	private PlayerDataSerivce _playerDataService;
 	private readonly Color _originalSlotColor = new Color(1, 1, 1, .5f);
 	private readonly Color _highlightedSlotColor = new Color(1, 1, 0, 1);
+	private readonly BlinkingComponent _sellSlotBlinkingComponent = new();
 
 	private MerchandiseColor _colorWanted;
 	private MerchandiseType _merchandiseTypeWanted;
@@ -51,7 +52,6 @@ public partial class CustomerView : Node2D, ITick {
 	private CustomerMovement? _leavingCustomerMovement;
 	private bool _merchandiseSellSlotHovered = false;
 	private bool _customerReadyToPurchase = false;
-	private BlinkingComponent _sellSlotBlinkingComponent = new BlinkingComponent();
 	private bool _holdingItem = false;
 
 	public void Initialize(Texture2dRepository texture2DRepository, PlayerDataSerivce playerDataService) {
@@ -62,7 +62,7 @@ public partial class CustomerView : Node2D, ITick {
 		_merchandiseSellSlotArea.MouseExited += () => { _merchandiseSellSlotHovered = false; };
 		_GenerateCustomer();
 		_sellSlotBlinkingComponent.Instantiate(_merchandiseSellSlotHighlight, 1, _originalSlotColor, _highlightedSlotColor);
-		_HighlightSellSlot();		
+		_HighlightSellSlot();
 	}
 
 	public CustomerSaleDto GetCustomerSale() {
@@ -167,7 +167,7 @@ public partial class CustomerView : Node2D, ITick {
 		_merchandiseTypeWanted = MerchandiseUtil.GetRandomMerchandiseType();
 		_customerId = _customerGenerator.GetRandomCustomerId(_playerDataService.GetCustomerRarityUpgradeLevel());
 		_customerMood = CustomerMood.Happy;
-		Sprite2D sprite = new Sprite2D();
+		Sprite2D sprite = new();
 		sprite.Texture = _GetCustomerSprite();
 		sprite.Position = _customerSpawnPoint + Position;
 		sprite.ZIndex = -1;
@@ -197,8 +197,6 @@ public partial class CustomerView : Node2D, ITick {
 				break;
 			case MerchandiseColor.Green:
 				_desiredMerchandiseSprite.Texture = _texture2DRepository.GetTexture(Texture2dId.GreenDvdBlank);
-				break;
-			default:
 				break;
 		}
 	}
