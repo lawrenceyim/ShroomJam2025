@@ -32,8 +32,8 @@ public partial class CustomerView : Node2D, ITick {
 
 	private Texture2dRepository _texture2DRepository;
 	private PlayerDataSerivce _playerDataService;
-	private readonly Color _originalSlotColor = new Color(1, 1, 0, 0);
-	private readonly Color _highlightedSlotColor = new Color(1, 1, 0, .5f);
+	private readonly Color _originalSlotColor = new Color(1, 1, 1, .5f);
+	private readonly Color _highlightedSlotColor = new Color(1, 1, 0, 1);
 
 	private MerchandiseColor _colorWanted;
 	private MerchandiseType _merchandiseTypeWanted;
@@ -51,11 +51,8 @@ public partial class CustomerView : Node2D, ITick {
 	private CustomerMovement? _leavingCustomerMovement;
 	private bool _merchandiseSellSlotHovered = false;
 	private bool _customerReadyToPurchase = false;
-
-	private bool _highlightActive = false;
-	private bool _highlightLerpingIn = true;
-	private int _ticksPerLerp = 60;
-	private int _tickLerpCounter = 0;
+	private BlinkingComponent _sellSlotBlinkingComponent = new BlinkingComponent();
+	private bool _holdingItem = false;
 
 	public void Initialize(Texture2dRepository texture2DRepository, PlayerDataSerivce playerDataService) {
 		_texture2DRepository = texture2DRepository;
@@ -64,6 +61,8 @@ public partial class CustomerView : Node2D, ITick {
 		_merchandiseSellSlotArea.MouseEntered += () => { _merchandiseSellSlotHovered = true; };
 		_merchandiseSellSlotArea.MouseExited += () => { _merchandiseSellSlotHovered = false; };
 		_GenerateCustomer();
+		_sellSlotBlinkingComponent.Instantiate(_merchandiseSellSlotHighlight, 1, _originalSlotColor, _highlightedSlotColor);
+		_HighlightSellSlot();		
 	}
 
 	public CustomerSaleDto GetCustomerSale() {
@@ -91,7 +90,6 @@ public partial class CustomerView : Node2D, ITick {
 	public void PhysicsTick(double delta) {
 		_customerTimer.PhysicsTick(delta);
 		_UpdateCustomer();
-		_LerpHighlight();
 	}
 
 	private void _ChangeCustomerMood() {
@@ -119,35 +117,21 @@ public partial class CustomerView : Node2D, ITick {
 		_dayTimerLabel.Text = $"{minutes:D2}:{seconds:D2}";
 	}
 
-	private void _LerpHighlight() {
-		if (!_highlightActive || _customerState != CustomerState.Waiting) {
-			return;
-		}
-
-		float t = (float)_tickLerpCounter / _ticksPerLerp;
-		_merchandiseSellSlotHighlight.Color = _highlightLerpingIn
-			? _originalSlotColor.Lerp(_highlightedSlotColor, t)
-			: _highlightedSlotColor.Lerp(_originalSlotColor, t);
-
-		_tickLerpCounter++;
-		if (_tickLerpCounter >= _ticksPerLerp) {
-			_highlightLerpingIn = !_highlightLerpingIn;
-			_tickLerpCounter = 0;
-		}
+	public void SetHoldingItem(bool holdingItem) {
+		_holdingItem = holdingItem;
+		_HighlightSellSlot();
 	}
 
-	public void HighlightSellSlot(bool highlighted) {
-		if (!highlighted) {
+	private void _HighlightSellSlot() {
+		if (!_holdingItem || _customerState != CustomerState.Waiting) {
 			_merchandiseSellSlotHighlight.Visible = false;
-			_highlightActive = false;
 			_merchandiseSellSlotHighlight.Color = _originalSlotColor;
+			_sellSlotBlinkingComponent.Pause(true);
 			return;
 		}
 
 		_merchandiseSellSlotHighlight.Visible = true;
-		_tickLerpCounter = 0;
-		_highlightLerpingIn = true;
-		_highlightActive = true;
+		_sellSlotBlinkingComponent.Pause(false);
 	}
 
 	private void _UpdateCustomer() {
@@ -162,7 +146,6 @@ public partial class CustomerView : Node2D, ITick {
 		if (_currentCustomerSprite is not null) {
 			switch (_customerState) {
 				case CustomerState.Entering:
-					// TODO : move sprite to position
 					_currentCustomerSprite.Position += _currentCustomerMovement.Movement();
 					if (Math.Abs(_currentCustomerSprite.Position.X - _customerStopPointX) < 25) {
 						_customerState = CustomerState.Waiting;
@@ -172,6 +155,7 @@ public partial class CustomerView : Node2D, ITick {
 
 					break;
 				case CustomerState.Waiting:
+					_HighlightSellSlot();
 					_ToggleVisibilityOfDesiredMerchandise(true);
 					break;
 			}

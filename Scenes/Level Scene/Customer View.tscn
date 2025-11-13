@@ -23,19 +23,10 @@ _dayTimerLabel = NodePath("Day Timer Label")
 _merchandiseSellSlotArea = NodePath("Area2D Merchandise Sell Slot")
 _merchandiseSellSlotHighlight = NodePath("Area2D Merchandise Sell Slot/Polygon2D")
 _profitLabel = NodePath("Profit Label")
-_desiredMerchandiseSprite = NodePath("ThoughtBubble/Desired Merchandise")
-_thoughtBubble = NodePath("ThoughtBubble")
-
-[node name="BackgroundDark" type="Sprite2D" parent="."]
-z_index = -20
-texture = ExtResource("8_xv01k")
+_desiredMerchandiseSprite = NodePath("Sprites/ThoughtBubble/Desired Merchandise")
+_thoughtBubble = NodePath("Sprites/ThoughtBubble")
 
 [node name="Customer Camera2D" type="Camera2D" parent="."]
-
-[node name="Tablesprite" type="Sprite2D" parent="."]
-position = Vector2(-640, -360)
-texture = ExtResource("2_j8kt0")
-centered = false
 
 [node name="CashRegister" type="Sprite2D" parent="."]
 position = Vector2(-426, 109)
@@ -44,19 +35,16 @@ texture = ExtResource("3_kaucv")
 [node name="Area2D Merchandise Sell Slot" type="Area2D" parent="."]
 
 [node name="Polygon2D" type="Polygon2D" parent="Area2D Merchandise Sell Slot"]
+z_index = 20
 position = Vector2(-197, 277)
-color = Color(1, 1, 0, 0.39215687)
 polygon = PackedVector2Array(-4, -1, 56, -170, 336, -170, 436, -2, 433, -3)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D Merchandise Sell Slot"]
 position = Vector2(-197, 277)
 polygon = PackedVector2Array(-4, -1, 56, -170, 336, -170, 436, -2, 433, -3)
 
-[node name="CashRegister" type="Sprite2D" parent="Area2D Merchandise Sell Slot"]
-position = Vector2(-427, 111)
-texture = ExtResource("3_kaucv")
-
 [node name="Profit Label" type="Label" parent="."]
+z_index = 20
 offset_left = -496.0
 offset_top = -67.0
 offset_right = -380.0
@@ -65,7 +53,7 @@ text = "$0"
 label_settings = SubResource("LabelSettings_sl153")
 
 [node name="Day Timer Label" type="Label" parent="."]
-z_index = 10
+z_index = -5
 offset_left = -160.0
 offset_top = -341.0
 offset_right = 174.0
@@ -74,22 +62,41 @@ text = "1:59"
 label_settings = SubResource("LabelSettings_xv01k")
 horizontal_alignment = 1
 
-[node name="Hand" parent="." instance=ExtResource("5_wtheq")]
-position = Vector2(-640, 84)
-
-[node name="ThoughtBubble" type="Sprite2D" parent="."]
-position = Vector2(42, -71)
-texture = ExtResource("6_6tr70")
-
-[node name="Desired Merchandise" type="Sprite2D" parent="ThoughtBubble"]
-z_index = 10
-position = Vector2(-41, 4)
-texture = ExtResource("4_sl153")
-
 [node name="Customer Settings Menu" parent="." instance=ExtResource("7_14180")]
 visible = false
 position = Vector2(-640, -360)
 
-[node name="SidewayArrow" type="Sprite2D" parent="."]
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="BackgroundDark" type="Sprite2D" parent="Sprites"]
+z_index = -20
+texture = ExtResource("8_xv01k")
+
+[node name="ThoughtBubble" type="Sprite2D" parent="Sprites"]
+position = Vector2(42, -71)
+texture = ExtResource("6_6tr70")
+
+[node name="Desired Merchandise" type="Sprite2D" parent="Sprites/ThoughtBubble"]
+z_index = 10
+position = Vector2(-41, 4)
+texture = ExtResource("4_sl153")
+
+[node name="Tablesprite" type="Sprite2D" parent="Sprites"]
+z_index = 10
+position = Vector2(-640, -360)
+texture = ExtResource("2_j8kt0")
+centered = false
+
+[node name="CashRegister" type="Sprite2D" parent="Sprites"]
+z_index = 15
+position = Vector2(-427, 111)
+texture = ExtResource("3_kaucv")
+
+[node name="Hand" parent="Sprites" instance=ExtResource("5_wtheq")]
+z_index = 20
+position = Vector2(-640, 84)
+
+[node name="SidewayArrow" type="Sprite2D" parent="Sprites"]
+z_index = 30
 position = Vector2(575, 200)
 texture = ExtResource("9_cje0c")

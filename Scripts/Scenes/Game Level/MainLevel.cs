@@ -72,7 +72,6 @@ public partial class MainLevel : Node, IInputState, ITick {
 		);
 
 		_DisplayHand(false);
-		_customerView.HighlightSellSlot(false);
 
 		_dayTimer.StartFixedTimer(false, SecondsPerDay * _ticksPerSeconds);
 		_dayTimer.TimedOut += _EndDay;
@@ -180,7 +179,7 @@ public partial class MainLevel : Node, IInputState, ITick {
 		int profit = _transactionService.SellMerchandise(saleDto);
 		_customerView.MerchandiseSold(profit);
 		_DisplayHand(false);
-		_customerView.HighlightSellSlot(false);
+		_customerView.SetHoldingItem(false);
 		_merchandiseService.SetMerchandiseCount(_merchandiseService.GetMerchandiseCount() - 1);
 		GD.Print($"Merchandise left: {_merchandiseService.GetMerchandiseCount()}");
 		if (_merchandiseService.GetMerchandiseCount() == 0) {
@@ -200,7 +199,7 @@ public partial class MainLevel : Node, IInputState, ITick {
 		_merchandiseService.SetShelfMerchandise(heldMerchandise, position);
 		_shelfView.RefreshShelfMerchandiseTexture(position);
 		_RefreshHandDisplay();
-		_customerView.HighlightSellSlot(_merchandiseService.GetHeldMerchandise() is not null);
+		_customerView.SetHoldingItem(_merchandiseService.GetHeldMerchandise() is not null);
 	}
 
 	private void _EndDay() {
