@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b8cjxi5dmhu2g"]
+[gd_scene load_steps=10 format=3 uid="uid://b8cjxi5dmhu2g"]
 
 [ext_resource type="Texture2D" uid="uid://dwmum8qqbyfb5" path="res://Assets/Sprites/BackgroundDark.png" id="1_j6nnl"]
 [ext_resource type="Script" uid="uid://kbmdq646u1vq" path="res://Scripts/Scenes/End of Day/EndOfDayScreen.cs" id="1_tqqb4"]
@@ -13,10 +13,23 @@ line_spacing = 0.0
 font_size = 60
 font_color = Color(0.41960785, 0.23529412, 0.07058824, 1)
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("_soundEffectPlayer", "_profitLabel")]
+[sub_resource type="LabelSettings" id="LabelSettings_f6j6i"]
+line_spacing = 0.0
+font_size = 30
+font_color = Color(0.41960785, 0.23529412, 0.07058824, 1)
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("_soundEffectPlayer", "_profitLabel", "_customerRarityUpgradeButton", "_merchandiseRarityUpgradeButton", "_nextDayButton", "_customerRarityLevelLabel", "_merchandiseRarityLevelLabel", "_customerRarityUpgradeCostLabel", "_merchandiseRarityUpgradeCostLabel", "_currentDayLabel")]
 script = ExtResource("1_tqqb4")
 _soundEffectPlayer = NodePath("Sfx Player")
 _profitLabel = NodePath("DayComplete/Profit Label")
+_customerRarityUpgradeButton = NodePath("DayComplete/CustomerUpgradeButton/Customer Button")
+_merchandiseRarityUpgradeButton = NodePath("DayComplete/MerchandiseUpgradeButton/Merchandise Button")
+_nextDayButton = NodePath("DayComplete/Next Day Button")
+_customerRarityLevelLabel = NodePath("DayComplete/Customer Level Label")
+_merchandiseRarityLevelLabel = NodePath("DayComplete/Merchandise Level Label")
+_customerRarityUpgradeCostLabel = NodePath("DayComplete/Customer Cost Label")
+_merchandiseRarityUpgradeCostLabel = NodePath("DayComplete/Merchandise Cost Label")
+_currentDayLabel = NodePath("DayComplete/Day Label")
 
 [node name="Sprites" type="Node2D" parent="."]
 
@@ -51,11 +64,77 @@ texture = ExtResource("7_ssli6")
 [node name="Profit Label" type="Label" parent="DayComplete"]
 offset_left = 42.0
 offset_top = -168.0
-offset_right = 410.0
+offset_right = 240.0
 offset_bottom = -85.0
 text = "0"
 label_settings = SubResource("LabelSettings_vnb6n")
 
-[node name="UpgradeButton" type="Sprite2D" parent="DayComplete"]
-position = Vector2(277, -54)
+[node name="Day Label" type="Label" parent="DayComplete"]
+offset_left = -150.0
+offset_top = 120.0
+offset_right = 48.0
+offset_bottom = 203.0
+text = "0"
+label_settings = SubResource("LabelSettings_vnb6n")
+
+[node name="Customer Level Label" type="Label" parent="DayComplete"]
+offset_left = 140.0
+offset_top = -85.0
+offset_right = 338.0
+offset_bottom = -2.0
+text = "0"
+label_settings = SubResource("LabelSettings_vnb6n")
+
+[node name="Merchandise Level Label" type="Label" parent="DayComplete"]
+offset_left = 140.0
+offset_top = -5.0
+offset_right = 338.0
+offset_bottom = 78.0
+text = "0"
+label_settings = SubResource("LabelSettings_vnb6n")
+
+[node name="CustomerUpgradeButton" type="Sprite2D" parent="DayComplete"]
+position = Vector2(300, -55)
+scale = Vector2(0.75, 0.75)
 texture = ExtResource("6_f6j6i")
+
+[node name="Customer Button" type="Button" parent="DayComplete/CustomerUpgradeButton"]
+offset_left = -126.66666
+offset_top = -32.0
+offset_right = 122.66669
+offset_bottom = 53.33333
+
+[node name="MerchandiseUpgradeButton" type="Sprite2D" parent="DayComplete"]
+position = Vector2(300, 35)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("6_f6j6i")
+
+[node name="Merchandise Button" type="Button" parent="DayComplete/MerchandiseUpgradeButton"]
+offset_left = -126.667
+offset_top = -33.06
+offset_right = 122.66634
+offset_bottom = 52.273327
+
+[node name="Customer Cost Label" type="Label" parent="DayComplete"]
+offset_left = 244.0
+offset_top = -108.0
+offset_right = 351.0
+offset_bottom = -66.0
+text = "0"
+label_settings = SubResource("LabelSettings_f6j6i")
+horizontal_alignment = 1
+
+[node name="Merchandise Cost Label" type="Label" parent="DayComplete"]
+offset_left = 244.0
+offset_top = -19.0
+offset_right = 351.0
+offset_bottom = 23.0
+text = "0"
+label_settings = SubResource("LabelSettings_f6j6i")
+horizontal_alignment = 1
+
+[node name="Next Day Button" type="Button" parent="DayComplete"]
+offset_left = -2.0
+offset_top = 101.0
+offset_right = 308.0
+offset_bottom = 177.0

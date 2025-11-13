@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using InputSystem;
+using RepositorySystem;
 using ServiceSystem;
 
 public partial class EndOfDayScreen : Node2D {
@@ -32,16 +33,19 @@ public partial class EndOfDayScreen : Node2D {
     private Label _merchandiseRarityUpgradeCostLabel;
 
     [Export]
-    private Label _moneyLabel;
+    private Label _currentDayLabel;
 
     private UpgradeService _upgradeService;
     private PlayerDataService _playerDataService;
+    private SceneRepository _sceneRepository;
     private int _moneyEarned;
     private int _moneyCounter;
 
     public override void _Ready() {
         ServiceLocator serviceLocator = GetNode<ServiceLocator>(ServiceLocator.AutoloadPath);
         TransactionService transactionService = serviceLocator.GetService<TransactionService>(ServiceName.Transaction);
+        RepositoryLocator repositoryLocator = serviceLocator.GetService<RepositoryLocator>(ServiceName.RepositoryLocator);
+        _sceneRepository = repositoryLocator.GetRepository<SceneRepository>(RepositoryName.Scene);
         _moneyEarned = transactionService.GetProfitFromDay();
         transactionService.AddProfitFromDayToPlayerMoney();
 
@@ -50,7 +54,6 @@ public partial class EndOfDayScreen : Node2D {
 
         _customerRarityUpgradeButton.Pressed += () => { UpgradeRarity(UpgradeService.UpgradeType.CustomerRarity); };
         _merchandiseRarityUpgradeButton.Pressed += () => { UpgradeRarity(UpgradeService.UpgradeType.MerchandiseRarity); };
-        _moneyLabel.Text = $"{_playerDataService.GetMoney()}";
         SetUpgradeCost(UpgradeService.UpgradeType.CustomerRarity);
         SetUpgradeCost(UpgradeService.UpgradeType.MerchandiseRarity);
 
@@ -72,7 +75,6 @@ public partial class EndOfDayScreen : Node2D {
     public void UpgradeRarity(UpgradeService.UpgradeType upgradeType) {
         _upgradeService.UpgradeRarity(upgradeType);
         SetUpgradeCost(upgradeType);
-        _moneyLabel.Text = $"{_playerDataService.GetMoney()}";
     }
 
     public void SetUpgradeCost(UpgradeService.UpgradeType upgradeType) {
@@ -86,5 +88,15 @@ public partial class EndOfDayScreen : Node2D {
                 _merchandiseRarityLevelLabel.Text = $"Merchandise Rarity Level: {_playerDataService.GetMerchandiseRarityUpgradeLevel()}";
                 break;
         }
+    }
+
+    private void _NextDay() {
+        int day = _playerDataService.GetDay();
+        if (day == 7) {
+            GetTree().ChangeSceneToPacked(_sceneRepository.GetPackedScene(SceneId.GameOver));
+        }
+
+        _playerDataService.SetDay(day + 1);
+        GetTree().ChangeSceneToPacked(_sceneRepository.GetPackedScene(SceneId.MainLevel));
     }
 }

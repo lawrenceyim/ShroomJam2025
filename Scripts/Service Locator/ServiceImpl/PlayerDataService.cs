@@ -30,4 +30,12 @@ public class PlayerDataService : IService {
     public int GetMerchandiseRarityUpgradeLevel() {
         return _playerDataRepository.GetMerchandiseRarityUpgradeLevel();
     }
+
+    public int GetDay() {
+        return _playerDataRepository.GetDay();
+    }
+
+    public void SetDay(int day) {
+        _playerDataRepository.SetDay(day);
+    }
 }

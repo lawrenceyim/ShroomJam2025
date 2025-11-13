@@ -17,5 +17,5 @@ public enum SceneId {
 	MainMenu = 0,
 	MainLevel = 1,
 	EndOfDay = 2,
-	Upgrade = 3
+	GameOver = 3,
 }

@@ -10,6 +10,5 @@ script = ExtResource("1_oydej")
 _packedScenes = Dictionary[int, PackedScene]({
 0: ExtResource("2_swuga"),
 1: ExtResource("3_lomx7"),
-2: ExtResource("4_lomx7"),
-3: null
+2: ExtResource("4_lomx7")
 })

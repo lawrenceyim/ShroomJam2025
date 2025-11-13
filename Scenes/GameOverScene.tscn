@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://blwpbpb6edri7"]
+
+[ext_resource type="Texture2D" uid="uid://160yd3vb5uq4" path="res://Assets/Sprites/Game Over/bad ending.webp" id="1_re8an"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="BadEnding" type="Sprite2D" parent="."]
+texture = ExtResource("1_re8an")
+
+[node name="Camera2D" type="Camera2D" parent="."]

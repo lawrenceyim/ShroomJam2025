@@ -4,6 +4,7 @@ public class PlayerDataRepository : IRepository {
     private int _money;
     private int _customerRarityUpgradeLevel = 1;
     private int _merchandiseRarityUpgradeLevel = 1;
+    private int _day = 1;
 
     public void SetMoney(int money) {
         _money = money;
@@ -27,5 +28,13 @@ public class PlayerDataRepository : IRepository {
 
     public int GetMerchandiseRarityUpgradeLevel() {
         return _merchandiseRarityUpgradeLevel;
+    }
+
+    public int GetDay() {
+        return _day;
+    }
+
+    public void SetDay(int day) {
+        _day = day;
     }
 }
