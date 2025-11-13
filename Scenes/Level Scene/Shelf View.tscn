@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://6ap52pswgcp2"]
+[gd_scene load_steps=9 format=3 uid="uid://6ap52pswgcp2"]
 
 [ext_resource type="Script" uid="uid://cch04puu0b1cu" path="res://Scripts/Scenes/Game Level/ShelfView.cs" id="1_ivvb1"]
 [ext_resource type="PackedScene" uid="uid://ygjnrx4svv16" path="res://Scenes/Game Object/Merchandise Slot.tscn" id="2_ivvb1"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c5n7jcnie0d8k" path="res://Scenes/Game Object/Settings.tscn" id="5_sth0q"]
 [ext_resource type="Texture2D" uid="uid://wwunrmufu7ve" path="res://Assets/Sprites/Sideway arrow.webp" id="6_b1872"]
 [ext_resource type="Texture2D" uid="uid://ljj6wnwe38tk" path="res://Assets/Sprites/ShelfBackground.png" id="7_eyqf3"]
+[ext_resource type="Texture2D" uid="uid://cb11xx0sve4q4" path="res://Assets/Sprites/pause button.webp" id="8_8kf5a"]
 
 [node name="Shelf View" type="Node2D"]
 script = ExtResource("1_ivvb1")
@@ -41,3 +42,14 @@ polygon = PackedVector2Array(-1, 5, 72, -69, -1, -141)
 [node name="ShelfBackground" type="Sprite2D" parent="."]
 z_index = -20
 texture = ExtResource("7_eyqf3")
+
+[node name="Shelf PauseButton" type="Sprite2D" parent="."]
+position = Vector2(-579, -301)
+texture = ExtResource("8_8kf5a")
+
+[node name="Button" type="Button" parent="Shelf PauseButton"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -54.0
+offset_top = -53.0
+offset_right = 54.0
+offset_bottom = 53.0

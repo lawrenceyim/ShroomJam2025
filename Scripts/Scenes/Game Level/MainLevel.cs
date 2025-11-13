@@ -46,6 +46,9 @@ public partial class MainLevel : Node, IInputState, ITick {
     [Export]
     private AudioStreamPlayer _soundEffectPlayer;
 
+    [Export]
+    private Button[] _pauseButtons;
+
     private const string SwitchView = "Space";
     private const string Pause = "Escape";
 
@@ -108,6 +111,10 @@ public partial class MainLevel : Node, IInputState, ITick {
         _dayTimer.StartFixedTimer(false, SecondsPerDay * _ticksPerSeconds);
         _dayTimer.TimedOut += _EndDay;
         _gameClock.SetPauseState(false);
+
+        foreach (Button button in _pauseButtons) {
+            button.Pressed += PauseGame;
+        }
 
         _customerSettingsMenu.ResumeDay += Unpause;
         _shelfSettingsMenu.ResumeDay += Unpause;

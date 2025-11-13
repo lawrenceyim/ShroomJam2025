@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b542syw0tbdyd"]
+[gd_scene load_steps=13 format=3 uid="uid://b542syw0tbdyd"]
 
 [ext_resource type="Script" uid="uid://bwa7a85coc2e5" path="res://Scripts/Scenes/Game Level/CustomerView.cs" id="1_5qpia"]
 [ext_resource type="Texture2D" uid="uid://dgyvlqpiewss1" path="res://Assets/Sprites/tablesprite.png" id="2_j8kt0"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://brrifuemrx73x" path="res://Assets/Sprites/thought bubble.webp" id="6_6tr70"]
 [ext_resource type="PackedScene" uid="uid://c5n7jcnie0d8k" path="res://Scenes/Game Object/Settings.tscn" id="7_14180"]
 [ext_resource type="Texture2D" uid="uid://wwunrmufu7ve" path="res://Assets/Sprites/Sideway arrow.webp" id="9_cje0c"]
+[ext_resource type="Texture2D" uid="uid://cb11xx0sve4q4" path="res://Assets/Sprites/pause button.webp" id="10_i3g25"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sl153"]
 font_size = 40
@@ -106,3 +107,14 @@ position = Vector2(-17, 68)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprites/To Shelf SidewayArrow/To Shelf Area2D"]
 polygon = PackedVector2Array(-1, 5, 72, -69, -1, -141)
+
+[node name="Customer PauseButton" type="Sprite2D" parent="Sprites"]
+position = Vector2(-579, -301)
+texture = ExtResource("10_i3g25")
+
+[node name="Button" type="Button" parent="Sprites/Customer PauseButton"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -54.0
+offset_top = -53.0
+offset_right = 54.0
+offset_bottom = 53.0

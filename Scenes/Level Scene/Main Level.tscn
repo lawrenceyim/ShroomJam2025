@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://cls5ce6wmb7ao" path="res://Assets/Audio/gameplay soundtrack.wav" id="4_14an5"]
 [ext_resource type="AudioStream" uid="uid://j7s7ab2co86a" path="res://Assets/Audio/Sound Effects/StartOfDay.wav" id="5_xo5dh"]
 
-[node name="GameLevel" type="Node2D" node_paths=PackedStringArray("_customerViewCamera", "_customerView", "_shelfViewCamera", "_shelfView", "_handCustomerView", "_handShelfView", "_customerSettingsMenu", "_shelfSettingsMenu", "_toCustomerArrow", "_toShelfArrow", "_toCustomerArrowArea", "_toShelfArrowArea", "_musicPlayer", "_soundEffectPlayer")]
+[node name="GameLevel" type="Node2D" node_paths=PackedStringArray("_customerViewCamera", "_customerView", "_shelfViewCamera", "_shelfView", "_handCustomerView", "_handShelfView", "_customerSettingsMenu", "_shelfSettingsMenu", "_toCustomerArrow", "_toShelfArrow", "_toCustomerArrowArea", "_toShelfArrowArea", "_musicPlayer", "_soundEffectPlayer", "_pauseButtons")]
 script = ExtResource("1_if62t")
 _customerViewCamera = NodePath("Customer View/Customer Camera2D")
 _customerView = NodePath("Customer View")
@@ -22,6 +22,7 @@ _toCustomerArrowArea = NodePath("ShelfView/To Customer SidewayArrow/To Customer 
 _toShelfArrowArea = NodePath("Customer View/Sprites/To Shelf SidewayArrow/To Shelf Area2D")
 _musicPlayer = NodePath("Music Player")
 _soundEffectPlayer = NodePath("Sfx Player")
+_pauseButtons = [NodePath("Customer View/Sprites/Customer PauseButton/Button"), NodePath("ShelfView/Shelf PauseButton/Button")]
 
 [node name="Customer View" parent="." instance=ExtResource("3_14an5")]
 position = Vector2(-2, 0)
