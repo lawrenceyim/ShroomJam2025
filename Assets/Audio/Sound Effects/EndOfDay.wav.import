@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bdbl13kvji34s"
+path="res://.godot/imported/EndOfDay.wav-03d4a0b85d183c5c5e9ddebf71f022c8.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/Sound Effects/EndOfDay.wav"
+dest_files=["res://.godot/imported/EndOfDay.wav-03d4a0b85d183c5c5e9ddebf71f022c8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

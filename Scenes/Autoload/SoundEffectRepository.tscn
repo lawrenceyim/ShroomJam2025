@@ -1,0 +1,22 @@
+[gd_scene load_steps=9 format=3 uid="uid://bc7tpy5mwfdjj"]
+
+[ext_resource type="Script" uid="uid://0a7iut216i3h" path="res://Scripts/Repository/Impl/SoundEffectRepository.cs" id="1_jvv5l"]
+[ext_resource type="AudioStream" uid="uid://bdbl13kvji34s" path="res://Assets/Audio/Sound Effects/EndOfDay.wav" id="2_p8yvh"]
+[ext_resource type="AudioStream" uid="uid://nwd8mttx6uki" path="res://Assets/Audio/Sound Effects/PickUp.wav" id="3_oi1jm"]
+[ext_resource type="AudioStream" uid="uid://cl8yuqnvsv0bx" path="res://Assets/Audio/Sound Effects/SetDown.wav" id="4_whvvi"]
+[ext_resource type="AudioStream" uid="uid://bwhdmcl1clruj" path="res://Assets/Audio/Sound Effects/GreatSaleMade.wav" id="5_npo8e"]
+[ext_resource type="AudioStream" uid="uid://s7ewn6vjvwia" path="res://Assets/Audio/Sound Effects/SaleMade.wav" id="6_b5d1d"]
+[ext_resource type="AudioStream" uid="uid://b2mttv8hipxhh" path="res://Assets/Audio/Sound Effects/AngryCustomerLeaves.wav" id="7_otf63"]
+[ext_resource type="AudioStream" uid="uid://j7s7ab2co86a" path="res://Assets/Audio/Sound Effects/StartOfDay.wav" id="8_rygam"]
+
+[node name="SoundEffectRepository" type="Node"]
+script = ExtResource("1_jvv5l")
+_soundEffects = Dictionary[int, AudioStream]({
+0: ExtResource("2_p8yvh"),
+1: ExtResource("3_oi1jm"),
+2: ExtResource("4_whvvi"),
+3: ExtResource("5_npo8e"),
+4: ExtResource("6_b5d1d"),
+5: ExtResource("7_otf63"),
+6: ExtResource("8_rygam")
+})

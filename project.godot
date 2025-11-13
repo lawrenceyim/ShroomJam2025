@@ -21,6 +21,7 @@ ServiceLocator="*res://Scenes/Autoload/ServiceLocator.tscn"
 PackedSceneRepository="*res://Scenes/Autoload/PackedSceneRepository.tscn"
 SceneRepository="*res://Scenes/Autoload/SceneRepository.tscn"
 Texture2dRepository="*res://Scenes/Autoload/Texture2dRepository.tscn"
+SoundEffectRepository="*res://Scenes/Autoload/SoundEffectRepository.tscn"
 
 [display]
 

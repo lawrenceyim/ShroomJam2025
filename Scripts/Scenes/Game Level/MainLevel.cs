@@ -43,6 +43,9 @@ public partial class MainLevel : Node, IInputState, ITick {
     [Export]
     private AudioStreamPlayer _musicPlayer;
 
+    [Export]
+    private AudioStreamPlayer _soundEffectPlayer;
+
     private const string SwitchView = "Space";
     private const string Pause = "Escape";
 
@@ -60,6 +63,7 @@ public partial class MainLevel : Node, IInputState, ITick {
     private MerchandiseService _merchandiseService;
     private Texture2dRepository _texture2dRepository;
     private SceneRepository _sceneRepository;
+    private SoundEffectRepository _soundEffectRepository;
     private GameClock _gameClock;
     private ActiveView _activeView = ActiveView.CustomerView;
     private bool _toCustomerArrowHovered = false;
@@ -67,18 +71,18 @@ public partial class MainLevel : Node, IInputState, ITick {
 
     public override void _Ready() {
         _serviceLocator = GetNode<ServiceLocator>(ServiceLocator.AutoloadPath);
+        RepositoryLocator repositoryLocator = _serviceLocator.GetService<RepositoryLocator>(ServiceName.RepositoryLocator);
+        PlayerDataSerivce playerDataService = _serviceLocator.GetService<PlayerDataSerivce>(ServiceName.PlayerData);
         _merchandiseService = _serviceLocator.GetService<MerchandiseService>(ServiceName.Merchandise);
         _inputStateMachine = _serviceLocator.GetService<InputStateMachine>(ServiceName.InputStateMachine);
         _gameClock = _serviceLocator.GetService<GameClock>(ServiceName.GameClock);
         _transactionService = _serviceLocator.GetService<TransactionService>(ServiceName.Transaction);
+        _soundEffectRepository = repositoryLocator.GetRepository<SoundEffectRepository>(RepositoryName.SoundEffect);
 
-        PlayerDataSerivce playerDataService = _serviceLocator.GetService<PlayerDataSerivce>(ServiceName.PlayerData);
         _transactionService.Initialize(_merchandiseService, playerDataService);
-
         _merchandiseService.RestockMerchandise();
         _gameClock.AddActiveScene(this, GetInstanceId());
         _inputStateMachine.SetState(this);
-        RepositoryLocator repositoryLocator = _serviceLocator.GetService<RepositoryLocator>(ServiceName.RepositoryLocator);
         _packedSceneRepository = repositoryLocator.GetRepository<PackedSceneRepository>(RepositoryName.PackedScene);
         _texture2dRepository = repositoryLocator.GetRepository<Texture2dRepository>(RepositoryName.Texture);
         _sceneRepository = repositoryLocator.GetRepository<SceneRepository>(RepositoryName.Scene);
@@ -111,6 +115,7 @@ public partial class MainLevel : Node, IInputState, ITick {
         _shelfSettingsMenu.RestartDay += _RestartDay;
         _customerSettingsMenu.AudioVolumeChange += _ChangeAudioVolume;
         _shelfSettingsMenu.AudioVolumeChange += _ChangeAudioVolume;
+        _customerView.PlaySoundEffect += _PlaySoundEffect;
     }
 
     public override void _ExitTree() {
@@ -221,6 +226,7 @@ public partial class MainLevel : Node, IInputState, ITick {
         _DisplayHand(false);
         _customerView.SetHoldingItem(false);
         _merchandiseService.SetMerchandiseCount(_merchandiseService.GetMerchandiseCount() - 1);
+        _PlaySoundEffect(SoundEffectId.SaleMade); // TODO: Replace later
         if (_merchandiseService.GetMerchandiseCount() == 0) {
             _EndDay();
         }
@@ -238,9 +244,17 @@ public partial class MainLevel : Node, IInputState, ITick {
         _shelfView.RefreshShelfMerchandiseTexture(position);
         _RefreshHandDisplay();
         _customerView.SetHoldingItem(_merchandiseService.GetHeldMerchandise() is not null);
+
+        if (_merchandiseService.GetHeldMerchandise() is not null) {
+            _PlaySoundEffect(SoundEffectId.MerchandisePickedUp);
+        }
+        else {
+            _PlaySoundEffect(SoundEffectId.MerchandisePutDown);
+        }
     }
 
     private void _EndDay() {
+        _PlaySoundEffect(SoundEffectId.EndOfDay); // TODO: Move to end of day screen which is separate
         // TODO: Implement transition to EoD screen
         GD.Print("End of Day");
     }
@@ -275,9 +289,20 @@ public partial class MainLevel : Node, IInputState, ITick {
                && _merchandiseService.GetHeldMerchandise() is not null;
     }
 
+    private void _PlaySoundEffect(SoundEffectId soundEffectId) {
+        if (GlobalSettings.MuteVolume) {
+            return;
+        }
+
+        AudioStream soundEffect = _soundEffectRepository.GetSoundEffect(soundEffectId);
+        _soundEffectPlayer.Stream = soundEffect;
+        _soundEffectPlayer.Play();
+    }
+
     private void _ChangeAudioVolume() {
         if (GlobalSettings.MuteVolume) {
             _musicPlayer.Stop();
+            _soundEffectPlayer.Stop();
         }
         else {
             _musicPlayer.Play();
