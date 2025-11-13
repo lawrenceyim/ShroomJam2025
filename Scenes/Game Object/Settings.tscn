@@ -13,13 +13,13 @@ size = Vector2(247, 85)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibx62"]
 size = Vector2(134, 123)
 
-[node name="Settings Menu" type="Node2D" node_paths=PackedStringArray("_mutedCheckMark", "_restartArea2D", "_resumeArea2D", "_muteArea2D")]
+[node name="Settings Menu" type="Node2D" node_paths=PackedStringArray("_volumeCheckMark", "_restartArea2D", "_resumeArea2D", "_volumeArea2D")]
 z_index = 20
 script = ExtResource("1_ibx62")
-_mutedCheckMark = NodePath("Buttons/Checkbox/Checkmark")
+_volumeCheckMark = NodePath("Buttons/Checkbox/Checkmark")
 _restartArea2D = NodePath("Buttons/RestartButton/Restart Area2D")
 _resumeArea2D = NodePath("Buttons/ResumeButton/Resume Area2D")
-_muteArea2D = NodePath("Buttons/Checkbox/Mute Area2D")
+_volumeArea2D = NodePath("Buttons/Checkbox/Volume Area2D")
 
 [node name="SettingsBase" type="Sprite2D" parent="."]
 texture = ExtResource("1_ssuah")
@@ -55,9 +55,9 @@ texture = ExtResource("4_70vku")
 [node name="Checkmark" type="Sprite2D" parent="Buttons/Checkbox"]
 texture = ExtResource("5_ibx62")
 
-[node name="Mute Area2D" type="Area2D" parent="Buttons/Checkbox"]
+[node name="Volume Area2D" type="Area2D" parent="Buttons/Checkbox"]
 position = Vector2(5, 2)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/Checkbox/Mute Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Buttons/Checkbox/Volume Area2D"]
 position = Vector2(-14, 7.5)
 shape = SubResource("RectangleShape2D_ibx62")

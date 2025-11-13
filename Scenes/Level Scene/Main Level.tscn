@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvfndfuef4jrr"]
+[gd_scene load_steps=5 format=3 uid="uid://bvfndfuef4jrr"]
 
 [ext_resource type="Script" uid="uid://crfdydjdi1rww" path="res://Scripts/Scenes/Game Level/MainLevel.cs" id="1_if62t"]
 [ext_resource type="PackedScene" uid="uid://b542syw0tbdyd" path="res://Scenes/Level Scene/Customer View.tscn" id="3_14an5"]
 [ext_resource type="PackedScene" uid="uid://6ap52pswgcp2" path="res://Scenes/Level Scene/Shelf View.tscn" id="3_jurmy"]
+[ext_resource type="AudioStream" uid="uid://cls5ce6wmb7ao" path="res://Assets/Audio/gameplay soundtrack.wav" id="4_14an5"]
 
-[node name="GameLevel" type="Node2D" node_paths=PackedStringArray("_customerViewCamera", "_customerView", "_shelfViewCamera", "_shelfView", "_handCustomerView", "_handShelfView", "_customerSettingsMenu", "_shelfSettingsMenu", "_toCustomerArrow", "_toShelfArrow", "_toCustomerArrowArea", "_toShelfArrowArea")]
+[node name="GameLevel" type="Node2D" node_paths=PackedStringArray("_customerViewCamera", "_customerView", "_shelfViewCamera", "_shelfView", "_handCustomerView", "_handShelfView", "_customerSettingsMenu", "_shelfSettingsMenu", "_toCustomerArrow", "_toShelfArrow", "_toCustomerArrowArea", "_toShelfArrowArea", "_musicPlayer")]
 script = ExtResource("1_if62t")
 _customerViewCamera = NodePath("Customer View/Customer Camera2D")
 _customerView = NodePath("Customer View")
@@ -18,12 +19,18 @@ _toCustomerArrow = NodePath("ShelfView/To Customer SidewayArrow")
 _toShelfArrow = NodePath("Customer View/Sprites/To Shelf SidewayArrow")
 _toCustomerArrowArea = NodePath("ShelfView/To Customer SidewayArrow/To Customer Area2D")
 _toShelfArrowArea = NodePath("Customer View/Sprites/To Shelf SidewayArrow/To Shelf Area2D")
+_musicPlayer = NodePath("AudioStreamPlayer")
 
 [node name="Customer View" parent="." instance=ExtResource("3_14an5")]
 position = Vector2(-2, 0)
 
 [node name="ShelfView" parent="." instance=ExtResource("3_jurmy")]
 position = Vector2(3000, 9)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_14an5")
+volume_db = -25.0
+autoplay = true
 
 [editable path="Customer View"]
 [editable path="ShelfView"]

@@ -5,9 +5,10 @@ using InputSystem;
 public partial class SettingsMenu : Node2D, IInputState {
 	public event Action ResumeDay;
 	public event Action RestartDay;
+	public event Action AudioVolumeChange;
 
 	[Export]
-	private Sprite2D _mutedCheckMark;
+	private Sprite2D _volumeCheckMark;
 
 	[Export]
 	private Area2D _restartArea2D;
@@ -16,7 +17,7 @@ public partial class SettingsMenu : Node2D, IInputState {
 	private Area2D _resumeArea2D;
 
 	[Export]
-	private Area2D _muteArea2D;
+	private Area2D _volumeArea2D;
 
 	private const string Unpause = "Escape";
 	private HoveredArea _hoveredArea = HoveredArea.None;
@@ -26,9 +27,8 @@ public partial class SettingsMenu : Node2D, IInputState {
 		_restartArea2D.MouseExited += () => { _hoveredArea = HoveredArea.None; };
 		_resumeArea2D.MouseEntered += () => { _hoveredArea = HoveredArea.Resume; };
 		_resumeArea2D.MouseExited += () => { _hoveredArea = HoveredArea.None; };
-		_muteArea2D.MouseEntered += () => { _hoveredArea = HoveredArea.Mute; };
-		_muteArea2D.MouseExited += () => { _hoveredArea = HoveredArea.None; };
-		_mutedCheckMark.Visible = GlobalSettings.MuteVolume;
+		_volumeArea2D.MouseEntered += () => { _hoveredArea = HoveredArea.Mute; };
+		_volumeArea2D.MouseExited += () => { _hoveredArea = HoveredArea.None; };
 	}
 
 	public void ProcessInput(InputEventDto eventDto) {
@@ -40,6 +40,19 @@ public partial class SettingsMenu : Node2D, IInputState {
 				_ProcessMouseButtonInput(mouseButtonDto);
 				break;
 		}
+	}
+
+	public void Display() {
+		_SetVolumeCheckmark();
+		Visible = true;
+	}
+
+	public void Hide() {
+		Visible = false;
+	}
+
+	private void _SetVolumeCheckmark() {
+		_volumeCheckMark.Visible = !GlobalSettings.MuteVolume;
 	}
 
 	private void _ProcessKeyDto(KeyDto keyDto) {
@@ -65,7 +78,8 @@ public partial class SettingsMenu : Node2D, IInputState {
 				break;
 			case HoveredArea.Mute:
 				GlobalSettings.MuteVolume = !GlobalSettings.MuteVolume;
-				_mutedCheckMark.Visible = GlobalSettings.MuteVolume;
+				_SetVolumeCheckmark();
+				AudioVolumeChange?.Invoke();
 				break;
 			case HoveredArea.Resume:
 				ResumeDay?.Invoke();
