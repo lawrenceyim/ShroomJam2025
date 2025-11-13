@@ -15,6 +15,10 @@ public class UpgradeService : IService {
                ComputeUpgradeCost(upgradeType) < _playerDataService.GetMoney();
     }
 
+    public bool IsMaxLevel(UpgradeType upgradeType) {
+        return GetUpgradeLevel(upgradeType) >= GetMaxUpgradeLevel(upgradeType);
+    }
+
     public void UpgradeRarity(UpgradeType upgradeType) {
         int cost = ComputeUpgradeCost(upgradeType);
         _playerDataService.SetMoney(_playerDataService.GetMoney() - cost);

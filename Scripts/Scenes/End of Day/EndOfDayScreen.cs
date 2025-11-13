@@ -54,12 +54,14 @@ public partial class EndOfDayScreen : Node2D {
 
         _customerRarityUpgradeButton.Pressed += () => { UpgradeRarity(UpgradeService.UpgradeType.CustomerRarity); };
         _merchandiseRarityUpgradeButton.Pressed += () => { UpgradeRarity(UpgradeService.UpgradeType.MerchandiseRarity); };
-        SetUpgradeCost(UpgradeService.UpgradeType.CustomerRarity);
-        SetUpgradeCost(UpgradeService.UpgradeType.MerchandiseRarity);
+        _nextDayButton.Pressed += _NextDay;
+        SetUpgradeCost();
 
         if (!GlobalSettings.MuteVolume) {
             _soundEffectPlayer.Play();
         }
+
+        _currentDayLabel.Text = $"{_playerDataService.GetDay()}";
     }
 
     public override void _PhysicsProcess(double delta) {
@@ -73,21 +75,34 @@ public partial class EndOfDayScreen : Node2D {
 
 
     public void UpgradeRarity(UpgradeService.UpgradeType upgradeType) {
+        if (!_upgradeService.CanUpgrade(upgradeType)) {
+            return;
+        }
+
         _upgradeService.UpgradeRarity(upgradeType);
-        SetUpgradeCost(upgradeType);
+        SetUpgradeCost();
     }
 
-    public void SetUpgradeCost(UpgradeService.UpgradeType upgradeType) {
-        switch (upgradeType) {
-            case UpgradeService.UpgradeType.CustomerRarity:
-                _customerRarityUpgradeCostLabel.Text = $"{_upgradeService.ComputeUpgradeCost(upgradeType)}";
-                _customerRarityLevelLabel.Text = $"Customer Rarity Level: {_playerDataService.GetCustomerRarityUpgradeLevel()}";
-                break;
-            case UpgradeService.UpgradeType.MerchandiseRarity:
-                _merchandiseRarityUpgradeCostLabel.Text = $"{_upgradeService.ComputeUpgradeCost(upgradeType)}";
-                _merchandiseRarityLevelLabel.Text = $"Merchandise Rarity Level: {_playerDataService.GetMerchandiseRarityUpgradeLevel()}";
-                break;
+    public void SetUpgradeCost() {
+        int customerCost = _upgradeService.ComputeUpgradeCost(UpgradeService.UpgradeType.CustomerRarity);
+        if (!_upgradeService.CanUpgrade(UpgradeService.UpgradeType.CustomerRarity)) {
+            _customerRarityUpgradeCostLabel.SelfModulate = new Color(255, 0, 0, 1);
         }
+
+        _customerRarityUpgradeCostLabel.Text = $"{customerCost}";
+        _customerRarityLevelLabel.Text = _upgradeService.IsMaxLevel(UpgradeService.UpgradeType.CustomerRarity)
+            ? "MAX"
+            : $"{_playerDataService.GetCustomerRarityUpgradeLevel()}";
+
+        int merchandiseCost = _upgradeService.ComputeUpgradeCost(UpgradeService.UpgradeType.MerchandiseRarity);
+        if (!_upgradeService.CanUpgrade(UpgradeService.UpgradeType.MerchandiseRarity)) {
+            _merchandiseRarityUpgradeCostLabel.SelfModulate = new Color(255, 0, 0, 1);
+        }
+
+        _merchandiseRarityUpgradeCostLabel.Text = $"{merchandiseCost}";
+        _merchandiseRarityLevelLabel.Text = _upgradeService.IsMaxLevel(UpgradeService.UpgradeType.MerchandiseRarity)
+            ? "MAX"
+            : $"{_playerDataService.GetMerchandiseRarityUpgradeLevel()}";
     }
 
     private void _NextDay() {
