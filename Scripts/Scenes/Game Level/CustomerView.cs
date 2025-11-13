@@ -27,8 +27,7 @@ public partial class CustomerView : Node2D, ITick {
     private readonly int _numberOfCustomerIds = Enum.GetNames(typeof(CustomerId)).Length;
     private readonly int _ticksPerSeconds = Engine.PhysicsTicksPerSecond;
     private readonly CustomerGeneratorComponent _customerGenerator = new();
-    private readonly Random _random = new();
-    private readonly TickTimer _customerTimer = new TickTimer();
+    private readonly TickTimer _customerTimer = new();
     private readonly int _secondsPerCustomerMood = 7;
     private readonly int _ticksPerSecond = Engine.PhysicsTicksPerSecond;
 

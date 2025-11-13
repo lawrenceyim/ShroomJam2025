@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b8cjxi5dmhu2g"]
+[gd_scene load_steps=11 format=3 uid="uid://b8cjxi5dmhu2g"]
 
 [ext_resource type="Texture2D" uid="uid://dwmum8qqbyfb5" path="res://Assets/Sprites/BackgroundDark.png" id="1_j6nnl"]
 [ext_resource type="Script" uid="uid://kbmdq646u1vq" path="res://Scripts/Scenes/End of Day/EndOfDayScreen.cs" id="1_tqqb4"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://505doa76foq0" path="res://Assets/Sprites/placeholders/cash register.webp" id="3_tqqb4"]
 [ext_resource type="Texture2D" uid="uid://bey741g50q25i" path="res://Assets/Sprites/upgrade button.webp" id="6_f6j6i"]
 [ext_resource type="AudioStream" uid="uid://bdbl13kvji34s" path="res://Assets/Audio/Sound Effects/EndOfDay.wav" id="6_msk36"]
+[ext_resource type="AudioStream" uid="uid://buf4rg5udndk8" path="res://Assets/Audio/breakroom.wav" id="6_ssli6"]
 [ext_resource type="Texture2D" uid="uid://6msfi1nv0ygf" path="res://Assets/Sprites/day complete.webp" id="7_ssli6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vnb6n"]
@@ -15,7 +16,7 @@ font_color = Color(0.41960785, 0.23529412, 0.07058824, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_f6j6i"]
 line_spacing = 0.0
-font_size = 30
+font_size = 20
 font_color = Color(0.41960785, 0.23529412, 0.07058824, 1)
 
 [node name="Node2D" type="Node2D" node_paths=PackedStringArray("_soundEffectPlayer", "_profitLabel", "_customerRarityUpgradeButton", "_merchandiseRarityUpgradeButton", "_nextDayButton", "_customerRarityLevelLabel", "_merchandiseRarityLevelLabel", "_customerRarityUpgradeCostLabel", "_merchandiseRarityUpgradeCostLabel", "_currentDayLabel")]
@@ -54,6 +55,10 @@ texture = ExtResource("3_tqqb4")
 
 [node name="Sfx Player" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_msk36")
+volume_db = -25.0
+
+[node name="Music Player" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_ssli6")
 volume_db = -25.0
 
 [node name="DayComplete" type="Sprite2D" parent="."]
@@ -117,18 +122,18 @@ offset_bottom = 52.273327
 
 [node name="Customer Cost Label" type="Label" parent="DayComplete"]
 offset_left = 244.0
-offset_top = -108.0
+offset_top = -104.0
 offset_right = 351.0
-offset_bottom = -66.0
+offset_bottom = -76.0
 text = "0"
 label_settings = SubResource("LabelSettings_f6j6i")
 horizontal_alignment = 1
 
 [node name="Merchandise Cost Label" type="Label" parent="DayComplete"]
 offset_left = 244.0
-offset_top = -19.0
+offset_top = -14.0
 offset_right = 351.0
-offset_bottom = 23.0
+offset_bottom = 28.0
 text = "0"
 label_settings = SubResource("LabelSettings_f6j6i")
 horizontal_alignment = 1

@@ -38,6 +38,7 @@ public partial class EndOfDayScreen : Node2D {
     private UpgradeService _upgradeService;
     private PlayerDataService _playerDataService;
     private SceneRepository _sceneRepository;
+    private SoundEffectRepository _soundEffectRepository;
     private int _moneyEarned;
     private int _moneyCounter;
 
@@ -46,6 +47,7 @@ public partial class EndOfDayScreen : Node2D {
         TransactionService transactionService = serviceLocator.GetService<TransactionService>(ServiceName.Transaction);
         RepositoryLocator repositoryLocator = serviceLocator.GetService<RepositoryLocator>(ServiceName.RepositoryLocator);
         _sceneRepository = repositoryLocator.GetRepository<SceneRepository>(RepositoryName.Scene);
+        _soundEffectRepository = repositoryLocator.GetRepository<SoundEffectRepository>(RepositoryName.SoundEffect);
         _moneyEarned = transactionService.GetProfitFromDay();
         transactionService.AddProfitFromDayToPlayerMoney();
 
@@ -57,10 +59,7 @@ public partial class EndOfDayScreen : Node2D {
         _nextDayButton.Pressed += _NextDay;
         SetUpgradeCost();
 
-        if (!GlobalSettings.MuteVolume) {
-            _soundEffectPlayer.Play();
-        }
-
+        _PlaySoundEffect(SoundEffectId.EndOfDay);
         _currentDayLabel.Text = $"{_playerDataService.GetDay()}";
     }
 
@@ -73,17 +72,18 @@ public partial class EndOfDayScreen : Node2D {
         _profitLabel.Text = $"Profit: {_moneyCounter}";
     }
 
-
-    public void UpgradeRarity(UpgradeService.UpgradeType upgradeType) {
+    private void UpgradeRarity(UpgradeService.UpgradeType upgradeType) {
         if (!_upgradeService.CanUpgrade(upgradeType)) {
             return;
         }
 
         _upgradeService.UpgradeRarity(upgradeType);
         SetUpgradeCost();
+        
+        _PlaySoundEffect(SoundEffectId.SaleMade);
     }
 
-    public void SetUpgradeCost() {
+    private void SetUpgradeCost() {
         int customerCost = _upgradeService.ComputeUpgradeCost(UpgradeService.UpgradeType.CustomerRarity);
         if (!_upgradeService.CanUpgrade(UpgradeService.UpgradeType.CustomerRarity)) {
             _customerRarityUpgradeCostLabel.SelfModulate = new Color(255, 0, 0, 1);
@@ -113,5 +113,15 @@ public partial class EndOfDayScreen : Node2D {
 
         _playerDataService.SetDay(day + 1);
         GetTree().ChangeSceneToPacked(_sceneRepository.GetPackedScene(SceneId.MainLevel));
+    }
+
+    private void _PlaySoundEffect(SoundEffectId soundEffectId) {
+        if (GlobalSettings.MuteVolume) {
+            return;
+        }
+
+        AudioStream soundEffect = _soundEffectRepository.GetSoundEffect(soundEffectId);
+        _soundEffectPlayer.Stream = soundEffect;
+        _soundEffectPlayer.Play();
     }
 }
