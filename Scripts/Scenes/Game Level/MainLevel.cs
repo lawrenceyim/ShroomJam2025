@@ -263,9 +263,7 @@ public partial class MainLevel : Node, IInputState, ITick {
     }
 
     private void _EndDay() {
-        _PlaySoundEffect(SoundEffectId.EndOfDay); // TODO: Move to end of day screen which is separate
-        // TODO: Implement transition to EoD screen
-        GD.Print("End of Day");
+        GetTree().ChangeSceneToPacked(_sceneRepository.GetPackedScene(SceneId.EndOfDay));
     }
 
     private void _DisplayHand(bool visible) {
