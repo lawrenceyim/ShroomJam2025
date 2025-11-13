@@ -15,7 +15,6 @@ public class TransactionService : IService {
         _playerDataService = playerDataService;
     }
 
-    // Returns transaction profit
     public int SellMerchandise(CustomerSaleDto saleDto) {
         Merchandise merchandise = _merchandiseService.GetHeldMerchandise();
         _merchandiseService.SetHeldMerchandise(null);
@@ -26,6 +25,10 @@ public class TransactionService : IService {
 
     public void ResetProfitFromDay() {
         _profitFromDay = 0;
+    }
+
+    public int GetProfitFromDay() {
+        return _profitFromDay;
     }
 
     public void AddProfitFromDayToPlayerMoney() {

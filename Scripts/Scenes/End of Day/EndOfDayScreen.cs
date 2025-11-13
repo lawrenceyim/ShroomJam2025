@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using InputSystem;
+using ServiceSystem;
 
 public partial class EndOfDayScreen : Node2D {
     [Export]
@@ -8,10 +10,16 @@ public partial class EndOfDayScreen : Node2D {
     [Export]
     private Label _profitLabel;
 
-    private int _moneyEarned = 100;
+    private int _moneyEarned;
     private int _moneyCounter;
 
     public override void _Ready() {
+        ServiceLocator serviceLocator = GetNode<ServiceLocator>(ServiceLocator.AutoloadPath);
+        TransactionService transactionService = serviceLocator.GetService<TransactionService>(ServiceName.Transaction);
+        _moneyEarned = transactionService.GetProfitFromDay();
+        transactionService.AddProfitFromDayToPlayerMoney();
+
+
         if (!GlobalSettings.MuteVolume) {
             _soundEffectPlayer.Play();
         }
@@ -22,7 +30,7 @@ public partial class EndOfDayScreen : Node2D {
             return;
         }
 
-        _moneyCounter++;
+        _moneyCounter = Math.Min(_moneyCounter + 25, _moneyEarned);
         _profitLabel.Text = $"Profit: {_moneyCounter}";
     }
 }
