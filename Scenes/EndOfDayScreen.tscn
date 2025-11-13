@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bey741g50q25i" path="res://Assets/Sprites/upgrade button.webp" id="6_f6j6i"]
 [ext_resource type="AudioStream" uid="uid://bdbl13kvji34s" path="res://Assets/Audio/Sound Effects/EndOfDay.wav" id="6_msk36"]
 [ext_resource type="AudioStream" uid="uid://buf4rg5udndk8" path="res://Assets/Audio/breakroom.wav" id="6_ssli6"]
-[ext_resource type="Texture2D" uid="uid://6msfi1nv0ygf" path="res://Assets/Sprites/day complete.webp" id="7_ssli6"]
+[ext_resource type="Texture2D" uid="uid://dbpg4eolrphls" path="res://Assets/Sprites/updated end of day screen.webp" id="7_ssli6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vnb6n"]
 line_spacing = 0.0
@@ -19,10 +19,11 @@ line_spacing = 0.0
 font_size = 20
 font_color = Color(0.41960785, 0.23529412, 0.07058824, 1)
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("_soundEffectPlayer", "_profitLabel", "_customerRarityUpgradeButton", "_merchandiseRarityUpgradeButton", "_nextDayButton", "_customerRarityLevelLabel", "_merchandiseRarityLevelLabel", "_customerRarityUpgradeCostLabel", "_merchandiseRarityUpgradeCostLabel", "_currentDayLabel")]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("_soundEffectPlayer", "_profitLabel", "_balanceLabel", "_customerRarityUpgradeButton", "_merchandiseRarityUpgradeButton", "_nextDayButton", "_customerRarityLevelLabel", "_merchandiseRarityLevelLabel", "_customerRarityUpgradeCostLabel", "_merchandiseRarityUpgradeCostLabel", "_currentDayLabel")]
 script = ExtResource("1_tqqb4")
 _soundEffectPlayer = NodePath("Sfx Player")
 _profitLabel = NodePath("DayComplete/Profit Label")
+_balanceLabel = NodePath("DayComplete/Balance Label")
 _customerRarityUpgradeButton = NodePath("DayComplete/CustomerUpgradeButton/Customer Button")
 _merchandiseRarityUpgradeButton = NodePath("DayComplete/MerchandiseUpgradeButton/Merchandise Button")
 _nextDayButton = NodePath("DayComplete/Next Day Button")
@@ -67,10 +68,18 @@ position = Vector2(-6, -14)
 texture = ExtResource("7_ssli6")
 
 [node name="Profit Label" type="Label" parent="DayComplete"]
-offset_left = 42.0
-offset_top = -168.0
-offset_right = 240.0
-offset_bottom = -85.0
+offset_left = -199.0
+offset_top = -164.0
+offset_right = -1.0
+offset_bottom = -81.0
+text = "0"
+label_settings = SubResource("LabelSettings_vnb6n")
+
+[node name="Balance Label" type="Label" parent="DayComplete"]
+offset_left = 167.0
+offset_top = -166.0
+offset_right = 365.0
+offset_bottom = -83.0
 text = "0"
 label_settings = SubResource("LabelSettings_vnb6n")
 

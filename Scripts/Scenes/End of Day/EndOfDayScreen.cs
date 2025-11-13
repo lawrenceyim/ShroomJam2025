@@ -12,6 +12,9 @@ public partial class EndOfDayScreen : Node2D {
     private Label _profitLabel;
 
     [Export]
+    private Label _balanceLabel;
+
+    [Export]
     private Button _customerRarityUpgradeButton;
 
     [Export]
@@ -54,12 +57,13 @@ public partial class EndOfDayScreen : Node2D {
         _playerDataService = serviceLocator.GetService<PlayerDataService>(ServiceName.PlayerData);
         _upgradeService = serviceLocator.GetService<UpgradeService>(ServiceName.Upgrade);
 
-        _customerRarityUpgradeButton.Pressed += () => { UpgradeRarity(UpgradeService.UpgradeType.CustomerRarity); };
-        _merchandiseRarityUpgradeButton.Pressed += () => { UpgradeRarity(UpgradeService.UpgradeType.MerchandiseRarity); };
+        _customerRarityUpgradeButton.Pressed += () => { _UpgradeRarity(UpgradeService.UpgradeType.CustomerRarity); };
+        _merchandiseRarityUpgradeButton.Pressed += () => { _UpgradeRarity(UpgradeService.UpgradeType.MerchandiseRarity); };
         _nextDayButton.Pressed += _NextDay;
-        SetUpgradeCost();
+        _UpdateUpgradeCostAndLevel();
 
         _PlaySoundEffect(SoundEffectId.EndOfDay);
+        _UpdateBalance();
         _currentDayLabel.Text = $"{_playerDataService.GetDay()}";
     }
 
@@ -72,18 +76,23 @@ public partial class EndOfDayScreen : Node2D {
         _profitLabel.Text = $"Profit: {_moneyCounter}";
     }
 
-    private void UpgradeRarity(UpgradeService.UpgradeType upgradeType) {
+    private void _UpgradeRarity(UpgradeService.UpgradeType upgradeType) {
         if (!_upgradeService.CanUpgrade(upgradeType)) {
             return;
         }
 
         _upgradeService.UpgradeRarity(upgradeType);
-        SetUpgradeCost();
-        
+        _UpdateUpgradeCostAndLevel();
+        _UpdateBalance();
+
         _PlaySoundEffect(SoundEffectId.SaleMade);
     }
 
-    private void SetUpgradeCost() {
+    private void _UpdateBalance() {
+        _balanceLabel.Text = $"{_playerDataService.GetMoney()}";
+    }
+
+    private void _UpdateUpgradeCostAndLevel() {
         int customerCost = _upgradeService.ComputeUpgradeCost(UpgradeService.UpgradeType.CustomerRarity);
         if (!_upgradeService.CanUpgrade(UpgradeService.UpgradeType.CustomerRarity)) {
             _customerRarityUpgradeCostLabel.SelfModulate = new Color(255, 0, 0, 1);
