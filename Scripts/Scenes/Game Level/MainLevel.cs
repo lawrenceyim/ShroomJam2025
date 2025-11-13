@@ -72,7 +72,7 @@ public partial class MainLevel : Node, IInputState, ITick {
     public override void _Ready() {
         _serviceLocator = GetNode<ServiceLocator>(ServiceLocator.AutoloadPath);
         RepositoryLocator repositoryLocator = _serviceLocator.GetService<RepositoryLocator>(ServiceName.RepositoryLocator);
-        PlayerDataSerivce playerDataService = _serviceLocator.GetService<PlayerDataSerivce>(ServiceName.PlayerData);
+        PlayerDataService playerDataService = _serviceLocator.GetService<PlayerDataService>(ServiceName.PlayerData);
         _merchandiseService = _serviceLocator.GetService<MerchandiseService>(ServiceName.Merchandise);
         _inputStateMachine = _serviceLocator.GetService<InputStateMachine>(ServiceName.InputStateMachine);
         _gameClock = _serviceLocator.GetService<GameClock>(ServiceName.GameClock);

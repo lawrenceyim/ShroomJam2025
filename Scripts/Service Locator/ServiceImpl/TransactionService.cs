@@ -6,11 +6,11 @@ namespace InputSystem;
 
 public class TransactionService : IService {
     private MerchandiseService _merchandiseService;
-    private PlayerDataSerivce _playerDataService;
+    private PlayerDataService _playerDataService;
     private const int ValuePerTier = 100;
     private int _profitFromDay = 0;
 
-    public void Initialize(MerchandiseService merchandiseService, PlayerDataSerivce playerDataService) {
+    public void Initialize(MerchandiseService merchandiseService, PlayerDataService playerDataService) {
         _merchandiseService = merchandiseService;
         _playerDataService = playerDataService;
     }

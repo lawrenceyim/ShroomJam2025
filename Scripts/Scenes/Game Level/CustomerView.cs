@@ -33,7 +33,7 @@ public partial class CustomerView : Node2D, ITick {
     private readonly int _ticksPerSecond = Engine.PhysicsTicksPerSecond;
 
     private Texture2dRepository _texture2DRepository;
-    private PlayerDataSerivce _playerDataService;
+    private PlayerDataService _playerDataService;
     private readonly Color _originalSlotColor = new Color(1, 1, 1, .5f);
     private readonly Color _highlightedSlotColor = new Color(1, 1, 0, 1);
     private readonly BlinkingComponent _sellSlotBlinkingComponent = new();
@@ -56,7 +56,7 @@ public partial class CustomerView : Node2D, ITick {
     private bool _customerReadyToPurchase = false;
     private bool _holdingItem = false;
 
-    public void Initialize(Texture2dRepository texture2DRepository, PlayerDataSerivce playerDataService) {
+    public void Initialize(Texture2dRepository texture2DRepository, PlayerDataService playerDataService) {
         _texture2DRepository = texture2DRepository;
         _playerDataService = playerDataService;
         _customerTimer.TimedOut += _ChangeCustomerMood;

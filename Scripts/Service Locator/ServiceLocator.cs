@@ -37,8 +37,8 @@ public partial class ServiceLocator : Node, IAutoload {
         AddService(ServiceName.GameClock, new GameClock(), true);
         AddService(ServiceName.InputStateMachine, new InputStateMachine(), true);
         AddService(ServiceName.Merchandise, new MerchandiseService(merchandiseRepository, playerDataRepository), false);
-        AddService(ServiceName.PlayerData, new PlayerDataSerivce(playerDataRepository), false);
-        AddService(ServiceName.Upgrade, new UpgradeService(GetService<PlayerDataSerivce>(ServiceName.PlayerData)), false);
+        AddService(ServiceName.PlayerData, new PlayerDataService(playerDataRepository), false);
+        AddService(ServiceName.Upgrade, new UpgradeService(GetService<PlayerDataService>(ServiceName.PlayerData)), false);
         AddService(ServiceName.Transaction, new TransactionService(), false);
     }
 }
