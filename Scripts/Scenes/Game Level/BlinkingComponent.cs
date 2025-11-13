@@ -16,12 +16,14 @@ public class BlinkingComponent {
         _tween.TweenProperty(_node, "self_modulate", originalColor, duration);
     }
 
+    public void KillTween() {
+        _tween.Kill();
+    }
 
     public void Pause(bool paused) {
         if (paused) {
             _tween.Pause();
-        }
-        else {
+        } else {
             _tween.Play();
         }
     }

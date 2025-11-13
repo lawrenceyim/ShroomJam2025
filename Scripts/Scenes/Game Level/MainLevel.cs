@@ -120,6 +120,8 @@ public partial class MainLevel : Node, IInputState, ITick {
 
     public override void _ExitTree() {
         _gameClock.RemoveActiveScene(GetInstanceId());
+        _toCustomerBlinkingComponent.KillTween();
+        _toShelfBlinkingComponent.KillTween();
     }
 
     public void PhysicsTick(double delta) {
