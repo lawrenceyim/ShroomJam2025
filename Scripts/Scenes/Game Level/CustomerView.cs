@@ -1,6 +1,4 @@
-#nullable enable
 using System;
-using System.Threading.Tasks;
 using Godot;
 
 public partial class CustomerView : Node2D, ITick {

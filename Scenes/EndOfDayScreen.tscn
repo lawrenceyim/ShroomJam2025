@@ -104,6 +104,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("6_f6j6i")
 
 [node name="Customer Button" type="Button" parent="DayComplete/CustomerUpgradeButton"]
+self_modulate = Color(1, 1, 1, 0)
 offset_left = -126.66666
 offset_top = -32.0
 offset_right = 122.66669
@@ -115,6 +116,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("6_f6j6i")
 
 [node name="Merchandise Button" type="Button" parent="DayComplete/MerchandiseUpgradeButton"]
+self_modulate = Color(1, 1, 1, 0)
 offset_left = -126.667
 offset_top = -33.06
 offset_right = 122.66634
@@ -139,6 +141,7 @@ label_settings = SubResource("LabelSettings_f6j6i")
 horizontal_alignment = 1
 
 [node name="Next Day Button" type="Button" parent="DayComplete"]
+self_modulate = Color(1, 1, 1, 0)
 offset_left = -2.0
 offset_top = 101.0
 offset_right = 308.0
