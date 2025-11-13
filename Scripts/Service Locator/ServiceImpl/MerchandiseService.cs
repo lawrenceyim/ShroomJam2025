@@ -3,6 +3,8 @@ using Godot;
 using ServiceSystem;
 
 public class MerchandiseService : IService {
+	private const int MinRarity = 1;
+	private const int MaxRarity = 5;
 	private const int MerchandiseRollPerLevel = 20;
 	private const int BaseMerchandiseRoll = 100;
 	private readonly MerchandiseRepository _merchandiseRepository;
@@ -57,7 +59,7 @@ public class MerchandiseService : IService {
 	private Merchandise _GenerateRandomMerchandise(int rarityUpgradeLevel) {
 		int merchandiseRollIncrease = rarityUpgradeLevel * MerchandiseRollPerLevel;
 		int threshold = BaseMerchandiseRoll + merchandiseRollIncrease;
-		int rolledRarity = Math.Clamp(_random.Next(0, threshold + 1) / BaseMerchandiseRoll + 1, 1, 5);
+		int rolledRarity = Math.Clamp(_random.Next(0, threshold + 1) / BaseMerchandiseRoll + 1, MinRarity, MaxRarity);
 
 		return new Merchandise(
 			rolledRarity,
