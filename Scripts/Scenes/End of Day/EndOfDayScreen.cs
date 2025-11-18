@@ -107,7 +107,7 @@ public partial class EndOfDayScreen : Node2D {
         if (!_upgradeService.CanUpgrade(UpgradeService.UpgradeType.MerchandiseRarity)) {
             _merchandiseRarityUpgradeCostLabel.SelfModulate = new Color(255, 0, 0, 1);
         }
-
+        
         _merchandiseRarityUpgradeCostLabel.Text = $"{merchandiseCost}";
         _merchandiseRarityLevelLabel.Text = _upgradeService.IsMaxLevel(UpgradeService.UpgradeType.MerchandiseRarity)
             ? "MAX"

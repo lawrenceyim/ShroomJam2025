@@ -12,7 +12,7 @@ public class UpgradeService : IService {
 
     public bool CanUpgrade(UpgradeType upgradeType) {
         return GetUpgradeLevel(upgradeType) < GetMaxUpgradeLevel(upgradeType) &&
-               ComputeUpgradeCost(upgradeType) < _playerDataService.GetMoney();
+               ComputeUpgradeCost(upgradeType) <= _playerDataService.GetMoney();
     }
 
     public bool IsMaxLevel(UpgradeType upgradeType) {
